@@ -6,7 +6,9 @@ type Props = {
     setTheme: Dispatch<SetStateAction<Props_theme>>;
 }
 
-export function Change_topic({ theme, setTheme }: Props): void {
+export function Change_topic(props: Props): void {
+    const { theme, setTheme } = props;
+
     switch (theme) {
         case Theme_name.ligth:
             setTheme(Theme_name.dark);

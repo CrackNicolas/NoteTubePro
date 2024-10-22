@@ -32,7 +32,7 @@ jest.mock('next/navigation', () => ({
 
 describe('Componente <Category/>', () => {
     const setRestart = jest.fn();
-    
+
     test('Renderizacion correcta en el Header', () => {
         const { getByText } = render(<ComponentHeader title="Categorias de notas" subtitle="Selecciona las categorias que deseas agregar o quitar de tus notas" />)
 
@@ -104,9 +104,9 @@ describe('Componente <Category/>', () => {
 
         test('Redirigir a la ruta correcta', () => {
             const volver = component.getByTitle("Volver atras");
-    
+
             fireEvent.click(volver);
-    
+
             expect(mock_push).toHaveBeenCalledWith('/dashboard/config');
         });
 

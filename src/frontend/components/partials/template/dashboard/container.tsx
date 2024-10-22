@@ -22,7 +22,7 @@ export default function ComponentTemplateDashboard(props: Props) {
     const { header = {
         title: 'Panel de Control',
         subtitle: 'Organiza tu mundo, mantente al tanto de lo más importante.'
-    }, items, view_redirect = false} = props;
+    }, items, view_redirect = false } = props;
 
     const router = useRouter();
 

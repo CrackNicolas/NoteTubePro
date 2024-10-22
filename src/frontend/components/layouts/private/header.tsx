@@ -13,7 +13,7 @@ type Props = {
 export default function ComponentHeader(props: Props) {
     const { count_sessions, user_selected, setUser_selected } = props;
 
-    const data = user_selected ? ["",`Usuario ${user_selected.user?.name}`] : ["users-fill", `${count_sessions} Sesiones de usuario`];
+    const data = user_selected ? ["", `Usuario ${user_selected.user?.name}`] : ["users-fill", `${count_sessions} Sesiones de usuario`];
 
     return (
         <article className="w-full flex justify-between items-center">

@@ -237,7 +237,7 @@ export default function ComponentContainerForm(props: Props) {
                                 ((!file || !note_selected?.file?.id) && (!view_file)) ?
                                     <ComponentIcon name="upload-file" size={27} description_class="icon-home dark:text-dark-secondary text-secondary cursor-pointer" />
                                     :
-                                    <Image src={(view_file)? view_file : ""} alt="" width={60} height={60} className="max-w-[70px] max-h-[70px] rounded-md" />
+                                    <Image src={(view_file) ? view_file : ""} alt="" width={60} height={60} className="max-w-[70px] max-h-[70px] rounded-md" />
                             }
 
                             <span className='line-clamp-1 dark:text-dark-secondary text-secondary text-md font-normal tracking-wide'>

@@ -14,9 +14,9 @@ import Notes from '@/backend/schemas/note'
 
 export async function GET(req: NextRequest, { params: { segment } }: { params: { segment: string } }): Promise<NextResponse> {
     const token = req.cookies.get('__session')?.value as string;
-    
+
     if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
-    
+
     const user_id = jwt.decode(token)?.sub as string;
 
     const connection: boolean = await Conect_database();

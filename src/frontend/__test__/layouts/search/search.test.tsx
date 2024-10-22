@@ -45,11 +45,11 @@ describe('Componente <Search/> principal', () => {
             const { getByPlaceholderText } = render(
                 <ComponentInputSearch setValue={setValue} />
             );
-    
+
             const input = getByPlaceholderText('Buscar...');
-    
+
             fireEvent.change(input, { target: { value: 'Titulo de nota' } });
-    
+
             expect(setValue).toHaveBeenCalledWith('title', 'Titulo de nota');
             expect(input).toBeInTheDocument();
         })
@@ -59,9 +59,9 @@ describe('Componente <Search/> principal', () => {
             const { getByPlaceholderText } = render(
                 <ComponentInputSearch setValue={setValue} />
             );
-    
+
             const input = getByPlaceholderText('Buscar...');
-    
+
             fireEvent.change(input, { target: { value: '-...' } });
 
             expect(setValue).not.toHaveBeenCalledWith('title', '-...');

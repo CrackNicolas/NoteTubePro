@@ -28,6 +28,16 @@ export const list_messages: Props[] = [
         color: 'error'
     },
     {
+        status: 401,
+        text: 'Mensaje de error',
+        color: 'error'
+    },
+    {
+        status: 403,
+        text: 'Mensaje de error',
+        color: 'error'
+    },
+    {
         status: 404,
         text: 'Mensaje de error',
         color: 'error'

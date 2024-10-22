@@ -20,7 +20,7 @@ export default function ComponentMessageConfirmation(props: Props) {
         switch (status) {
             case 200: case 201: case 204:
                 return <ComponentIcon name='check' description_class='text-secondary' size={25} />
-            case 400: case 404: case 500:
+            case 400: case 401: case 403: case 404: case 500:
                 return <ComponentIcon name='close' description_class='text-error' size={25} />
         }
     }
@@ -29,7 +29,7 @@ export default function ComponentMessageConfirmation(props: Props) {
         switch (status) {
             case 200: case 201: case 204:
                 return "secondary";
-            case 400: case 404: case 500:
+            case 400: case 401: case 403: case 404: case 500:
                 return "error";
         }
     }

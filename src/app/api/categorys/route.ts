@@ -12,9 +12,9 @@ import Category from '@/backend/schemas/category'
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
     const token = req.cookies.get('__session')?.value as string;
-    
+
     if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
-    
+
     const user_id = jwt.decode(token)?.sub;
 
     const connection: boolean = await Conect_database();

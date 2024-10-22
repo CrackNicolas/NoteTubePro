@@ -1,4 +1,4 @@
-export function Query(user_id: string, segment: string) {
+export function Query(user_id: string, segment: string): object {
     if (!segment) return { user_id: user_id };
 
     const criteria = JSON.parse(segment);

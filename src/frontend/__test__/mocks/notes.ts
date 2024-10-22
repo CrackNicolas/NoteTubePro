@@ -18,7 +18,7 @@ export const note: Props_note = {
         name: 'Archivo',
         url: 'url'
     },
-    user_id: 'user_d2e0jzKi44asdasd2eKJeR'
+    user_id: 'ddddd_d2e0jzKi44asdasd2eKJeR'
 }
 
 export const notes: Props_note[] = [
@@ -38,7 +38,7 @@ export const notes: Props_note[] = [
             name: 'Archivo',
             url: 'url'
         },
-        user_id: 'user_d1e0jzKi44asdasd2eKJeR'
+        user_id: 'dddsadsad2e0jzKi44asdasd2eKJeR'
     },
     {
         _id: '4321',
@@ -51,7 +51,7 @@ export const notes: Props_note[] = [
         priority: 'Media',
         featured: false,
         createdAt: new Date(current_date.getFullYear(), current_date.getMonth() - 3, current_date.getDay() - 3),
-        user_id: 'user_d2e0jzKi44asdasd2eKJeR'
+        user_id: 'ddsadsadsadd_d2e0jzKi44asdasd2eKJeR'
     },
     {
         _id: '2223',
@@ -69,7 +69,7 @@ export const notes: Props_note[] = [
             name: 'Archivo',
             url: 'url'
         },
-        user_id: 'user_d3e0jzKi44asdasd2eKJeR'
+        user_id: 'dddjdjdjdjdj_d2e0jzKi44asdasd2eKJeR'
     }
 ]
 

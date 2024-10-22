@@ -1,7 +1,7 @@
 import { Props_session } from "@/context/types/session";
 
 export const session: Props_session = {
-    id: 'user_d2e0jzKi44asdasd2eKJeR',
+    id: 'ddddd_d2e0jzKi44asdasd2eKJeR',
     status: false,
     last_time: 'Creada el 10 de jun de 2024 19:40:13hs',
     expiret: 'Mon Jun 10 2024 20:09:25 GMT-0300 (hora estándar de Argentina)',
@@ -19,7 +19,7 @@ export const session: Props_session = {
 
 export const sessions: Props_session[] = [
     {
-        id: 'user_d2e0jzKi44asdasd2eKJeR',
+        id: 'ddddd_d2e0jzKi44asdasd2eKJeR',
         status: false,
         last_time: 'Creada el 10 de jun de 2024 19:40:13hs',
         expiret: 'Mon Jun 10 2024 20:09:25 GMT-0300 (hora estándar de Argentina)',
@@ -35,7 +35,7 @@ export const sessions: Props_session[] = [
         }
     },
     {
-        id: 'user_d5e0jzKi44asdasd2eKJeR',
+        id: 'ddffssd2e0jzKi44asdasd2eKJeR',
         status: true,
         last_time: 'Creada el 5 de jun de 2024 19:40:13hs',
         expiret: 'Mon Jun 10 2023 10:09:25 GMT-0300 (hora estándar de Argentina)',
