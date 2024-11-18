@@ -1,11 +1,11 @@
-import { ReactNode, Fragment } from 'react'
+import { ReactNode, Fragment, Dispatch, SetStateAction } from 'react'
 import { Dialog, Transition } from '@headlessui/react';
 
 import ComponentIcon from "@/frontend/components/partials/icon";
 
 type Props = {
     open: boolean,
-    setOpen: any,
+    setOpen: Dispatch<SetStateAction<boolean>>,
     color?: string,
     button_close?: boolean,
     children: ReactNode

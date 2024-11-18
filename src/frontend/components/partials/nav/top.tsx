@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Props_context } from "@/context/types/context";
 
