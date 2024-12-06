@@ -5,7 +5,7 @@ import ComponentIcon from "@/frontend/components/partials/icon";
 export default function ComponentHome() {
     return (
         <div className="flex flex-col h-screen justify-between relative px-6 lg:px-8 pb-5">
-            <div className="mt-[150px] flex flex-col items-center gap-y-9">
+            <div className="mt-[130px] flex flex-col items-center gap-y-9">
                 <ComponentIcon testid="icon-home" name="logo" size={70} description_class="text-secondary" />
                 <div className="flex flex-col gap-y-2">
                     <span className="text-center text-4xl font-bold tracking-wider dark:text-dark-tertiary text-tertiary text-2xl sm:text-6xl">
