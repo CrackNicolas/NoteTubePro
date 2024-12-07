@@ -5,13 +5,13 @@ import ComponentIcon from "@/frontend/components/partials/icon";
 
 type Props = {
     open: boolean,
-    setOpen: Dispatch<SetStateAction<boolean>>,
     color?: string,
-    button_close?: boolean,
-    children: ReactNode
+    setOpen: Dispatch<SetStateAction<boolean>>,
+    children: ReactNode,
+    button_close?: boolean
 }
 
-export default function ComponentModal(props: Props) {
+export default function ComponentModal(props: Props): JSX.Element {
     const { children, open, setOpen, color = "secondary", button_close = true } = props;
 
     return (

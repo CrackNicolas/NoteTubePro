@@ -1,29 +1,28 @@
 import { Dispatch, Fragment, SetStateAction, useEffect, useRef, useState } from "react";
 import { FieldError, FieldErrorsImpl, FieldValues, LiteralUnion, Merge, UseFormClearErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
-import axios from "axios";
-
 import ComponentIcon from '@/frontend/components/partials/icon';
 
 import { Props_category } from "@/context/types/category";
 
+import { Request } from "@/backend/logic/requests";
 import { validation } from "@/frontend/validations/form";
 
 type Props = {
-    error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | LiteralUnion<"required", string> | undefined,
-    select_category: Props_category,
-    setSelect_category: Dispatch<SetStateAction<Props_category>>
-    register: UseFormRegister<FieldValues>,
-    setValue?: UseFormSetValue<FieldValues>,
-    clearErrors?: UseFormClearErrors<FieldValues>,
-    required?: boolean,
     style?: {
         border?: string,
         text?: string
-    }
+    },
+    error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | LiteralUnion<"required", string> | undefined,
+    required?: boolean,
+    register: UseFormRegister<FieldValues>,
+    setValue?: UseFormSetValue<FieldValues>,
+    clearErrors?: UseFormClearErrors<FieldValues>,
+    select_category: Props_category,
+    setSelect_category: Dispatch<SetStateAction<Props_category>>
 }
 
-export default function ComponentSelect(props: Props) {
+export default function ComponentSelect(props: Props): JSX.Element {
     const list = useRef<HTMLUListElement>(null);
     const ref_select = useRef<HTMLDivElement>(null);
 
@@ -36,35 +35,36 @@ export default function ComponentSelect(props: Props) {
         title: 'Categoria...'
     }
 
-    const option_selected = (select_category.title != 'Categoria...');
+    const option_selected: boolean = (select_category.title != 'Categoria...');
 
-    const handle_click_outside = (event: MouseEvent) => {
+    const handle_click_outside = (event: MouseEvent): void => {
         if (ref_select.current && !ref_select.current.contains(event.target as Node)) {
             setOpen_category(false);
         }
     };
+
+    const selected = (category: Props_category): void => {
+        setValue('category', category);
+        setSelect_category(category);
+        setOpen_category(false);
+        clearErrors('category');
+        setCategorys(prev => prev.some((item: Props_category) => item.title === item_default.title) ? prev : [item_default, ...prev]);
+    }
+
+    const load_categorys = async (): Promise<void> => {
+        const { data } = await Request('GET',"/api/categorys/true");
+
+        if (data.status === 200) {
+            setCategorys(data.data);
+        }
+    }
 
     useEffect(() => {
         document.addEventListener('mousedown', handle_click_outside);
         return () => document.removeEventListener('mousedown', handle_click_outside);
     }, []);
 
-    const selected = (category: Props_category) => {
-        setValue('category', category);
-        setSelect_category(category);
-        setOpen_category(false);
-        clearErrors('category');
-        setCategorys(prev => prev.some(item => item.title === item_default.title) ? prev : [item_default, ...prev]);
-    }
-
     useEffect(() => {
-        const load_categorys = async () => {
-            const { data } = await axios.get("/api/categorys/true");
-
-            if (data.status === 200) {
-                setCategorys(data.data);
-            }
-        }
         load_categorys();
     }, []);
 
@@ -94,7 +94,7 @@ export default function ComponentSelect(props: Props) {
                         </div>
                         <ul ref={list} title="Lista de categorias" className={`${(!open_category) && 'hidden'} absolute z-10 mt-[32px] w-full ${(categorys.length >= 4) && `h-[${categorys.length * 37}px]`} dark:bg-dark-primary bg-primary border-[0.1px] ${!error ? `${style.border} scroll-select` : 'dark:border-dark-error border-error scroll-select-error'} rounded-b-md border-opacity-50 overflow-hidden`}>
                             {
-                                categorys.filter(category => category.title != select_category.title).map(category => {
+                                categorys.filter((category: Props_category) => category.title != select_category.title).map(category => {
                                     return (
                                         <li key={category.title} title={category.title} onClick={() => selected(category)} className={`flex justify-between items-center group ${!error ? `${style.text} dark:hover:bg-dark-secondary hover:bg-secondary` : 'dark:text-dark-error text-error dark:hover:bg-dark-error hover:bg-error'} dark:hover:text-dark-primary hover:text-primary px-2 py-1 cursor-pointer hover:font-semibold`}>
                                             <span className="text-md font-normal">

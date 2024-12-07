@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken';
-
 import { type NextRequest } from 'next/server';
 import { NextResponse } from "next/server";
 
@@ -8,14 +6,12 @@ import { Props_category } from "@/context/types/category";
 
 import { Conect_database } from "@/backend/utils/db";
 
-import Category from '@/backend/schemas/category'
+import Category from '@/backend/schemas/category';
+import Autentication from '@/backend/logic/autentication';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-    const token = req.cookies.get('__session')?.value as string;
-
-    if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
-
-    const user_id = jwt.decode(token)?.sub;
+    const user_id = Autentication(req.cookies);
+    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const connection: boolean = await Conect_database();
     if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
@@ -39,9 +35,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
         const user_category = await Category.findOne({ "use.user_id": user_id });
 
-        if (!user_category) {
-            await Category.updateMany({}, { $push: { use: { value: true, user_id } } });
-        }
+        if (!user_category) await Category.updateMany({}, { $push: { use: { value: true, user_id } } });
 
         const categorys = await Category.find({ "use.user_id": user_id });
 
@@ -56,16 +50,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         })
 
         return NextResponse.json<Props_response>({ status: 200, data: filter_categorys });
-    } catch (error) {
+    } catch (error: unknown) {
         return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } })
     }
 }
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
-    const token = req.cookies.get('__session')?.value as string;
-    const user_id = jwt.decode(token)?.sub;
-
-    if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const user_id = Autentication(req.cookies);
+    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const { title, use } = await req.json();
 
@@ -78,18 +70,14 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
 
             const count: number = user_categorys.filter(category =>
                 category.use.some((prev: { user_id: string, value: boolean }) => prev.user_id === user_id && prev.value === true)
-            ).length
+            ).length;
 
-            if (count === 2) {
-                return NextResponse.json<Props_response>({ status: 200, info: { message: 'Debes tener por lo menos 2 categorias en uso' } });
-            }
+            if (count === 2) return NextResponse.json<Props_response>({ status: 200, info: { message: 'Debes tener por lo menos 2 categorias en uso' } });
         }
 
         const exists_category = await Category.findOne({ title });
 
-        if (!exists_category) {
-            return NextResponse.json<Props_response>({ status: 404, info: { message: "Categoria no encontrada" } });
-        }
+        if (!exists_category) return NextResponse.json<Props_response>({ status: 404, info: { message: "Categoria no encontrada" } });
 
         const category = exists_category.use.find((prev: { user_id: string }) => prev.user_id === user_id);
         category.value = use;
@@ -97,7 +85,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
         await exists_category.save();
 
         return NextResponse.json<Props_response>({ status: 200, info: { message: `Categoria "${title}" ${use ? 'configurada para su uso' : 'fuera de uso'} ` } });
-    } catch (error) {
+    } catch (error:unknown) {
         return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } })
     }
 }

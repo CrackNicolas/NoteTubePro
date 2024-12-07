@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import axios from "axios";
-
 import ComponentIcon from "@/frontend/components/partials/icon";
 import ComponentList from "@/frontend/components/layouts/search/list";
 import ComponentMessageWait from "@/frontend/components/layouts/messages/wait";
@@ -13,6 +11,7 @@ import ComponentSelectDynamic from "@/frontend/components/partials/form/select_d
 import ComponentMessageConfirmation from "@/frontend/components/layouts/messages/confirmation";
 import ComponentMessageConfirmationDelete from "@/frontend/components/layouts/messages/confirmation_delete";
 
+import { Request } from "@/backend/logic/requests";
 import { Props_response } from "@/context/types/response";
 import { Props_category } from "@/context/types/category";
 import { Props_delete_note, Props_note } from "@/context/types/note";
@@ -22,7 +21,7 @@ type Props = {
     update_note: (note: Props_note) => void
 }
 
-export default function ComponentSearch(props: Props) {
+export default function ComponentSearch(props: Props): JSX.Element {
     const { update_note } = props;
 
     const { register, watch, setValue } = useForm();
@@ -50,7 +49,7 @@ export default function ComponentSearch(props: Props) {
     const [select_featured, setSelect_featured] = useState<string | undefined>('Nota destacada...');
     const [open_confirmation_delete, setOpen_confirmation_delete] = useState<boolean>(false);
 
-    const handle_click_outside = (event: MouseEvent) => {
+    const handle_click_outside = (event: MouseEvent): void => {
         if (ref_nav_toggle.current &&
             !ref_nav_toggle.current.contains(event.target as Node) &&
             !ref_button_close_toggle.current?.contains(event.target as Node) &&
@@ -62,42 +61,42 @@ export default function ComponentSearch(props: Props) {
         }
     };
 
-    const restart = () => {
+    const restart = (): void => {
         setSelect_category({ title: 'Categoria...' });
         setSelect_priority('Prioridad...');
         setSelect_featured('Nota destacada...');
         setSelect_date('Fecha...');
     }
 
-    const close_delete = () => {
+    const close_delete = (): void => {
         setState_select(false);
         setSearch('');
     }
 
-    const select_note = (value: boolean) => {
+    const select_note = (value: boolean): void => {
         setState_select(value);
         setNotes_selected([]);
     }
 
-    const note_all = (notes_selected.length === list_notes.length);
+    const note_all: boolean = (notes_selected.length === list_notes.length);
 
-    const select_all = () => {
+    const select_all = (): void => {
         if (note_all) {
             setNotes_selected([]);
             return;
         }
-        list_notes.map(note => {
-            if (!notes_selected.map(note => note._id).includes(note._id)) {
+        list_notes.map((note: Props_note) => {
+            if (!notes_selected.map((note: Props_delete_note) => note._id).includes(note._id)) {
                 setNotes_selected(prev => [...prev, { _id: note._id, file: note.file?.id }])
             }
         })
     }
 
-    const load_notes = useCallback(async () => {
+    const load_notes = useCallback(async (): Promise<void> => {
         if (search == "") return;
 
         setLoading_notes({ value: true, button: true });
-        const { data } = await axios.get(`/api/notes${(search !== '{}') ? `/${search}` : ''}`);
+        const { data } = await Request('GET', `/api/notes${(search !== '{}') ? `/${search}` : ''}`);
         if (data.status === 200) {
             setLoading_notes({
                 value: false,
@@ -115,7 +114,7 @@ export default function ComponentSearch(props: Props) {
         }
     }, [search]);
 
-    const listen_to_changes = useCallback(async () => {
+    const listen_to_changes = useCallback(async (): Promise<void> => {
         const criteria: Props_params_search = {
             title: (title !== '') ? title : undefined,
             category: (select_category.title !== 'Categoria...') ? select_category : undefined,
@@ -127,9 +126,9 @@ export default function ComponentSearch(props: Props) {
         setSearch(JSON.stringify(criteria));
     }, [title, select_category, select_priority, select_date, select_featured])
 
-    const delete_notes = async () => {
+    const delete_notes = async (): Promise<void> => {
         setLoading_message(true);
-        const { data } = await axios.delete(`/api/notes/${JSON.stringify(notes_selected)}`);
+        const { data } = await Request('DELETE', `/api/notes/${JSON.stringify(notes_selected)}`);
         if (data.status === 200) {
             setOpen(true);
             setResponse(data);
@@ -155,7 +154,7 @@ export default function ComponentSearch(props: Props) {
     }, [title, select_category, select_priority, select_featured, select_date, listen_to_changes]);
 
     return (
-        <section className={`relative h-[calc(100vh-30px)] flex flex-col gap-5 mt-[30px] pt-6`}>
+        <article className={`relative h-[calc(100vh-30px)] flex flex-col gap-5 mt-[30px] pt-6`}>
             <article className={`fixed pb-3 max-w-7xl pr-[29px] sm:pr-[85px] z-50 flex gap-y-6 gap-x-3 justify-between items-center dark:bg-dark-primary bg-primary transition-width ${view_filter ? 'w-full sz:w-full md:w-[calc(100%-175px)]' : 'w-full'}`}>
                 {
                     state_select ?
@@ -220,9 +219,9 @@ export default function ComponentSearch(props: Props) {
                 <div ref={ref_nav_toggle} className={`fixed top-0 flex flex-col justify-between toggle-search ${view_filter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-dark-primary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2 h-[100vh]`}>
                     <div className="flex flex-col">
                         <div className="flex justify-between items-center py-1 border-b-[3px] rounded-md border-opacity-50 dark:border-dark-secondary border-secondary w-full">
-                            <span className="dark:text-dark-tertiary text-tertiary opacity-70 tracking-wider font-semibold">
+                            <h4 className="dark:text-dark-tertiary text-tertiary opacity-70 tracking-wider font-semibold">
                                 Filtrar notas
-                            </span>
+                            </h4>
                             <button ref={ref_button_close_toggle} type="button" title="Cerrar menu" onClick={() => setView_filter(!view_filter)} className="outline-none">
                                 <ComponentIcon name="close" description_class="cursor-pointer dark:hover:text-dark-secondary hover:text-secondary hover:opacity-100 dark:text-dark-tertiary text-tertiary opacity-70" size={27} view_box="0 0 16 16" />
                             </button>
@@ -289,6 +288,6 @@ export default function ComponentSearch(props: Props) {
             {
                 <ComponentMessageConfirmationDelete open={open_confirmation_delete} setOpen={setOpen_confirmation_delete} action={delete_notes} />
             }
-        </section>
+        </article>
     )
 }

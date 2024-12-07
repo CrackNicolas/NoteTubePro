@@ -5,17 +5,17 @@ import { useUser } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
-import { createContext, useCallback, useEffect, useState } from "react";
-
-import axios from "axios";
+import { createContext, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 
 import { Props_context } from "@/context/types/context";
 import { Props_session, Props_user } from "@/context/types/session";
 
 import { ComponentUserButton } from "@/frontend/components/services/clerk";
 
-import Template from '@/frontend/template/init'
+import Template from '@/frontend/template/init';
+import ComponentLoad from "@/frontend/components/partials/load";
 
+import { Request } from "@/backend/logic/requests";
 import { Change_topic } from "@/frontend/logic/theme";
 import { Time_elapsed } from "@/frontend/logic/format_time";
 import { Props_layouts, Props_theme, Theme_name } from "@/frontend/types/props";
@@ -30,7 +30,7 @@ export const Context = createContext<Props_context>({
     setOpacity: () => { }
 });
 
-export default function Provider({ children }: Props_layouts) {
+export default function Provider({ children }: Props_layouts): JSX.Element {
     const [session, setSession] = useState<Props_session>({});
 
     const [theme, setTheme] = useState<Props_theme>(Theme_name.ligth);
@@ -40,14 +40,9 @@ export default function Provider({ children }: Props_layouts) {
     const router = useRouter();
     const path = usePathname();
 
-    useEffect(() => {
-        const stored_theme = localStorage.getItem('theme') as Props_theme;
-        if (stored_theme) {
-            Change_topic({ theme: stored_theme, setTheme });
-        }
-    }, [])
+    const section_current: string = useMemo(() => path.substring(1), [path]);
 
-    const load_user = useCallback(async () => {
+    const load_user = useCallback(async (): Promise<void> => {
         const { isSignedIn, user } = data_user;
 
         if (isSignedIn && user.fullName) {
@@ -60,7 +55,7 @@ export default function Provider({ children }: Props_layouts) {
                 rol: 'member'
             }
 
-            const { data } = await axios.get(`/api/role/${user.id}`);
+            const { data } = await Request('GET', `/api/role/${user.id}`);
             instance_user.rol = data.data;
 
             const instance_session: Props_session = {
@@ -75,25 +70,32 @@ export default function Provider({ children }: Props_layouts) {
                 user: instance_user
             }
 
-            await axios.get(`/api/categorys`);
-            await axios.post("/api/private/sessions", instance_session);
+            await Request('GET', `/api/categorys`);
+            await Request('POST', "/api/private/sessions", instance_session);
 
             setSession(instance_session);
         } else {
-            await axios.put("/api/private/sessions", { id: session.id, status: false });
+            await Request('PUT', "/api/private/sessions", { id: session.id, status: false });
             setSession({});
         }
     }, [data_user, session.id]);
 
-    const handleOffline = useCallback(() => {
+    const handleOffline = useCallback((): void => {
         router.push('/without_internet');
     }, [router])
 
-    const handleOnline = useCallback(() => {
+    const handleOnline = useCallback((): void => {
         if (path === '/offline') {
             router.push('/');
         }
     }, [path, router])
+
+    useEffect(() => {
+        const stored_theme: Theme_name = localStorage.getItem('theme') as Props_theme;
+        if (stored_theme) {
+            Change_topic({ theme: stored_theme, setTheme });
+        }
+    }, [])
 
     useEffect(() => {
         load_user();
@@ -113,12 +115,25 @@ export default function Provider({ children }: Props_layouts) {
         };
     }, [path, handleOffline, handleOnline])
 
+    const context_value: Props_context = useMemo(() => ({
+        section_current,
+        session,
+        button_sesion: <ComponentUserButton />,
+        opacity: false,
+        theme,
+        setTheme,
+        setOpacity: () => { },
+        path
+    }), [section_current, session, theme, path]);
+
     return (
-        <Context.Provider value={{ section_current: path.substring(1), session, button_sesion: <ComponentUserButton />, opacity: false, theme, setTheme, setOpacity: () => { }, path }}>
-            <ProgressBar color={theme} options={{ showSpinner: false }} />
-            <Template>
-                {children}
-            </Template>
-        </Context.Provider>
+        <Suspense fallback={<ComponentLoad />} >
+            <Context.Provider value={context_value}>
+                <ProgressBar color={theme} options={{ showSpinner: false }} />
+                <Template>
+                    {children}
+                </Template>
+            </Context.Provider>
+        </Suspense>
     )
 }

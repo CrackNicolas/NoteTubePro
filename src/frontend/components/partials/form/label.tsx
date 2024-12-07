@@ -8,7 +8,7 @@ type Props = {
     values_exists?: boolean
 }
 
-export default function ComponentLabel(props: Props) {
+export default function ComponentLabel(props: Props): JSX.Element {
     const { title, html_for, errors, color = 'dark:text-dark-secondary text-secondary', values_exists = false } = props;
 
     const exists_error = errors && errors[html_for];

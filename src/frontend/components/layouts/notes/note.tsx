@@ -11,35 +11,33 @@ import { Props_delete_note, Props_note } from "@/context/types/note";
 type Props = {
     note: Props_note,
     paint?: boolean,
-    update_note: (note: Props_note) => void,
     state: boolean,
+    update_note: (note: Props_note) => void,
     notes_selected: Props_delete_note[],
     setNotes_selected: Dispatch<SetStateAction<Props_delete_note[]>>
 }
 
-export default function ComponentNote(props: Props) {
+export default function ComponentNote(props: Props): JSX.Element {
     const { note, paint = false, update_note, state, notes_selected, setNotes_selected } = props;
     const { title, description, priority, createdAt, featured } = note;
 
     const [view_note, setView_note] = useState<Props_note | undefined>(undefined);
     const [open_modal_view, setOpen_modal_view] = useState<boolean>(false);
 
-    const open_view = (note: Props_note) => {
+    const open_view = (note: Props_note): void => {
         setView_note(note);
         setOpen_modal_view(true);
     }
 
-    const include_note = (id?: string) => {
-        return notes_selected.map(note => note._id).includes(id);
-    }
+    const include_note = (id?: string): boolean => notes_selected.map((note: Props_delete_note) => note._id).includes(id);
 
-    const note_selection = (data: Props_delete_note) => {
+    const note_selection = (data: Props_delete_note): void => {
         if (state) {
             setNotes_selected(prev => include_note(data._id) ? prev.filter(n => n._id !== data._id) : [...prev, { _id: data._id, file: data.file }])
         }
     }
 
-    const redirect = (event: MouseEvent<HTMLButtonElement>) => {
+    const redirect = (event: MouseEvent<HTMLButtonElement>): void => {
         event.stopPropagation();
         update_note(note);
     }
@@ -84,9 +82,9 @@ export default function ComponentNote(props: Props) {
                 <p className="line-clamp-1 text-sm dark:text-dark-tertiary dark:opacity-90 text-tertiary opacity-50">
                     {description}
                 </p>
-                <span title="Tiempo transcurrido" className="sm:visible invisible absolute right-3 dark:text-dark-tertiary dark:opacity-90 text-tertiary text-[11px] opacity-50">
+                <h6 title="Tiempo transcurrido" className="sm:visible invisible absolute right-3 dark:text-dark-tertiary dark:opacity-90 text-tertiary text-[11px] opacity-50">
                     {Time_elapsed(createdAt)}
-                </span>
+                </h6>
             </div>
             <div className="col-span-1 flex flex-col items-end justify-end">
                 {

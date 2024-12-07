@@ -9,11 +9,11 @@ import { Time_elapsed } from "@/frontend/logic/format_time";
 
 type Props = {
     open: boolean,
-    setOpen: Dispatch<SetStateAction<boolean>>,
-    note: Props_note
+    note: Props_note,
+    setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export default function ComponentView(props: Props) {
+export default function ComponentView(props: Props): JSX.Element {
     const { open, setOpen, note } = props;
 
     return (
@@ -23,9 +23,9 @@ export default function ComponentView(props: Props) {
                     {Time_elapsed(note.createdAt)}
                 </span>
                 <div className="flex justify-between items-center w-full">
-                    <span className="text-start line-clamp-1 font-normal tracking-wide dark:text-dark-secondary text-secondary font-semibold text-lg" title={note.title} >
+                    <h3 className="text-start line-clamp-1 font-normal tracking-wide dark:text-dark-secondary text-secondary font-semibold text-lg" title={note.title} >
                         {note.title}
-                    </span>
+                    </h3>
                     <span className="rounded-full" title={`Categoria ${note.category.title.toLowerCase()}`}>
                         <ComponentIcon name={note.category.icon} size={20} description_class="dark:text-dark-secondary text-secondary" />
                     </span>

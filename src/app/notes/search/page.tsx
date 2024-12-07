@@ -6,7 +6,7 @@ import ComponentSearch from "@/frontend/components/layouts/search/container";
 
 import { Props_note } from "@/context/types/note";
 
-export default function Search() {
+export default function Search(): JSX.Element {
     const router = useRouter();
 
     const update_note = (note: Props_note): void => {

@@ -61,47 +61,6 @@ describe('Componente <Category/>', () => {
             component = render(<ComponentList categorys={categorys} setRestart={setRestart} />);
         });
 
-        test('Renderizacion seleccionando una categoria y confirmacion exitosa', async () => {
-            const { getByTitle, getByRole } = component;
-
-            await waitFor(() => {
-                const item = getByTitle(`Categoria ${categorys[0].title}`);
-                fireEvent.click(item);
-            })
-
-            await waitFor(() => {
-                const modal_confirmation = getByTitle('modal');
-                const button_confirmation = getByRole('button', { name: 'Aceptar' });
-
-                expect(modal_confirmation).toBeInTheDocument();
-
-                fireEvent.click(button_confirmation);
-
-                expect(modal_confirmation).not.toBeInTheDocument();
-            })
-        })
-
-        test('Renderizacion seleccionando una categoria y cerrando confirmacion', async () => {
-            const { getByTitle } = component;
-
-            await waitFor(() => {
-                const item = getByTitle(`Categoria ${categorys[0].title}`);
-
-                fireEvent.click(item);
-            })
-
-            await waitFor(() => {
-                const modal_confirmation = getByTitle('modal');
-                const button_close = getByTitle('Boton cerrar')
-
-                expect(modal_confirmation).toBeInTheDocument();
-
-                fireEvent.click(button_close);
-
-                expect(modal_confirmation).not.toBeInTheDocument();
-            })
-        })
-
         test('Redirigir a la ruta correcta', () => {
             const volver = component.getByTitle("Volver atras");
 

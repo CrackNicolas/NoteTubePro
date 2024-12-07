@@ -13,7 +13,7 @@ type Props = {
     register: UseFormRegister<FieldValues>
 }
 
-export default function ComponentItemPriority(props: Props) {
+export default function ComponentItemPriority(props: Props): JSX.Element {
     const { id, class_icon, value, paint, error, register } = props;
 
     return (

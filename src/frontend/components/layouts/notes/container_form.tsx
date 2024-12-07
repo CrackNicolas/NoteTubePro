@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import axios from 'axios';
-
 import ComponentIcon from '@/frontend/components/partials/icon';
 import ComponentInput from '@/frontend/components/partials/form/input';
 import ComponentLabel from '@/frontend/components/partials/form/label';
@@ -16,17 +14,18 @@ import ComponentItemPriority from '@/frontend/components/partials/form/item_prio
 import ComponentItemFeatured from '@/frontend/components/partials/form/item_featured';
 import ComponentMessageConfirmation from '@/frontend/components/layouts/messages/confirmation';
 
+import { Request } from '@/backend/logic/requests';
 import { Props_note } from '@/context/types/note';
 import { Props_response } from '@/context/types/response';
 import { Props_category } from '@/context/types/category';
 
 type Props = {
+    note_selected: Props_note | undefined,
     category_selected: Props_category | undefined,
-    setCategory_selected: Dispatch<SetStateAction<Props_category | undefined>>,
-    note_selected: Props_note | undefined
+    setCategory_selected: Dispatch<SetStateAction<Props_category | undefined>>
 }
 
-export default function ComponentContainerForm(props: Props) {
+export default function ComponentContainerForm(props: Props): JSX.Element {
     const { category_selected, setCategory_selected, note_selected } = props;
 
     const router = useRouter();
@@ -35,9 +34,9 @@ export default function ComponentContainerForm(props: Props) {
 
     const [open, setOpen] = useState<boolean>(false);
     const [file, setFile] = useState<File | undefined>(undefined);
-    const [view_file, setView_file] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(false);
     const [response, setResponse] = useState<Props_response>();
+    const [view_file, setView_file] = useState<string | undefined>(undefined);
     const [message_image, setMessage_image] = useState<{ paint: boolean, value: string }>({ paint: true, value: 'Selecciona una imagen (máximo 1MB)' });
     const [values_exists, setValues_exists] = useState<boolean>(false);
 
@@ -58,7 +57,7 @@ export default function ComponentContainerForm(props: Props) {
         setResponse(data);
     }
 
-    const capture_file = (event: ChangeEvent<HTMLInputElement>) => {
+    const capture_file = (event: ChangeEvent<HTMLInputElement>): void => {
         const new_file = event.target.files?.[0];
 
         if (new_file && !new_file.type.startsWith('image/')) {
@@ -74,14 +73,14 @@ export default function ComponentContainerForm(props: Props) {
         }
     }
 
-    const remove_file = () => {
+    const remove_file = (): void => {
         setFile(undefined);
         (document.getElementById("file-upload") as HTMLInputElement).value = "";
         setView_file(undefined);
         setMessage_image({ paint: true, value: 'Selecciona una imagen (máximo 1MB)' });
     }
 
-    const onSubmit: SubmitHandler<FieldValues | Props_note> = async (data) => {
+    const onSubmit: SubmitHandler<FieldValues | Props_note> = async (data): Promise<void> => {
         if (data.title == data.description) {
             setValues_exists(true);
             return;
@@ -102,16 +101,16 @@ export default function ComponentContainerForm(props: Props) {
 
         setLoading(true);
         if (!note_selected) {
-            response = await axios.post("/api/notes", form);
+            response = await Request('POST',"/api/notes", form);
         } else {
             form.set('_id', note_selected._id as string);
-            response = await axios.put("/api/notes", form);
+            response = await Request('PUT',"/api/notes", form);
         }
         setLoading(false);
         open_modal(response.data);
     }
 
-    const reply = () => {
+    const reply = (): void => {
         setOpen(false);
         router.push('/notes/search');
     }
@@ -245,7 +244,7 @@ export default function ComponentContainerForm(props: Props) {
                                     (!file || !note_selected?.file?.id) && (!view_file) && "Subir imagen..."
                                 }
                             </span>
-                            <input id="file-upload" accept="image/*" name="file-upload" type="file" onChange={(e) => capture_file(e)} className="sr-only" />
+                            <input id="file-upload" accept="image/*" name="file-upload" type="file" onChange={event => capture_file(event)} className="sr-only" />
                         </label>
                     </div>
                 </div>

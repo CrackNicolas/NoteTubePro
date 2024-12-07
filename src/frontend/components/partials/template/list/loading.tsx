@@ -1,13 +1,13 @@
 import { Fragment, ReactNode } from "react"
 
 type Props = {
-    children: ReactNode
     count: number,
-    description_class?: string,
-    title?: string
+    title?: string,
+    children: ReactNode,
+    description_class?: string
 }
 
-export default function ComponentTemplateLoading(props: Props) {
+export default function ComponentTemplateLoading(props: Props): JSX.Element {
     const { children, count, description_class = "", title = 'Cargando...' } = props;
 
     return (

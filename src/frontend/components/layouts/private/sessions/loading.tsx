@@ -1,6 +1,6 @@
 import ComponentTemplateLoading from "@/frontend/components/partials/template/list/loading"
 
-export default function ComponentLoading({ count }: { count: number }) {
+export default function ComponentLoading({ count }: { count: number }): JSX.Element {
     return (
         <ComponentTemplateLoading count={count} description_class="flex gap-3 p-3">
             <span className="min-w-[30px] min-h-[30px] w-[30px] h-[30px] rounded-full dark:bg-dark-tertiary bg-tertiary opacity-20" />

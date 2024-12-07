@@ -4,8 +4,8 @@ import { fireEvent, render, RenderResult } from '@testing-library/react'
 import ComponentDashboardMain from '@/frontend/components/layouts/dashboard/main'
 import ComponentTemplateDashboard from '@/frontend/components/partials/template/dashboard/container'
 
-import { items_main } from '@/frontend/constant/dashboard'
-import { items_config } from '@/frontend/constant/dashboard'
+import { Items_main } from '@/frontend/constant/dashboard'
+import { Items_config } from '@/frontend/constant/dashboard'
 
 const mock_push = jest.fn();
 
@@ -20,7 +20,7 @@ describe('Componente <DashboardMain/>', () => {
     let component: RenderResult
 
     beforeEach(() => {
-        component = render(<ComponentDashboardMain items={items_main} />);
+        component = render(<ComponentDashboardMain items={Items_main} />);
     });
 
     test('Renderizacion correcta en el Header', () => {
@@ -28,7 +28,7 @@ describe('Componente <DashboardMain/>', () => {
     });
 
     test('Renderizacion correcta en los Items', () => {
-        items_main.forEach(item => {
+        Items_main.forEach(item => {
             const title = component.getByTitle(item.title);
             const icons = component.getAllByTestId('icon-item');
 
@@ -59,7 +59,7 @@ describe('Componente <DashboardConfig/>', () => {
     let component: RenderResult
 
     beforeEach(() => {
-        component = render(<ComponentTemplateDashboard items={items_config} view_redirect={true} />);
+        component = render(<ComponentTemplateDashboard items={Items_config} view_redirect={true} />);
     });
 
     test('Renderizacion correcta en el Header', () => {
@@ -67,7 +67,7 @@ describe('Componente <DashboardConfig/>', () => {
     });
 
     test('Renderizacion correcta en los Items', () => {
-        items_config.forEach(item => {
+        Items_config.forEach(item => {
             expect(component.getByText(item.title)).toBeInTheDocument()
             expect(component.getByTitle(item.title)).toHaveAttribute('href', item.url);
             expect(component.getByText(item.description)).toBeInTheDocument()

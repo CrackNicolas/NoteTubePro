@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken';
-
 import { fileTypeFromBuffer } from "file-type";
 
 import { type NextRequest } from 'next/server';
@@ -12,16 +10,14 @@ import { Props_response } from "@/context/types/response";
 import { Conect_database } from "@/backend/utils/db";
 import { File_transformer, File_edit, File_delete } from '@/backend/utils/cloudinary';
 
-import Notes from '@/backend/schemas/note'
+import Notes from '@/backend/schemas/note';
 import Malware from '@/backend/security/anti_malware';
+import Autentication from '@/backend/logic/autentication';
 import { Anti_malware } from '@/backend/enums/anti_malware';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-    const token = req.cookies.get('__session')?.value as string;
-
-    if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
-
-    const user_id = jwt.decode(token)?.sub;
+    const user_id = Autentication(req.cookies);
+    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const connection: boolean = await Conect_database();
     if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
@@ -30,15 +26,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         const search: Props_note[] = await Notes.find({ user_id });
 
         return NextResponse.json<Props_response>({ status: 200, data: search });
-    } catch (error) {
+    } catch (error: unknown) {
         return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } })
     }
 }
 export async function POST(req: NextRequest): Promise<NextResponse> {
-    const token = req.cookies.get('__session')?.value as string;
-    const user_id = jwt.decode(token)?.sub;
-
-    if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const user_id = Autentication(req.cookies);
+    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const data = await req.formData();
 
@@ -105,10 +99,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 }
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
-    const token = req.cookies.get('__session')?.value as string;
-    const user_id = jwt.decode(token)?.sub;
-
-    if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const user_id = Autentication(req.cookies);
+    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const data = await req.formData();
 
@@ -171,7 +163,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
         await exists_note.save();
 
         return NextResponse.json<Props_response>({ status: 200, info: { message: `La nota "${exists_note.title}" fue modificada` } });
-    } catch (error) {
+    } catch (error: unknown) {
         return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } })
     }
 }

@@ -9,7 +9,7 @@ type Props = {
     action: () => Promise<void>
 }
 
-export default function ComponentMessageConfirmationDelete(props: Props) {
+export default function ComponentMessageConfirmationDelete(props: Props): JSX.Element {
     const { open, setOpen, action } = props;
 
     return (

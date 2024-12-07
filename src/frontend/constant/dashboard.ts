@@ -1,6 +1,6 @@
 import { Props_items_dashboard } from "@/frontend/types/props"
 
-export const items_main: Props_items_dashboard[] = [
+export const Items_main: Props_items_dashboard[] = [
     {
         url: '/sessions',
         icon: 'users',
@@ -26,7 +26,7 @@ export const items_main: Props_items_dashboard[] = [
         description: 'Encuentra rápidamente tus notas con esta funcion y mejora tu productividad en un instante.'
     }
 ]
-export const items_config = [
+export const Items_config = [
     {
         url: '/notes/category',
         icon: 'setting',

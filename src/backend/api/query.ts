@@ -5,15 +5,15 @@ export function Query(user_id: string, segment: string): object {
 
     let date: { $gte?: string, $lt?: string } | undefined = {};
 
-    const start_day = (date: Date) => {
+    const start_day = (date: Date): string => {
         date.setHours(0, 0, 0, 0);
         return date.toISOString();
-    };
+    }
 
-    const end_day = (date: Date) => {
+    const end_day = (date: Date): string => {
         date.setHours(23, 59, 59, 999);
         return date.toISOString();
-    };
+    }
 
     let current_date = new Date();
 

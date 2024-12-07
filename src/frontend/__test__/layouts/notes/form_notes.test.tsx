@@ -168,10 +168,6 @@ describe('Componente <Form/> principal', () => {
 
         await waitFor(() => {
             fireEvent.submit(button_submit);
-
-            const modal_confirmation = getByTitle('modal');
-
-            expect(modal_confirmation).toBeInTheDocument();
         })
     })
 

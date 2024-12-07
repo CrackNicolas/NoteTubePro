@@ -11,7 +11,7 @@ describe('Componente <Home/>', () => {
     })
 })
 
-function Analyze(component: RenderResult, url: string) {
+function Analyze(component: RenderResult, url: string): void {
     const logo = component.getByTestId("icon-home");
     const title = component.getByText('Aplicación de notas');
     const subtitle = component.getByText('¡Organiza tu vida, toma notas sin límites!');

@@ -7,16 +7,16 @@ import { Props_response, Props_status } from "@/context/types/response";
 
 type Props = {
     open: boolean,
+    reply?: () => void,
     setOpen: Dispatch<SetStateAction<boolean>>,
     response: Props_response,
-    reply?: () => void,
     button_close?: boolean
 }
 
-export default function ComponentMessageConfirmation(props: Props) {
+export default function ComponentMessageConfirmation(props: Props): JSX.Element {
     const { open, setOpen, response: { status, info }, reply = () => { setOpen(false) }, button_close = true } = props;
 
-    const icon = (status: Props_status) => {
+    const icon = (status: Props_status): JSX.Element => {
         switch (status) {
             case 200: case 201: case 204:
                 return <ComponentIcon name='check' description_class='text-secondary' size={25} />
@@ -25,7 +25,7 @@ export default function ComponentMessageConfirmation(props: Props) {
         }
     }
 
-    const color = (status: Props_status) => {
+    const color = (status: Props_status): string => {
         switch (status) {
             case 200: case 201: case 204:
                 return "secondary";

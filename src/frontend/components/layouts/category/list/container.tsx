@@ -2,13 +2,12 @@ import { useRouter } from "next/navigation";
 
 import { Dispatch, SetStateAction, useState } from "react";
 
-import axios from "axios";
-
 import ComponentIcon from "@/frontend/components/partials/icon";
 import ComponentItems from "@/frontend/components/layouts/category/list/items";
 import ComponentMessageWait from '@/frontend/components/layouts/messages/wait';
 import ComponentMessageConfirmation from "@/frontend/components/layouts/messages/confirmation";
 
+import { Request } from "@/backend/logic/requests";
 import { Props_category } from "@/context/types/category"
 import { Props_response } from "@/context/types/response";
 
@@ -17,7 +16,7 @@ type Props = {
     setRestart: Dispatch<SetStateAction<boolean>>
 }
 
-export default function ComponentList(props: Props) {
+export default function ComponentList(props: Props): JSX.Element {
     const { categorys, setRestart } = props;
 
     const router = useRouter();
@@ -26,10 +25,10 @@ export default function ComponentList(props: Props) {
     const [loading, setLoading] = useState<boolean>(false);
     const [response, setResponse] = useState<Props_response>();
 
-    const select = async (category: Props_category) => {
+    const select = async (category: Props_category): Promise<void> => {
         setLoading(true);
 
-        const { data } = await axios.put('/api/categorys', {
+        const { data } = await Request('PUT','/api/categorys', {
             title: category.title,
             use: !category.use
         });

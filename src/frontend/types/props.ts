@@ -34,6 +34,6 @@ export enum Theme_name {
 export const ThemeColors = {
     [Theme_name.dark]: "#1F2937",
     [Theme_name.ligth]: "#00ffff",
-};
+}
 
 export type Props_theme = Theme_name;

@@ -9,7 +9,7 @@ import { Theme_name } from "@/frontend/types/props";
 
 import { Context } from "@/context/provider";
 
-export function ComponentUserButton() {
+export function ComponentUserButton(): JSX.Element {
     const props = useContext(Context);
 
     return <UserButton appearance={{
@@ -24,7 +24,7 @@ export function ComponentUserButton() {
         }
     }} />
 }
-export function ComponentSignIn() {
+export function ComponentSignIn(): JSX.Element {
     const props = useContext(Context);
 
     return <SignIn afterSignOutUrl="/dashboard/main" appearance={{

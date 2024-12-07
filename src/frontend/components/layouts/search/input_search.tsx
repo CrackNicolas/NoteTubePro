@@ -4,16 +4,16 @@ import { FieldValues, UseFormSetValue } from "react-hook-form";
 import ComponentIcon from "@/frontend/components/partials/icon";
 
 type Props = {
-    setValue: UseFormSetValue<FieldValues>,
-    design?: boolean
+    design?: boolean,
+    setValue: UseFormSetValue<FieldValues>
 }
 
-export default function ComponentInputSearch(props: Props) {
+export default function ComponentInputSearch(props: Props): JSX.Element {
     const { setValue, design = false } = props;
 
     const [error, setError] = useState<boolean>(false);
 
-    const validation = (value: string) => {
+    const validation = (value: string): void => {
         if (value == '') {
             setValue('title', value);
             setError(false);

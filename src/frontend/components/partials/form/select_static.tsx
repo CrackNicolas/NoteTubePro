@@ -6,17 +6,17 @@ import { Props_items_select } from "@/frontend/types/props";
 
 type Props = {
     title: string,
-    select?: string,
-    setSelect: Dispatch<SetStateAction<string | undefined>>
-    items: Props_items_select[],
     style?: {
         border?: string,
         text?: string,
         bg?: string
-    }
+    },
+    items: Props_items_select[],
+    select?: string,
+    setSelect: Dispatch<SetStateAction<string | undefined>>
 }
 
-export default function ComponentSelect(props: Props) {
+export default function ComponentSelect(props: Props): JSX.Element {
     const { title, select, setSelect, items, style = { text: 'dark:text-dark-secondary dark:text-dark-secondary text-secondary', border: 'dark:border-dark-secondary dark:border-dark-secondary border-secondary', bg: 'dark:bg-dark-secondary bg-secondary' } } = props;
 
     const list = useRef<HTMLUListElement>(null);
@@ -24,15 +24,15 @@ export default function ComponentSelect(props: Props) {
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const handle_click_outside = (event: MouseEvent) => {
+    const handle_click_outside = (event: MouseEvent): void => {
         if (ref_select.current && !ref_select.current.contains(event.target as Node)) {
             setOpen(false);
         }
     };
 
-    const option_selected = (select != (title + '...'));
+    const option_selected: boolean = (select != (title + '...'));
 
-    const selected = (value: string) => {
+    const selected = (value: string): void => {
         setOpen(false);
         setSelect((value === title) ? undefined : value);
     }

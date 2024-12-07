@@ -11,14 +11,14 @@ import ComponentLoading from "@/frontend/components/layouts/notes/list/loading";
 type Props = {
     state: boolean,
     notes: Props_note[],
-    loading: Props_loading_notes | undefined,
+    loading?: Props_loading_notes,
     update_note: (note: Props_note) => void,
     notes_selected: Props_delete_note[],
     setNotes_selected: Dispatch<SetStateAction<Props_delete_note[]>>,
     description_class?: string
 }
 
-export default function ComponentList(props: Props) {
+export default function ComponentList(props: Props): JSX.Element {
     const { loading, notes, update_note, description_class = '', state, notes_selected, setNotes_selected } = props;
 
     return (
@@ -33,7 +33,7 @@ export default function ComponentList(props: Props) {
                             <ComponentHeader title={loading?.description} />
                         </div>
                         :
-                        notes.map(note => {
+                        notes.map((note: Props_note) => {
                             return <ComponentNote key={note._id} note={note} update_note={update_note} state={state} notes_selected={notes_selected} setNotes_selected={setNotes_selected} />
                         })
             }

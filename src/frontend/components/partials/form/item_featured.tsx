@@ -10,7 +10,7 @@ type Props = {
     register: UseFormRegister<FieldValues>
 }
 
-export default function ComponentItemFeatured(props: Props) {
+export default function ComponentItemFeatured(props: Props): JSX.Element {
     const { value, paint, error, register } = props;
 
     return (

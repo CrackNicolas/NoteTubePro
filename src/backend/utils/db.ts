@@ -10,7 +10,7 @@ export async function Conect_database(): Promise<boolean> {
         const db = await connect(`${process.env.MONGODB_URL}`);
         props.isConnected = (db.connections[0].readyState === 1)
         return props.isConnected;
-    } catch (error) {
+    } catch (error: unknown) {
         return false;
     }
 }

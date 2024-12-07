@@ -7,7 +7,7 @@ type Props = {
     setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export default function ComponentMessageWait(props: Props) {
+export default function ComponentMessageWait(props: Props): JSX.Element {
     const { open, setOpen } = props;
 
     return (

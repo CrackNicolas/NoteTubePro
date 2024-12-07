@@ -16,10 +16,10 @@ type Props = {
     description_class: string
 }
 
-export default function ComponentInput(props: Props) {
+export default function ComponentInput(props: Props): JSX.Element {
     const { type, name, id = name, placeholder, description_class, value, rows, error, register, required = true } = props;
 
-    const additional_validation = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const additional_validation = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
         event.target.value = event.target.value
             .replace(/[\r\n-]+/g, "")                                // Elimina saltos de línea
             .replace(/\s\s+/g, " ")                                  // Reduce múltiples espacios a uno

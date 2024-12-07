@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken';
-
 import { type NextRequest } from 'next/server';
 import { NextResponse } from "next/server";
 
@@ -9,13 +7,11 @@ import { Props_response } from "@/context/types/response";
 import { Conect_database } from "@/backend/utils/db";
 
 import Session from '@/backend/schemas/session';
+import Autentication from '@/backend/logic/autentication';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-    const token = req.cookies.get('__session')?.value as string;
-
-    if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
-
-    const user_id = jwt.decode(token)?.sub;
+    const user_id = Autentication(req.cookies);
+    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     if (user_id !== process.env.ROL_ADMIN_USER_ID) return NextResponse.json<Props_response>({ status: 403, info: { message: "Acceso no autorizado" } });
 
@@ -33,15 +29,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         const sessions: Props_session[] = await Session.find();
 
         return NextResponse.json<Props_response>({ status: 200, data: sessions });
-    } catch (error) {
+    } catch (error: unknown) {
         return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } });
     }
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-    const token = req.cookies.get('__session')?.value as string;
-
-    if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const user_id = Autentication(req.cookies);
+    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const { id, status, last_time, expiret, origin, user } = await req.json();
 
@@ -73,17 +68,16 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         await new_session.save();
 
         return NextResponse.json<Props_response>({ status: 201, info: { message: 'Session registrada' } });
-    } catch (error) {
+    } catch (error: unknown) {
         return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } });
     }
 }
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
+    const user_id = Autentication(req.cookies);
+    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+
     const { id, status } = await req.json();
-
-    const token = req.cookies.get('__session')?.value as string;
-
-    if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const connection: boolean = await Conect_database();
     if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } })
@@ -100,7 +94,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
         await exists_session.save();
 
         return NextResponse.json<Props_response>({ status: 201, info: { message: 'Session actualizada' } });
-    } catch (error) {
+    } catch (error: unknown) {
         return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } });
     }
 }

@@ -4,12 +4,12 @@ import ComponentLoading from "@/frontend/components/layouts/category/list/loadin
 import { Props_category } from "@/context/types/category";
 
 type Props = {
-    categorys: Props_category[],
     select: (category: Props_category) => Promise<void> | void,
-    use_paint?: boolean
+    use_paint?: boolean,
+    categorys: Props_category[]
 }
 
-export default function ComponentItems(props: Props) {
+export default function ComponentItems(props: Props): JSX.Element {
     const { categorys, select, use_paint = false } = props;
 
     return (
@@ -18,7 +18,7 @@ export default function ComponentItems(props: Props) {
                 (categorys.length === 0) ?
                     <ComponentLoading count={10} />
                     :
-                    categorys.map(category => {
+                    categorys.map((category: Props_category) => {
                         return (
                             <div key={category.title} title={`Categoria ${category.title}`} onClick={() => select(category)} className={`group col-span-1 grid place-items-center h-[100px] rounded-md cursor-pointer dark:hover:bg-dark-secondary hover:bg-secondary transition duration-500 ${use_paint ? 'dark:hover:bg-dark-secondary hover:bg-secondary dark:bg-dark-primary bg-primary dark:border-dark-secondary border-secondary border-[0.1px]' : `${category.use ? 'dark:bg-dark-secondary bg-secondary' : 'dark:bg-dark-primary bg-primary dark:border-dark-secondary border-secondary border-[0.1px]'}`} `}>
                                 <div className="flex flex-col items-center gap-y-1">

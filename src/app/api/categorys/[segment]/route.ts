@@ -1,9 +1,8 @@
-import jwt from 'jsonwebtoken';
-
-import { type NextRequest } from 'next/server'
+import { type NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 import Category from '@/backend/schemas/category';
+import Autentication from '@/backend/logic/autentication';
 
 import { Props_response } from '@/context/types/response';
 import { Props_category } from '@/context/types/category';
@@ -11,11 +10,8 @@ import { Props_category } from '@/context/types/category';
 import { Conect_database } from '@/backend/utils/db';
 
 export async function GET(req: NextRequest, { params: { segment } }: { params: { segment: boolean } }): Promise<NextResponse> {
-    const token = req.cookies.get('__session')?.value as string;
-
-    if (!token) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
-
-    const user_id = jwt.decode(token)?.sub;
+    const user_id = Autentication(req.cookies);
+    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const connection: boolean = await Conect_database();
     if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } })
@@ -38,7 +34,7 @@ export async function GET(req: NextRequest, { params: { segment } }: { params: {
         })
 
         return NextResponse.json<Props_response>({ status: 200, data: filter_categorys });
-    } catch (error) {
+    } catch (error: unknown) {
         return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } });
     }
 }

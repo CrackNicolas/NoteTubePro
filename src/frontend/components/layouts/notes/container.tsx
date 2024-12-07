@@ -4,28 +4,25 @@ import { useSearchParams } from "next/navigation";
 
 import { Fragment, useCallback, useEffect, useState } from "react";
 
-import axios from "axios";
-
 import ComponentItems from "@/frontend/components/layouts/category/list/items";
 import ComponentHeader from "@/frontend/components/partials/template/dashboard/header";
 import ComponentContainerForm from "@/frontend/components/layouts/notes/container_form";
 
+import { Request } from "@/backend/logic/requests";
 import { Props_note } from "@/context/types/note";
 import { Props_category } from "@/context/types/category";
 
-export default function ComponentNotes() {
+export default function ComponentNotes(): JSX.Element {
+    const [selected_note, setSelected_note] = useState<Props_note | undefined>(undefined);
     const [list_categorys, setList_categorys] = useState<Props_category[]>([]);
     const [category_selected, setCategory_selected] = useState<Props_category | undefined>(undefined);
-    const [selected_note, setSelected_note] = useState<Props_note | undefined>(undefined);
 
     const search_params = useSearchParams();
 
-    const select = (category: Props_category): void => {
-        setCategory_selected(category);
-    }
+    const select = (category: Props_category): void => setCategory_selected(category);
 
-    const load_categorys = useCallback(async () => {
-        const { data } = await axios.get(`/api/categorys/true`);
+    const load_categorys = useCallback(async (): Promise<void> => {
+        const { data } = await Request('GET',`/api/categorys/true`);
 
         if (data.status === 200) {
             setList_categorys(data.data);
@@ -48,7 +45,7 @@ export default function ComponentNotes() {
     }, [search_params]);
 
     return (
-        <section className="flex h-screen flex-col gap-y-6 justify-start pt-20">
+        <article className="flex h-screen flex-col gap-y-6 justify-start pt-20">
             {
                 !category_selected ?
                     <Fragment>
@@ -58,6 +55,6 @@ export default function ComponentNotes() {
                     :
                     <ComponentContainerForm category_selected={category_selected} setCategory_selected={setCategory_selected} note_selected={selected_note} />
             }
-        </section>
+        </article>
     )
 }

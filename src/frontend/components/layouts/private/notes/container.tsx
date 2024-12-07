@@ -13,7 +13,7 @@ type Props = {
     user_selected: Props_session
 }
 
-export default function ComponentList(props: Props) {
+export default function ComponentList(props: Props): JSX.Element {
     const { notes, user_selected } = props;
 
     return (
@@ -22,7 +22,7 @@ export default function ComponentList(props: Props) {
                 (notes.length === 0) ?
                     <ComponentLoading count={10} />
                     :
-                    notes.map(note => {
+                    notes.map((note: Props_note) => {
                         return (
                             <div key={note._id} title="Nota" className={`relative transition-padding group grid grid-cols-9 w-full dark:bg-dark-sixth bg-sixth sm:px-2.5 px-2 sm:py-2 py-1.5 cursor-pointer rounded-md border-[0.1px] dark:border-dark-secondary border-secondary border-opacity-20 hover:border-opacity-100`}>
                                 <div className="col-span-8 flex flex-col">
@@ -37,9 +37,9 @@ export default function ComponentList(props: Props) {
                                     <p className="line-clamp-1 text-sm dark:text-dark-tertiary dark:opacity-90 text-tertiary opacity-50">
                                         {note.description}
                                     </p>
-                                    <span title="Tiempo transcurrido" className="sm:visible invisible absolute right-3 dark:text-dark-tertiary dark:opacity-90 text-tertiary text-[11px] opacity-50">
+                                    <h6 title="Tiempo transcurrido" className="sm:visible invisible absolute right-3 dark:text-dark-tertiary dark:opacity-90 text-tertiary text-[11px] opacity-50">
                                         {Time_elapsed(note.createdAt)}
-                                    </span>
+                                    </h6>
                                 </div>
                                 <div className="col-span-1 flex flex-col items-end justify-end">
                                     <Image src={(user_selected.user) ? user_selected.user.image : 'https://cdn.icon-icons.com/icons2/1381/PNG/512/systemusers_94754.png'} alt="Imagen de usuario" width={24} height={20} className="rounded-full mt-1" />
