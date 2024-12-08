@@ -57,7 +57,7 @@ export default function ComponentSearch(props: Props): JSX.Element {
             !ref_button_delete_note.current?.contains(event.target as Node) &&
             !ref_button_create_note.current?.contains(event.target as Node)
         ) {
-            setView_filter(false);
+            controller_view_filter(false);
         }
     };
 
@@ -140,6 +140,15 @@ export default function ComponentSearch(props: Props): JSX.Element {
         }
     }
 
+    const controller_view_filter = (value: boolean) => {
+        setView_filter(value);
+        if(value){
+            window.document.body.classList.add('overflow-hidden');
+        }else{
+            window.document.body.classList.remove('overflow-hidden');
+        }
+    }
+
     useEffect(() => {
         document.addEventListener('mousedown', handle_click_outside);
         return () => document.removeEventListener('mousedown', handle_click_outside);
@@ -199,7 +208,7 @@ export default function ComponentSearch(props: Props): JSX.Element {
                     }
                     {
                         !view_filter && (
-                            <button ref={ref_button_view_toggle} onClick={() => setView_filter(!view_filter)} type="button" title="Filtros" className="outline-none">
+                            <button ref={ref_button_view_toggle} onClick={() => controller_view_filter(!view_filter)} type="button" title="Filtros" className="outline-none">
                                 <ComponentIcon name="filter" description_class="cursor-pointer dark:hover:text-dark-secondary hover:text-secondary dark:text-dark-fifth text-fifth" size={24} view_box="0 0 16 16" />
                             </button>
                         )
@@ -222,7 +231,7 @@ export default function ComponentSearch(props: Props): JSX.Element {
                             <h4 className="dark:text-dark-tertiary text-tertiary opacity-70 tracking-wider font-semibold">
                                 Filtrar notas
                             </h4>
-                            <button ref={ref_button_close_toggle} type="button" title="Cerrar menu" onClick={() => setView_filter(!view_filter)} className="outline-none">
+                            <button ref={ref_button_close_toggle} type="button" title="Cerrar menu" onClick={() => controller_view_filter(!view_filter)} className="outline-none">
                                 <ComponentIcon name="close" description_class="cursor-pointer dark:hover:text-dark-secondary hover:text-secondary hover:opacity-100 dark:text-dark-tertiary text-tertiary opacity-70" size={27} view_box="0 0 16 16" />
                             </button>
                         </div>
