@@ -6,7 +6,7 @@ export async function GET(req: NextRequest, { params: { image } }: { params: { i
     const cloudinary_url = `https://res.cloudinary.com/cracknicolas/image/upload/v1728426582/${image}`;
 
     try {
-        const response = await Request('GET', cloudinary_url, { responseType: 'arraybuffer' });
+        const response = await Request({ type: 'GET', url: cloudinary_url, config: { responseType: 'arraybuffer' } });
 
         const content_type = response.headers['content-type'] || 'image/*';
 

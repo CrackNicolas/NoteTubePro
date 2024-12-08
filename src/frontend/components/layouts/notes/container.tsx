@@ -22,7 +22,7 @@ export default function ComponentNotes(): JSX.Element {
     const select = (category: Props_category): void => setCategory_selected(category);
 
     const load_categorys = useCallback(async (): Promise<void> => {
-        const { data } = await Request('GET',`/api/categorys/true`);
+        const { data } = await Request({ type: 'GET', url: '/api/categorys/true' });
 
         if (data.status === 200) {
             setList_categorys(data.data);

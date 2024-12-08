@@ -59,7 +59,7 @@ export default function ComponentNavTop(props: Props_context): JSX.Element {
     }, [handle_resize, handle_click_outside]);
 
     return (
-        <nav className="fixed w-full dark:bg-dark-primary bg-primary mt-[-7px] z-50">
+        <nav className="fixed w-full dark:bg-dark-primary bg-primary top-0 mt-[-7px] z-50">
             <article className="mx-auto max-w-7xl px-3 sm:px-10">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-[-4px] flex items-center sm:hidden px-0">

@@ -2,7 +2,16 @@ import axios, { AxiosRequestConfig } from "axios";
 
 type types = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-export async function Request(type: types, url: string, body?: object, config?: AxiosRequestConfig): Promise<any> {
+type Props = {
+    type: types,
+    url: string,
+    body?: object,
+    config?: AxiosRequestConfig
+}
+
+export async function Request(props: Props): Promise<any> {
+    const { type, url, body, config } = props;
+
     let response;
 
     switch (type) {
@@ -13,7 +22,7 @@ export async function Request(type: types, url: string, body?: object, config?: 
             response = await axios.post(url, body, config);
             break;
         case 'PUT':
-            response = await axios.put(url, body, config);
+            response = await axios.put(url, body);
             break;
         case 'DELETE':
             response = await axios.delete(url, { ...config, data: body });

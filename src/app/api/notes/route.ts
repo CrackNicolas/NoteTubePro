@@ -14,6 +14,7 @@ import Notes from '@/backend/schemas/note';
 import Malware from '@/backend/security/anti_malware';
 import Autentication from '@/backend/logic/autentication';
 import { Anti_malware } from '@/backend/enums/anti_malware';
+import { Condition_file } from "@/backend/enums/condition_file";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
     const user_id = Autentication(req.cookies);
@@ -114,7 +115,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
         }
 
         const category_prev = data.get('category');
-        const category: Props_category = category_prev && typeof category_prev === 'string' ? JSON.parse(category_prev) : null;
+        const category: Props_category = (category_prev && typeof category_prev === 'string') ? JSON.parse(category_prev) : null;
 
         exists_note.title = data.get('title');
         exists_note.description = data.get('description');
@@ -126,38 +127,37 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
         exists_note.featured = (data.get('featured') === 'SI');
         exists_note.user_id = user_id;
 
-        const file = data.get('file') as File;
+        const condition_file_prev = data.get('condition_file');
+        const condition_file: Condition_file = (condition_file_prev && typeof condition_file_prev === 'string') ? JSON.parse(condition_file_prev) : null;
 
-        if (file) {
-            const file_buffer = Buffer.from(await file.arrayBuffer());
-            const type = await fileTypeFromBuffer(file_buffer);
+        switch (condition_file) {
+            case Condition_file.MODIFY:
+                const file = data.get('file') as File;
+                const file_buffer = Buffer.from(await file.arrayBuffer());
+                const type = await fileTypeFromBuffer(file_buffer);
 
-            if (!type || !type.mime.startsWith('image/')) {
-                return NextResponse.json<Props_response>({ status: 400, info: { message: "Solo se permiten archivos de imagen" } });
-            }
+                if (!type || !type.mime.startsWith('image/')) {
+                    return NextResponse.json<Props_response>({ status: 400, info: { message: "Solo se permiten archivos de imagen" } });
+                }
 
-            const response_malware = await Malware({ file_buffer, type, file });
+                const response_malware = await Malware({ file_buffer, type, file });
 
-            if (response_malware != Anti_malware.FREE) {
-                return NextResponse.json<Props_response>(
-                    {
+                if (response_malware != Anti_malware.FREE) {
+                    return NextResponse.json<Props_response>({
                         status: 400, info: {
                             message: (response_malware == Anti_malware.VIRUS) ? "Archivo con virus" : "Error al analizar el archivo"
                         }
-                    }
-                )
-            }
+                    })
+                }
 
-            const { id, url } = await File_edit(exists_note.file.id, file);
-            if (!url) {
-                return NextResponse.json<Props_response>({ status: 404, info: { message: "Archivo no encontrado" } });
-            }
-            exists_note.file = { id, name: file.name, url };
-        }
-
-        if (exists_note.file.id) {
-            await File_delete([exists_note.file.id]);
-            exists_note.file = undefined;
+                const { id, url } = await File_edit(exists_note.file.id, file);
+                if (!url) return NextResponse.json<Props_response>({ status: 404, info: { message: "Archivo no encontrado" } });
+                exists_note.file = { id, name: file.name, url };
+                break;
+            case Condition_file.DELETE:
+                await File_delete([exists_note.file.id]);
+                exists_note.file = undefined;
+                break;
         }
 
         await exists_note.save();

@@ -96,7 +96,7 @@ export default function ComponentSearch(props: Props): JSX.Element {
         if (search == "") return;
 
         setLoading_notes({ value: true, button: true });
-        const { data } = await Request('GET', `/api/notes${(search !== '{}') ? `/${search}` : ''}`);
+        const { data } = await Request({ type: 'GET', url: `/api/notes${(search !== '{}') ? `/${search}` : ''}` });
         if (data.status === 200) {
             setLoading_notes({
                 value: false,
@@ -128,7 +128,7 @@ export default function ComponentSearch(props: Props): JSX.Element {
 
     const delete_notes = async (): Promise<void> => {
         setLoading_message(true);
-        const { data } = await Request('DELETE', `/api/notes/${JSON.stringify(notes_selected)}`);
+        const { data } = await Request({ type: 'DELETE', url: `/api/notes/${JSON.stringify(notes_selected)}` });
         if (data.status === 200) {
             setOpen(true);
             setResponse(data);

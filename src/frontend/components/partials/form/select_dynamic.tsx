@@ -52,7 +52,7 @@ export default function ComponentSelect(props: Props): JSX.Element {
     }
 
     const load_categorys = async (): Promise<void> => {
-        const { data } = await Request('GET',"/api/categorys/true");
+        const { data } = await Request({ type: 'GET', url: "/api/categorys/true" });
 
         if (data.status === 200) {
             setCategorys(data.data);

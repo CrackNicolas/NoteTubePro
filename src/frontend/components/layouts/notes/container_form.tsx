@@ -18,6 +18,7 @@ import { Request } from '@/backend/logic/requests';
 import { Props_note } from '@/context/types/note';
 import { Props_response } from '@/context/types/response';
 import { Props_category } from '@/context/types/category';
+import { Condition_file } from '@/backend/enums/condition_file';
 
 type Props = {
     note_selected: Props_note | undefined,
@@ -33,12 +34,13 @@ export default function ComponentContainerForm(props: Props): JSX.Element {
     const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB en bytes
 
     const [open, setOpen] = useState<boolean>(false);
-    const [file, setFile] = useState<File | undefined>(undefined);
+    const [file, setFile] = useState<File | string>();
     const [loading, setLoading] = useState<boolean>(false);
     const [response, setResponse] = useState<Props_response>();
     const [view_file, setView_file] = useState<string | undefined>(undefined);
     const [message_image, setMessage_image] = useState<{ paint: boolean, value: string }>({ paint: true, value: 'Selecciona una imagen (máximo 1MB)' });
     const [values_exists, setValues_exists] = useState<boolean>(false);
+    const [confirmation_delete_file, setConfirmation_delete_file] = useState<boolean>(false);
 
     const { register, handleSubmit, formState: { errors }, setValue, reset, watch } = useForm();
 
@@ -70,6 +72,7 @@ export default function ComponentContainerForm(props: Props): JSX.Element {
             setMessage_image({ paint: true, value: 'Imagen adecuada' });
             setFile(new_file);
             setView_file(URL.createObjectURL(new_file as File));
+            setConfirmation_delete_file(false);
         }
     }
 
@@ -78,6 +81,7 @@ export default function ComponentContainerForm(props: Props): JSX.Element {
         (document.getElementById("file-upload") as HTMLInputElement).value = "";
         setView_file(undefined);
         setMessage_image({ paint: true, value: 'Selecciona una imagen (máximo 1MB)' });
+        setConfirmation_delete_file(!confirmation_delete_file);
     }
 
     const onSubmit: SubmitHandler<FieldValues | Props_note> = async (data): Promise<void> => {
@@ -95,16 +99,27 @@ export default function ComponentContainerForm(props: Props): JSX.Element {
         form.set('featured', data.featured);
         form.set('category', JSON.stringify(category_selected));
 
-        if (file !== undefined) {
-            form.set('file', file as File);
-        }
-
         setLoading(true);
         if (!note_selected) {
-            response = await Request('POST',"/api/notes", form);
+            if (file !== undefined) {
+                form.set('file', file as File);
+            }
+            response = await Request({ type: 'POST', url: "/api/notes", body: form });
         } else {
+            if (file) {
+                form.set('file', file as File);
+                form.set('condition_file', JSON.stringify(Condition_file.MODIFY));
+            }
+            if (note_selected?.file?.id && !file) {
+                if (confirmation_delete_file) {
+                    form.set('condition_file', JSON.stringify(Condition_file.DELETE));
+                } else {
+                    form.set('condition_file', JSON.stringify(Condition_file.NOT_EDIT));
+                }
+            }
+
             form.set('_id', note_selected._id as string);
-            response = await Request('PUT',"/api/notes", form);
+            response = await Request({ type: 'PUT', url: "/api/notes", body: form });
         }
         setLoading(false);
         open_modal(response.data);
@@ -236,7 +251,7 @@ export default function ComponentContainerForm(props: Props): JSX.Element {
                                 ((!file || !note_selected?.file?.id) && (!view_file)) ?
                                     <ComponentIcon name="upload-file" size={27} description_class="icon-home dark:text-dark-secondary text-secondary cursor-pointer" />
                                     :
-                                    <Image src={(view_file) ? view_file : ""} alt="" width={60} height={60} className="max-w-[70px] max-h-[70px] rounded-md" />
+                                    <Image src={view_file ?? ""} alt="" width={60} height={60} className="max-w-[70px] max-h-[70px] rounded-md" />
                             }
 
                             <span className='line-clamp-1 dark:text-dark-secondary text-secondary text-md font-normal tracking-wide'>

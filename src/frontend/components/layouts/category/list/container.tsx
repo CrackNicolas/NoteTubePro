@@ -28,9 +28,13 @@ export default function ComponentList(props: Props): JSX.Element {
     const select = async (category: Props_category): Promise<void> => {
         setLoading(true);
 
-        const { data } = await Request('PUT','/api/categorys', {
-            title: category.title,
-            use: !category.use
+        const { data } = await Request({
+            type: 'PUT',
+            url: '/api/categorys',
+            body: {
+                title: category.title,
+                use: !category.use
+            }
         });
 
         setLoading(false);

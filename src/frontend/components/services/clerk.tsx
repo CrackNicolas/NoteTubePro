@@ -17,7 +17,7 @@ export function ComponentUserButton(): JSX.Element {
         elements: {
             userPreview: "mb-3 px-4",
             userButtonPopoverCard: "mt-1 w-[300px]",
-            userButtonPopoverFooter:"hidden",
+            userButtonPopoverFooter: "hidden",
             userButtonPopoverActionButton: "px-4",
             userButtonPopoverActionButton__manageAccount: "hidden",
             userButtonPopoverActionButtonText__signOut: "text-transparent before:text-tertiary before:content-['Cerrar_sesión']"
@@ -27,13 +27,13 @@ export function ComponentUserButton(): JSX.Element {
 export function ComponentSignIn(): JSX.Element {
     const props = useContext(Context);
 
-    return <SignIn afterSignOutUrl="/dashboard/main" appearance={{
+    return <SignIn fallbackRedirectUrl="/dashboard/main" appearance={{
         ...((props.theme == Theme_name.ligth) && { baseTheme: dark }),
         elements: {
             logoBox: "absolute right-2 top-2",
             alert: "hidden",
             card: "px-7 sm:px-10 pt-7 sm:pt-10 pb-7 sm:pb-10",
-            footer:"hidden",
+            footer: "hidden",
             dividerText: "hidden",
             headerTitle: "text-transparent text-center flex flex-col items-center before:dark:text-dark-secondary before:text-tertiary before:content-['Iniciar_sesión']",
             headerSubtitle: "my-[-20px] text-sm text-transparent flex flex-col items-center before:text-center before:dark:text-dark-secondary before:text-tertiary before:content-['Continua_con_tu_aplicación_de_notas']",

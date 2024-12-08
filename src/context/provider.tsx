@@ -55,7 +55,7 @@ export default function Provider({ children }: Props_layouts): JSX.Element {
                 rol: 'member'
             }
 
-            const { data } = await Request('GET', `/api/role/${user.id}`);
+            const { data } = await Request({ type: 'GET', url: `/api/role/${user.id}` });
             instance_user.rol = data.data;
 
             const instance_session: Props_session = {
@@ -70,12 +70,12 @@ export default function Provider({ children }: Props_layouts): JSX.Element {
                 user: instance_user
             }
 
-            await Request('GET', `/api/categorys`);
-            await Request('POST', "/api/private/sessions", instance_session);
+            await Request({ type: 'GET', url: `/api/categorys` });
+            await Request({ type: 'POST', url: "/api/private/sessions", body: instance_session });
 
             setSession(instance_session);
         } else {
-            await Request('PUT', "/api/private/sessions", { id: session.id, status: false });
+            await Request({ type: 'PUT', url: "/api/private/sessions", body: { id: session.id, status: false } });
             setSession({});
         }
     }, [data_user, session.id]);
@@ -127,13 +127,13 @@ export default function Provider({ children }: Props_layouts): JSX.Element {
     }), [section_current, session, theme, path]);
 
     return (
-        <Suspense fallback={<ComponentLoad />} >
-            <Context.Provider value={context_value}>
-                <ProgressBar color={theme} options={{ showSpinner: false }} />
+        <Context.Provider value={context_value}>
+            <ProgressBar color={theme} options={{ showSpinner: false }} />
+            <Suspense fallback={<ComponentLoad />}>
                 <Template>
                     {children}
                 </Template>
-            </Context.Provider>
-        </Suspense>
+            </Suspense>
+        </Context.Provider>
     )
 }

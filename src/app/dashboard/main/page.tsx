@@ -17,7 +17,7 @@ export default function Dashboard(): JSX.Element {
 
 	const load_items = useCallback(async (): Promise<void> => {
 		try {
-			const { data } = await Request('GET',`/api/role/${id}`);
+			const { data } = await Request({ type: 'GET', url: `/api/role/${id}` });
 
 			switch (data.data) {
 				case 'admin':

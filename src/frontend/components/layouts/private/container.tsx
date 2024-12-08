@@ -20,7 +20,7 @@ export default function ComponentSessions(): JSX.Element {
         setNotes([]);
         setUser_selected(session);
 
-        const { data } = await Request('GET',`/api/private/notes/${session.id}`);
+        const { data } = await Request({ type: 'GET', url: `/api/private/notes/${session.id}` });
 
         if (data.status === 200) {
             setNotes(data.data);
@@ -28,7 +28,7 @@ export default function ComponentSessions(): JSX.Element {
     }
 
     const load_sessions = async (): Promise<void> => {
-        const { data } = await Request('GET','/api/private/sessions');
+        const { data } = await Request({ type: 'GET', url: '/api/private/sessions' });
 
         if (data.status === 200) {
             setSessions(data.data);

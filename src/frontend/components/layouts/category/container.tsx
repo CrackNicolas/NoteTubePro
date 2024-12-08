@@ -18,7 +18,7 @@ export default function ComponentCategory(): JSX.Element {
     const [response, setResponse] = useState<Props_response>();
 
     const load_categorys = async (): Promise<void> => {
-        const { data } = await Request('GET',`/api/categorys`);
+        const { data } = await Request({ type: 'GET', url: `/api/categorys` });
 
         if (data.status === 200) {
             setList_categorys(data.data);
