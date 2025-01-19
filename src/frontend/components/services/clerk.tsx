@@ -34,6 +34,7 @@ export function ComponentSignIn(): JSX.Element {
             alert: "hidden",
             card: "px-7 sm:px-10 pt-7 sm:pt-10 pb-7 sm:pb-10",
             footer: "hidden",
+            socialButtons: 'mt-[-25px]',
             dividerText: "hidden",
             headerTitle: "text-transparent text-center flex flex-col items-center before:dark:text-dark-secondary before:text-tertiary before:content-['Iniciar_sesión']",
             headerSubtitle: "my-[-20px] text-sm text-transparent flex flex-col items-center before:text-center before:dark:text-dark-secondary before:text-tertiary before:content-['Continua_con_tu_aplicación_de_notas']",
