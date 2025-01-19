@@ -1,10 +1,8 @@
-import { ClerkProvider } from '@clerk/nextjs'
-import { esES } from '@clerk/localizations'
-
 import { Metadata } from 'next/types'
 import { Roboto } from 'next/font/google'
 
 import Provider from '@/context/provider'
+import ComponentTemplateClerkProvider from '@/frontend/components/services/provider'
 
 import { Props_layouts } from '@/frontend/types/props'
 
@@ -31,11 +29,11 @@ export default function RootLayout({ children }: Props_layouts): JSX.Element {
 				<meta name="theme-color" content="#00ffff" />
 			</head>
 			<body className={roboto.className}>
-				<ClerkProvider localization={esES} >
+				<ComponentTemplateClerkProvider>
 					<Provider>
 						{children}
 					</Provider>
-				</ClerkProvider>
+				</ComponentTemplateClerkProvider>
 			</body>
 		</html>
 	)
