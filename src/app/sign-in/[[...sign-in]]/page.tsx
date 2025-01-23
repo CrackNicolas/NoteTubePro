@@ -6,7 +6,7 @@ import ComponentLoad from "@/frontend/components/partials/load";
 
 export default function Page(): Component {
     return (
-        <article className="grid place-items-center items-center h-screen">
+        <article className="grid place-items-center items-center min-h-screen">
             <ComponentLoad/>
             <ComponentSignIn />
         </article>

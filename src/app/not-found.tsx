@@ -6,7 +6,7 @@ import ComponentLink from "@/frontend/components/partials/link";
 
 export default function NotFound(): Component {
     return (
-        <article className="dark:bg-dark-primary bg-primary pt-24 pb-9 h-screen">
+        <article className="dark:bg-dark-primary bg-primary pt-24 pb-9 min-h-screen">
             <article className="flex flex-col items-center gap-y-4 max-w-7xl px-2 lg:px-10">
                 <div className="flex flex-col place-items-center">
                     <ComponentIcon name="not-found" size={200} viewBox="0 0 200 200" />

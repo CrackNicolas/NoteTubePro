@@ -46,7 +46,7 @@ export default function ComponentNotes(): Component {
     }, [note]);
 
     return (
-        <article className="flex h-screen 2xl:px-0 xl:px-1 sm:pl-3 flex-col gap-y-6 justify-start pt-20">
+        <article className="flex min-h-screen 2xl:px-0 xl:px-1 sm:pl-3 flex-col gap-y-6 justify-start pt-20">
             {
                 !categorySelected ?
                     <Fragment>

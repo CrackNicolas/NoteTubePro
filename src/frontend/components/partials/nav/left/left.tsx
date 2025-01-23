@@ -13,7 +13,7 @@ export default function ComponentNavLeft(props: INavLeft): Component {
     const { theme, setTheme } = props;
 
     return (
-        <nav className="fixed sm:h-screen py-1 bottom-0 w-full sm:top-12 z-40 sm:w-[32px] dark:bg-dark-primary bg-primary">
+        <nav className="fixed sm:min-h-screen py-1 bottom-0 w-full sm:top-12 z-40 sm:w-[32px] dark:bg-dark-primary bg-primary">
             <ul className="flex sm:grid sm:place-items-center">
                 <ComponentItemNavLeft url={APP_ROUTES.home} title="Inicio" name="home" />
                 <ComponentItemNavLeft url={APP_ROUTES.dashboard.main} title="Panel" name="panel" />

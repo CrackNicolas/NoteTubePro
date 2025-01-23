@@ -16,7 +16,7 @@ export default function ComponentItems(props: IItems): Component {
     const { categorys, select, paint = false } = props;
 
     return (
-        <article className="relative pb-16 sm:pb-7 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3 w-full">
+        <article className="relative pb-10 sm:pb-7 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3 w-full">
             {
                 (categorys.length === 0) ?
                     <ComponentLoading count={10} />

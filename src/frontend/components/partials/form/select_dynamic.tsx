@@ -83,7 +83,7 @@ export default function ComponentSelect(props: ISelect): Component {
                         <span className={`${style.text} dark:opacity-100 opacity-70`}>
                             Cargando...
                         </span>
-                        <div className='spinner-load-category size-[15px] rounded-full'></div>
+                        <div className='spinner-load-category w-[15px] h-[15px] rounded-full'></div>
                     </div>
                     :
                     <Fragment>

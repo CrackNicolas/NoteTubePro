@@ -28,9 +28,9 @@ export default function ComponentTemplateDashboard(props: ITemplateDashboard): C
     const router = useRouter();
 
     return (
-        <article className="h-screen relative dark:bg-dark-primary bg-primary 2xl:px-0 xl:px-1 sm:pl-3 sm:pt-20 pt-16 pb-9">
+        <article className="min-h-screen relative dark:bg-dark-primary bg-primary 2xl:px-0 xl:px-1 sm:pl-3 sm:pt-20 pt-16 pb-9">
             <ComponentHeader title={header.title} subtitle={header.subtitle} />
-            <article className="relative pb-16 sm:pb-9 mx-auto place-items-center mt-1 grid max-w-2xl grid-cols-1 lg:gap-8 gap-3 pt-10 sm:mt-10 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            <article className="relative pb-10 sm:pb-9 mx-auto place-items-center mt-1 grid max-w-2xl grid-cols-1 lg:gap-8 gap-3 pt-10 sm:mt-10 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {
                     viewRedirect && (
                         <span className="absolute top-0 left-0 dark:bg-dark-primary bg-primary rounded-full p-1.5 dark:hover:bg-dark-room hover:bg-room transition duration-500" title="Volver atras" onClick={() => router.push(APP_ROUTES.dashboard.main)}>

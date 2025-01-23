@@ -43,7 +43,7 @@ export default function ComponentSessions(): Component {
     }, []);
 
     return (
-        <article className="flex flex-col gap-5 2xl:px-0 xl:px-1 sm:pl-3 mt-[40px] pt-7 h-[calc(100vh-50px)]">
+        <article className="flex flex-col gap-5 2xl:px-0 xl:px-1 sm:pl-3 mt-[40px] pt-7 pb-10 min-h-screen">
             <ComponentHeader countSessions={sessions.length} userSelected={userSelected} setUserSelected={setUserSelected} />
             {
                 (userSelected) ?
