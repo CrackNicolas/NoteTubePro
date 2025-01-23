@@ -9,7 +9,7 @@ export default function ComponentHome(): Component {
     return (
         <article className="flex flex-col h-screen justify-between relative px-6 lg:px-8 pb-5">
             <article className="mt-[130px] flex flex-col items-center gap-y-9">
-                <ComponentIcon testid="icon-home" name="logo" size={70} descriptionClass="text-secondary" />
+                <ComponentIcon testid="icon-home" name="logo" size={70} descriptionClass="dark:text-dark-secondary text-secondary" />
                 <div className="flex flex-col sm:gap-y-2">
                     <h1 className="text-center font-bold tracking-wider dark:text-dark-tertiary text-tertiary text-2xl sm:text-6xl">
                         Aplicación de notas
