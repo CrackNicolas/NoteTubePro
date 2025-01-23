@@ -1,8 +1,8 @@
 import { Schema, model, models } from "mongoose";
 
-import { Props_session } from "@/backend/types/session";
+import { PropsSession } from "@/backend/types/session";
 
-const schema_session = new Schema<Props_session>({
+const schemaSession = new Schema<PropsSession>({
     id: {
         type: String,
         require: [true, 'Required id'],
@@ -13,9 +13,9 @@ const schema_session = new Schema<Props_session>({
         type: Boolean,
         require: [true, 'Required status']
     },
-    last_time: {
+    lastTime: {
         type: String,
-        require: [true, 'Required last_time'],
+        require: [true, 'Required lastTime'],
         trim: true
     },
     expiret: {
@@ -23,37 +23,37 @@ const schema_session = new Schema<Props_session>({
         require: [true, 'Required expiret']
     },
     origin: {
-        IP_adress: {
+        ipAdress: {
             type: String,
-            require: [true, 'Required IP_adress'],
+            require: [true, 'Required origin ipAdress'],
             trim: true
         },
         city: {
             type: String,
-            require: [true, 'Required city'],
+            require: [true, 'Required origin city'],
             trim: true
         }
     },
     user: {
         name: {
             type: String,
-            require: [true, 'Required name'],
+            require: [true, 'Required user name'],
             unique: true,
             trim: true
         },
         email: {
             type: String,
-            require: [true, 'Required email'],
+            require: [true, 'Required user email'],
             unique: true,
             trim: true
         },
         image: {
             type: String,
-            require: [true, 'Required image'],
+            require: [true, 'Required user image'],
         },
         rol: {
             type: String,
-            require: [true, 'Required rol'],
+            require: [true, 'Required user rol'],
         }
     }
 },
@@ -62,4 +62,4 @@ const schema_session = new Schema<Props_session>({
     }
 )
 
-export default models.Session || model('Session', schema_session);
+export default models.Session || model('Session', schemaSession);

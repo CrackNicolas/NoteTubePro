@@ -3,17 +3,19 @@
 import { dark } from '@clerk/themes'
 import { UserButton, SignIn } from "@clerk/nextjs";
 
-import { useContext } from "react";
+import { APP_ROUTES } from '@/frontend/constant/app_rutes';
 
-import { Theme_name } from "@/frontend/types/props";
+import { Component } from '@/frontend/types/component';
+import { ThemeName } from "@/frontend/types/theme";
 
-import { Context } from "@/context/provider";
+import IContext from '@/context/interfaces/context';
+import useAppContext from '@/context/hooks/context';
 
-export function ComponentUserButton(): JSX.Element {
-    const props = useContext(Context);
+export function ComponentUserButton(): Component {
+    const props: IContext = useAppContext();
 
     return <UserButton appearance={{
-        ...((props.theme == Theme_name.ligth) && { baseTheme: dark }),
+        ...((props.theme == ThemeName.ligth) && { baseTheme: dark }),
         elements: {
             userPreview: "mb-3 px-4",
             userButtonPopoverCard: "mt-1 w-[300px]",
@@ -24,11 +26,11 @@ export function ComponentUserButton(): JSX.Element {
         }
     }} />
 }
-export function ComponentSignIn(): JSX.Element {
-    const props = useContext(Context);
+export function ComponentSignIn(): Component {
+    const props: IContext = useAppContext();
 
-    return <SignIn fallbackRedirectUrl="/dashboard/main" appearance={{
-        ...((props.theme == Theme_name.ligth) && { baseTheme: dark }),
+    return <SignIn fallbackRedirectUrl={APP_ROUTES.dashboard.main} appearance={{
+        ...((props.theme == ThemeName.ligth) && { baseTheme: dark }),
         elements: {
             logoBox: "absolute right-2 top-2",
             alert: "hidden",

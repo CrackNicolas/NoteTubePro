@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { Props_response } from "@/context/types/response";
+import { PropsResponse } from "@/context/types/response";
 
-import Autentication from "@/backend/logic/autentication";
+import autentication from "@/backend/logic/autentication";
 
 export async function GET(req: NextRequest, { params: { id } }: { params: { id: string } }): Promise<NextResponse> {
-    const user_id = Autentication(req.cookies);
-    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const userId = autentication(req.cookies);
+    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     try {
         return NextResponse.json({ status: 200, data: (id === process.env.ROL_ADMIN_USER_ID) ? 'admin' : 'member' })

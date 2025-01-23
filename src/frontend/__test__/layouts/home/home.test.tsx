@@ -2,12 +2,14 @@ import '@testing-library/jest-dom'
 
 import { RenderResult, render } from '@testing-library/react'
 
+import { APP_ROUTES } from '@/frontend/constant/app_rutes'
+
 import ComponentHome from '@/frontend/components/layouts/home/container'
 
 describe('Componente <Home/>', () => {
     test('Renderizacion correcta', () => {
         const component = render(<ComponentHome />);
-        Analyze(component, '/dashboard/main');
+        Analyze(component, APP_ROUTES.dashboard.main);
     })
 })
 

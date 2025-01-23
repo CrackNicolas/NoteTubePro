@@ -1,12 +1,12 @@
-import { Props_status } from "@/context/types/response"
+import { PropsStatus } from "@/context/types/response"
 
 type Props = {
-    status: Props_status,
+    status: PropsStatus,
     text: string,
     color: string
 }
 
-export const list_messages: Props[] = [
+export const listMessages: Props[] = [
     {
         status: 200,
         text: 'Mensaje de éxito',

@@ -1,34 +1,38 @@
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Component } from "@/frontend/types/component";
+import { APP_ROUTES } from "@/frontend/constant/app_rutes";
+
+import { PropsCategory } from "@/context/types/category"
+import { PropsResponse } from "@/context/types/response";
+import { PropsDispatchBoolean } from "@/frontend/types/dispatch";
+
+import { httpRequest } from "@/backend/logic/requests";
 
 import ComponentIcon from "@/frontend/components/partials/icon";
 import ComponentItems from "@/frontend/components/layouts/category/list/items";
 import ComponentMessageWait from '@/frontend/components/layouts/messages/wait';
 import ComponentMessageConfirmation from "@/frontend/components/layouts/messages/confirmation";
 
-import { Request } from "@/backend/logic/requests";
-import { Props_category } from "@/context/types/category"
-import { Props_response } from "@/context/types/response";
-
-type Props = {
-    categorys: Props_category[],
-    setRestart: Dispatch<SetStateAction<boolean>>
+interface IList {
+    categorys: PropsCategory[],
+    setRestart: PropsDispatchBoolean
 }
 
-export default function ComponentList(props: Props): JSX.Element {
+export default function ComponentList(props: IList): Component {
     const { categorys, setRestart } = props;
 
     const router = useRouter();
 
     const [open, setOpen] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const [response, setResponse] = useState<Props_response>();
+    const [response, setResponse] = useState<PropsResponse>();
 
-    const select = async (category: Props_category): Promise<void> => {
+    const select = async (category: PropsCategory): Promise<void> => {
         setLoading(true);
 
-        const { data } = await Request({
+        const { data } = await httpRequest({
             type: 'PUT',
             url: '/api/categorys',
             body: {
@@ -45,8 +49,8 @@ export default function ComponentList(props: Props): JSX.Element {
 
     return (
         <article className="relative">
-            <span className="absolute left-0 top-[-40px] dark:bg-dark-primary bg-primary rounded-full p-1.5 dark:hover:bg-dark-room hover:bg-room transition duration-500" title="Volver atras" onClick={() => router.push('/dashboard/config')}>
-                <ComponentIcon name="return" size={22} description_class="rotate-[-180deg] dark:text-dark-secondary text-secondary cursor-pointer" />
+            <span className="absolute left-0 top-[-40px] dark:bg-dark-primary bg-primary rounded-full p-1.5 dark:hover:bg-dark-room hover:bg-room transition duration-500" title="Volver atras" onClick={() => router.push(APP_ROUTES.dashboard.config)}>
+                <ComponentIcon name="return" size={22} descriptionClass="rotate-[-180deg] dark:text-dark-secondary text-secondary cursor-pointer" />
             </span>
             <ComponentItems categorys={categorys} select={select} />
             {

@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import ComponentMessage from '@/frontend/components/layouts/messages/confirmation';
 
-import { list_messages } from "@/frontend/__test__/mocks/messages";
+import { listMessages } from "@/frontend/__test__/mocks/messages";
 
 import ResizeObserver from 'resize-observer-polyfill';
 global.ResizeObserver = ResizeObserver;
@@ -27,7 +27,7 @@ describe('Componente <Messages/>', () => {
             expect(setOpen).toHaveBeenCalledWith(false);
         })
 
-        list_messages.map(message => {
+        listMessages.map(message => {
             test(`Con status ${message.status}`, () => {
                 const component = render(
                     <ComponentMessage
@@ -46,9 +46,9 @@ describe('Componente <Messages/>', () => {
                 fireEvent.click(button);
                 expect(setOpen).toHaveBeenCalledWith(false);
 
-                const element_message = component.getByText(message.text);
-                expect(element_message).toBeInTheDocument();
-                expect(element_message).toHaveClass('mt-2 text-center text-xl dark:text-dark-tertiary text-tertiary opacity-50 dark:opacity-100');
+                const elementMessage = component.getByText(message.text);
+                expect(elementMessage).toBeInTheDocument();
+                expect(elementMessage).toHaveClass('mt-2 text-center text-xl dark:text-dark-tertiary text-tertiary opacity-50 dark:opacity-100');
             })
         })
     })

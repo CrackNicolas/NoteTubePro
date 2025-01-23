@@ -1,9 +1,10 @@
-type Props = {
-    title?: string,
-    subtitle?: string
-}
+import IElement from "@/frontend/interfaces/elements/element";
 
-export default function ComponentHeader(props: Props): JSX.Element {
+import { Component } from "@/frontend/types/component";
+
+interface IHeader extends Partial<Pick<IElement, 'title' | 'subtitle'>> {}
+
+export default function ComponentHeader(props: IHeader): Component {
     const { title = '', subtitle = '' } = props;
 
     return (

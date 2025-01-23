@@ -2,33 +2,36 @@
 
 import { useEffect, useState } from "react"
 
+import { Component } from "@/frontend/types/component";
+
+import { PropsNote } from "@/context/types/note";
+import { PropsSession } from "@/context/types/session";
+
+import { httpRequest } from "@/backend/logic/requests";
+
 import ComponentHeader from "@/frontend/components/layouts/private/header";
 import ComponentListNotes from "@/frontend/components/layouts/private/notes/container";
 import ComponentListSessions from "@/frontend/components/layouts/private/sessions/container";
 
-import { Request } from "@/backend/logic/requests";
-import { Props_note } from "@/context/types/note";
-import { Props_session } from "@/context/types/session";
+export default function ComponentSessions(): Component {
+    const [sessions, setSessions] = useState<PropsSession[] | []>([]);
+    const [notes, setNotes] = useState<PropsNote[] | []>([]);
 
-export default function ComponentSessions(): JSX.Element {
-    const [sessions, setSessions] = useState<Props_session[] | []>([]);
-    const [notes, setNotes] = useState<Props_note[] | []>([]);
+    const [userSelected, setUserSelected] = useState<PropsSession>();
 
-    const [user_selected, setUser_selected] = useState<Props_session>();
-
-    const load_notes = async (session: Props_session): Promise<void> => {
+    const loadNotes = async (session: PropsSession): Promise<void> => {
         setNotes([]);
-        setUser_selected(session);
+        setUserSelected(session);
 
-        const { data } = await Request({ type: 'GET', url: `/api/private/notes/${session.id}` });
+        const { data } = await httpRequest({ type: 'GET', url: `/api/private/notes/${session.id}` });
 
         if (data.status === 200) {
             setNotes(data.data);
         }
     }
 
-    const load_sessions = async (): Promise<void> => {
-        const { data } = await Request({ type: 'GET', url: '/api/private/sessions' });
+    const loadSessions = async (): Promise<void> => {
+        const { data } = await httpRequest({ type: 'GET', url: '/api/private/sessions' });
 
         if (data.status === 200) {
             setSessions(data.data);
@@ -36,17 +39,17 @@ export default function ComponentSessions(): JSX.Element {
     }
 
     useEffect(() => {
-        load_sessions();
+        loadSessions();
     }, []);
 
     return (
-        <article className="flex flex-col gap-5 mt-[40px] pt-7 h-[calc(100vh-50px)]">
-            <ComponentHeader count_sessions={sessions.length} user_selected={user_selected} setUser_selected={setUser_selected} />
+        <article className="flex flex-col gap-5 2xl:px-0 xl:px-1 sm:pl-3 mt-[40px] pt-7 h-[calc(100vh-50px)]">
+            <ComponentHeader countSessions={sessions.length} userSelected={userSelected} setUserSelected={setUserSelected} />
             {
-                (user_selected) ?
-                    <ComponentListNotes notes={notes} user_selected={user_selected} />
+                (userSelected) ?
+                    <ComponentListNotes notes={notes} userSelected={userSelected} />
                     :
-                    <ComponentListSessions sessions={sessions} load_notes={load_notes} />
+                    <ComponentListSessions sessions={sessions} loadNotes={loadNotes} />
             }
         </article>
     )

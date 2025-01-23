@@ -1,10 +1,12 @@
-import { Metadata } from 'next/types'
 import { Roboto } from 'next/font/google'
+import { Metadata } from 'next/types'
 
 import Provider from '@/context/provider'
 import ComponentTemplateClerkProvider from '@/frontend/components/services/provider'
 
-import { Props_layouts } from '@/frontend/types/props'
+import ILayouts from '@/frontend/interfaces/layouts'
+
+import { Component } from '@/frontend/types/component'
 
 import './globals.css'
 
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
 	}
 }
 
-export default function RootLayout({ children }: Props_layouts): JSX.Element {
+export default function RootLayout({ children }: ILayouts): Component {
 	return (
 		<html lang="en">
 			<head>

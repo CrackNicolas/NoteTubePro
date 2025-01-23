@@ -1,4 +1,4 @@
-export enum Condition_file {
+export enum ConditionFile {
     NOT_EDIT,
     MODIFY,
     DELETE

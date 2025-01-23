@@ -1,27 +1,25 @@
 import { Schema, model, models } from "mongoose";
 
-import { Props_category } from "@/backend/types/category";
+import { PropsCategory } from "@/backend/types/category";
 
-const schema_category = new Schema<Props_category>({
+const schemaCategory = new Schema<PropsCategory>({
     title: {
         type: String,
         require: [true, 'Required title'],
         unique: true,
         trim: true
     },
-    use: [
-        {
-            value: {
-                type: Boolean,
-                require: [true, 'Required use']
-            },
-            user_id: {
-                type: String,
-                require: [true, 'Required user_id'],
-                trim: true
-            }
+    use: [{
+        value: {
+            type: Boolean,
+            require: [true, 'Required use value']
+        },
+        userId: {
+            type: String,
+            require: [true, 'Required use userId'],
+            trim: true
         }
-    ],
+    }],
     icon: {
         type: String,
         require: [true, 'Required icon']
@@ -32,4 +30,4 @@ const schema_category = new Schema<Props_category>({
     }
 )
 
-export default models.Category || model('Category', schema_category);
+export default models.Category || model('Category', schemaCategory);

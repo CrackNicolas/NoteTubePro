@@ -1,30 +1,35 @@
 'use client'
 
-import { useCallback, useContext, useEffect, useState } from "react";
-import { Context } from "@/context/provider";
+import { useCallback, useEffect, useState } from "react";
+
+import { Component } from "@/frontend/types/component";
+import { APP_ROUTES } from "@/frontend/constant/app_rutes";
+
+import IContext from "@/context/interfaces/context";
+import useAppContext from "@/context/hooks/context";
+
+import { ItemsMain } from "@/frontend/constant/dashboard"
+import { PropsItemsDashboard } from "@/frontend/types/props"
+
+import { httpRequest } from "@/backend/logic/requests";
 
 import ComponentDashboardMain from "@/frontend/components/layouts/dashboard/main";
 
-import { Items_main } from "@/frontend/constant/dashboard"
-import { Props_items_dashboard } from "@/frontend/types/props"
+export default function Dashboard(): Component {
+	const { session: { id, user } }: IContext = useAppContext();
 
-import { Request } from "@/backend/logic/requests";
+	const [items, setItems] = useState<PropsItemsDashboard[]>([]);
 
-export default function Dashboard(): JSX.Element {
-	const { session: { id, user } } = useContext(Context);
-
-	const [items, setItems] = useState<Props_items_dashboard[]>([]);
-
-	const load_items = useCallback(async (): Promise<void> => {
+	const loadItems = useCallback(async (): Promise<void> => {
 		try {
-			const { data } = await Request({ type: 'GET', url: `/api/role/${id}` });
+			const { data } = await httpRequest({ type: 'GET', url: `/api/role/${id}` });
 
 			switch (data.data) {
 				case 'admin':
-					setItems(Items_main);
+					setItems(ItemsMain);
 					break;
 				case 'member':
-					const filtered_items = Items_main.filter(item => item.url !== '/sessions');
+					const filtered_items = ItemsMain.filter(item => item.url !== APP_ROUTES.sessions);
 					setItems(filtered_items);
 					break;
 				default:
@@ -37,9 +42,9 @@ export default function Dashboard(): JSX.Element {
 
 	useEffect(() => {
 		if (user) {
-			load_items();
+			loadItems();
 		}
-	}, [user, load_items]);
+	}, [user, loadItems]);
 
 	return <ComponentDashboardMain items={items} />
 }

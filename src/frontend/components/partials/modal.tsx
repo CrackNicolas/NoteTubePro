@@ -1,18 +1,20 @@
-import { ReactNode, Fragment, Dispatch, SetStateAction } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react';
+
+import { Component } from '@/frontend/types/component';
+
+import ILayouts from '@/frontend/interfaces/layouts';
+import IModalBase from '@/frontend/interfaces/modal';
 
 import ComponentIcon from "@/frontend/components/partials/icon";
 
-type Props = {
-    open: boolean,
+interface IModal extends IModalBase, ILayouts {
     color?: string,
-    setOpen: Dispatch<SetStateAction<boolean>>,
-    children: ReactNode,
-    button_close?: boolean
+    buttonClose?: boolean
 }
 
-export default function ComponentModal(props: Props): JSX.Element {
-    const { children, open, setOpen, color = "secondary", button_close = true } = props;
+export default function ComponentModal(props: IModal): Component {
+    const { children, open, setOpen, color = "secondary", buttonClose = true } = props;
 
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -25,11 +27,11 @@ export default function ComponentModal(props: Props): JSX.Element {
                         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enterTo="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 sm:scale-100" leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                             <Dialog.Panel className="relative transform overflow-hidden rounded-lg dark:bg-dark-primary bg-primary shadow-xl transition-all sm:my-8 w-full max-w-lg">
                                 <div className={`relative flex flex-col items-center border-[0.1px] ${color == 'error' ? `border-${color} dark:border-none` : `border-${color} dark:border-dark-${color}`} border-opacity-50 rounded-lg gap-y-5 px-3 sm:px-5 pb-6 pt-3`}>
-                                    <ComponentIcon name='logo' description_class={`absolute top-1.5 left-2 dark:text-dark-${color} text-${color} dark:opacity-100 opacity-70 `} size={20} />
+                                    <ComponentIcon name='logo' descriptionClass={`absolute top-1.5 left-2 dark:text-dark-${color} text-${color} dark:opacity-100 opacity-70 `} size={20} />
                                     {
-                                        button_close && (
+                                        buttonClose && (
                                             <button type='button' title="Boton cerrar" onClick={() => setOpen(false)} className="outline-none" >
-                                                <ComponentIcon name='close' description_class={`absolute top-0 right-0 dark:text-dark-${color} text-${color} dark:opacity-100 opacity-70 cursor-pointer`} size={30} />
+                                                <ComponentIcon name='close' descriptionClass={`absolute top-0 right-0 dark:text-dark-${color} text-${color} dark:opacity-100 opacity-70 cursor-pointer`} size={30} />
                                             </button>
                                         )
                                     }

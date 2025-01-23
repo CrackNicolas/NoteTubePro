@@ -1,62 +1,62 @@
 import { type NextRequest } from 'next/server';
 import { NextResponse } from "next/server";
 
-import { Props_session } from '@/context/types/session';
-import { Props_response } from "@/context/types/response";
+import { PropsSession } from '@/context/types/session';
+import { PropsResponse } from "@/context/types/response";
 
-import { Conect_database } from "@/backend/utils/db";
+import { conectDatabase } from "@/backend/utils/db";
 
 import Session from '@/backend/schemas/session';
-import Autentication from '@/backend/logic/autentication';
+import autentication from '@/backend/logic/autentication';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-    const user_id = Autentication(req.cookies);
-    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const userId = autentication(req.cookies);
+    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
 
-    if (user_id !== process.env.ROL_ADMIN_USER_ID) return NextResponse.json<Props_response>({ status: 403, info: { message: "Acceso no autorizado" } });
+    if (userId !== process.env.ROL_ADMIN_USER_ID) return NextResponse.json<PropsResponse>({ status: 403, info: { message: "Acceso no autorizado" } });
 
-    const connection: boolean = await Conect_database();
-    if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } })
+    const connection: boolean = await conectDatabase();
+    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } })
 
     try {
-        const sessions_expiret = await Session.find({ expiret: { $lt: new Date().toISOString() }, status: true });
+        const sessionsExpiret = await Session.find({ expiret: { $lt: new Date().toISOString() }, status: true });
 
-        for (let session of sessions_expiret) {
+        for (let session of sessionsExpiret) {
             session.status = false;
             await session.save();
         }
 
-        const sessions: Props_session[] = await Session.find();
+        const sessions: PropsSession[] = await Session.find();
 
-        return NextResponse.json<Props_response>({ status: 200, data: sessions });
+        return NextResponse.json<PropsResponse>({ status: 200, data: sessions });
     } catch (error: unknown) {
-        return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } });
+        return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } });
     }
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-    const user_id = Autentication(req.cookies);
-    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const userId = autentication(req.cookies);
+    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
 
-    const { id, status, last_time, expiret, origin, user } = await req.json();
+    const { id, status, lastTime, expiret, origin, user } = await req.json();
 
-    const connection: boolean = await Conect_database();
-    if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } })
+    const connection: boolean = await conectDatabase();
+    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } })
 
     try {
-        const exists_session = await Session.findOne({ id });
+        const existsSession = await Session.findOne({ id });
 
-        if (exists_session) {
-            exists_session.status = status;
-            exists_session.last_time = last_time;
-            exists_session.origin = origin;
-            exists_session.expiret = expiret;
-            await exists_session.save();
-            return NextResponse.json<Props_response>({ status: 400, info: { message: "La session ya está registrada" } });
+        if (existsSession) {
+            existsSession.status = status;
+            existsSession.lastTime = lastTime;
+            existsSession.origin = origin;
+            existsSession.expiret = expiret;
+            await existsSession.save();
+            return NextResponse.json<PropsResponse>({ status: 400, info: { message: "La session ya está registrada" } });
         }
 
-        const new_session = new Session({
-            id, status, last_time, expiret, origin,
+        const newSession = new Session({
+            id, status, lastTime, expiret, origin,
             user: {
                 name: user.name,
                 email: user.email,
@@ -65,36 +65,36 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             }
         });
 
-        await new_session.save();
+        await newSession.save();
 
-        return NextResponse.json<Props_response>({ status: 201, info: { message: 'Session registrada' } });
+        return NextResponse.json<PropsResponse>({ status: 201, info: { message: 'Session registrada' } });
     } catch (error: unknown) {
-        return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } });
+        return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } });
     }
 }
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
-    const user_id = Autentication(req.cookies);
-    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const userId = autentication(req.cookies);
+    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const { id, status } = await req.json();
 
-    const connection: boolean = await Conect_database();
-    if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } })
+    const connection: boolean = await conectDatabase();
+    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } })
 
     try {
-        const exists_session = await Session.findOne({ id });
+        const existsSession = await Session.findOne({ id });
 
-        if (!exists_session) {
-            return NextResponse.json<Props_response>({ status: 400, info: { message: "La sesion no existe" } });
+        if (!existsSession) {
+            return NextResponse.json<PropsResponse>({ status: 400, info: { message: "La sesion no existe" } });
         }
 
-        exists_session.status = status;
+        existsSession.status = status;
 
-        await exists_session.save();
+        await existsSession.save();
 
-        return NextResponse.json<Props_response>({ status: 201, info: { message: 'Session actualizada' } });
+        return NextResponse.json<PropsResponse>({ status: 201, info: { message: 'Session actualizada' } });
     } catch (error: unknown) {
-        return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } });
+        return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } });
     }
 }

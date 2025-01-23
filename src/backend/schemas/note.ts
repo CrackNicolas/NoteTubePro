@@ -1,8 +1,8 @@
 import { Schema, model, models } from "mongoose";
 
-import { Props_note } from "@/backend/types/note";
+import { PropsNote } from "@/backend/types/note";
 
-const schema_notes = new Schema<Props_note>({
+const schemaNotes = new Schema<PropsNote>({
     title: {
         type: String,
         require: [true, 'Required title'],
@@ -37,23 +37,23 @@ const schema_notes = new Schema<Props_note>({
     file: {
         id: {
             type: String,
-            require: [true, 'Required id'],
+            require: [true, 'Required file id'],
             trim: true
         },
         name: {
             type: String,
-            require: [true, 'Required name'],
+            require: [true, 'Required file name'],
             trim: true
         },
         url: {
             type: String,
-            require: [true, 'Required url'],
+            require: [true, 'Required file url'],
             trim: true
         }
     },
-    user_id: {
+    userId: {
         type: String,
-        require: [true, 'Required user_id'],
+        require: [true, 'Required userId'],
         trim: true
     }
 },
@@ -62,4 +62,4 @@ const schema_notes = new Schema<Props_note>({
     }
 )
 
-export default models.Notes || model('Notes', schema_notes);
+export default models.Notes || model('Notes', schemaNotes);

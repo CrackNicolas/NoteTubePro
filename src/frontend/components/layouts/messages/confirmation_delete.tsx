@@ -1,22 +1,22 @@
-import { Dispatch, SetStateAction } from "react";
+import { Component } from "@/frontend/types/component";
+
+import IModalBase from "@/frontend/interfaces/modal";
 
 import ComponentIcon from "@/frontend/components/partials/icon";
 import ComponentModal from "@/frontend/components/partials/modal";
 
-type Props = {
-    open: boolean,
-    setOpen: Dispatch<SetStateAction<boolean>>,
+interface IMessageConfirmationDelete extends IModalBase {
     action: () => Promise<void>
 }
 
-export default function ComponentMessageConfirmationDelete(props: Props): JSX.Element {
+export default function ComponentMessageConfirmationDelete(props: IMessageConfirmationDelete): Component {
     const { open, setOpen, action } = props;
 
     return (
         <ComponentModal open={open} setOpen={setOpen}>
             <div className="flex flex-col w-full items-center text-center sm:mt-0 sm:text-left">
                 <span className="flex place-items-center p-3.5 rounded-full dark:bg-dark-secondary bg-primary">
-                    <ComponentIcon name='delete-note' description_class='text-error' size={24} />
+                    <ComponentIcon name='delete-note' descriptionClass='text-error' size={24} />
                 </span>
                 <p title="¿Seguro que desea eliminar?" className="mt-2 text-center text-xl dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-50">
                     ¿Seguro que deseas eliminar?

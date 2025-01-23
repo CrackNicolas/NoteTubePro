@@ -6,12 +6,12 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-type Props_file = {
-    id: string | undefined,
-    url: string | undefined
+type PropsFile = {
+    id?: string,
+    url?: string
 }
 
-export async function File_transformer(file: File): Promise<Props_file> {
+export async function fileTransformer(file: File): Promise<PropsFile> {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
@@ -27,7 +27,7 @@ export async function File_transformer(file: File): Promise<Props_file> {
         url: response?.secure_url
     }
 }
-export async function File_edit(id: string, file: File): Promise<Props_file> {
+export async function fileEdit(id: string, file: File): Promise<PropsFile> {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
@@ -43,10 +43,10 @@ export async function File_edit(id: string, file: File): Promise<Props_file> {
         url: response?.secure_url
     }
 }
-export async function File_delete(files_id: string[]): Promise<UploadApiResponse[] | undefined> {
-    if (files_id.length === 0) return;
+export async function fileDelete(filesId: string[]): Promise<UploadApiResponse[] | undefined> {
+    if (filesId.length === 0) return;
 
-    const promises: Promise<UploadApiResponse>[] = files_id.map(id => {
+    const promises: Promise<UploadApiResponse>[] = filesId.map((id: string) => {
         return cloudinary.uploader.destroy(id);
     })
 

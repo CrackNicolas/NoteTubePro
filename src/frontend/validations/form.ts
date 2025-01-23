@@ -1,4 +1,27 @@
-export const validation = (name: string, required: boolean = true): any => {
+import { REGEX_PATTERNS } from "@/frontend/constant/regex";
+
+import { PropsInputName } from "@/frontend/interfaces/elements/form/input";
+
+type PropsValidation = {
+    required?: {
+        value: boolean,
+        message: string
+    };
+    minLength?: {
+        value: number,
+        message: string
+    };
+    maxLength?: {
+        value: number,
+        message: string
+    },
+    pattern?: {
+        value: RegExp,
+        message: string
+    }
+}
+
+export const validation = (name: PropsInputName, required: boolean = true): PropsValidation => {
     switch (name) {
         case 'title':
             return {
@@ -15,7 +38,7 @@ export const validation = (name: string, required: boolean = true): any => {
                     message: 'El titulo deber ser menor a 45 caracteres'
                 },
                 pattern: {
-                    value: /^[A-Za-z._áéíóúñ0-9]+(?: [A-Za-z._áéíóúñ0-9]+)* ?$/i,
+                    value: REGEX_PATTERNS.title,
                     message: 'Solo caracteres válidos, sin dobles espacios'
                 }
             }
@@ -34,7 +57,7 @@ export const validation = (name: string, required: boolean = true): any => {
                     message: 'La descripcion deber ser menor a 500 caracteres'
                 },
                 pattern: {
-                    value: /^[A-Za-z,._áéíóúñ0-9]+(?: [A-Za-z,._áéíóúñ0-9]+)* ?$/i,
+                    value: REGEX_PATTERNS.description,
                     message: 'Solo caracteres válidos, sin dobles espacios'
                 }
             }
@@ -53,4 +76,5 @@ export const validation = (name: string, required: boolean = true): any => {
                 }
             }
     }
+    return {};
 }

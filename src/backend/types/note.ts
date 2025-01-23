@@ -1,16 +1,16 @@
-import { Props_category } from "@/backend/types/category"
+import { PropsCategory } from "@/backend/types/category"
 
-export type Props_note = {
+export type PropsNote = {
     title: string,
     description: string,
-    category: Props_category
+    category: PropsCategory
     priority: string,
     featured: boolean,
-    file: Props_file,
-    user_id: string
+    file: PropsFile,
+    userId: string
 }
 
-type Props_file = {
+type PropsFile = {
     id: string,
     name: string,
     url: string

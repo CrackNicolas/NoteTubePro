@@ -1,8 +1,10 @@
-import ComponentLoad from "@/frontend/components/partials/load";
+import { Component } from "@/frontend/types/component";
 
 import { ComponentSignIn } from "@/frontend/components/services/clerk";
 
-export default function Page(): JSX.Element {
+import ComponentLoad from "@/frontend/components/partials/load";
+
+export default function Page(): Component {
     return (
         <article className="grid place-items-center items-center h-screen">
             <ComponentLoad/>

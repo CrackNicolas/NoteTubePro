@@ -1,19 +1,20 @@
-import { Dispatch, SetStateAction } from "react";
+import { Component } from "@/frontend/types/component";
+
+import { PropsSession } from "@/context/types/session";
+import { PropsDispatchSession } from "@/frontend/types/dispatch";
 
 import ComponentIcon from "@/frontend/components/partials/icon";
 
-import { Props_session } from "@/context/types/session";
-
-type Props = {
-    user_selected?: Props_session,
-    count_sessions: number,
-    setUser_selected: Dispatch<SetStateAction<Props_session | undefined>>
+interface IHeader {
+    userSelected?: PropsSession,
+    countSessions: number,
+    setUserSelected: PropsDispatchSession
 }
 
-export default function ComponentHeader(props: Props): JSX.Element {
-    const { count_sessions, user_selected, setUser_selected } = props;
+export default function ComponentHeader(props: IHeader): Component {
+    const { countSessions, userSelected, setUserSelected } = props;
 
-    const data = user_selected ? ["", `Usuario ${user_selected.user?.name}`] : ["users-fill", `${count_sessions} Sesiones de usuario`];
+    const data: string[] = userSelected ? ["", `Usuario ${userSelected.user?.name}`] : ["users-fill", `Tienes ${countSessions} ${(countSessions == 1) ? 'sesion' : 'sesiones'} de usuario`];
 
     return (
         <article className="w-full flex justify-between items-center">
@@ -23,9 +24,9 @@ export default function ComponentHeader(props: Props): JSX.Element {
                 </span>
             </div>
             {
-                user_selected && (
-                    <button type="button" onClick={() => setUser_selected(undefined)} className="outline-none bg-room dark:bg-dark-room rounded-full p-2">
-                        <ComponentIcon name="return" size={16} description_class="cursor-pointer dark:text-dark-secondary text-secondary" />
+                userSelected && (
+                    <button type="button" onClick={() => setUserSelected(undefined)} className="outline-none bg-room dark:bg-dark-room rounded-full p-2">
+                        <ComponentIcon name="return" size={16} descriptionClass="cursor-pointer dark:text-dark-secondary text-secondary" />
                     </button>
                 )
             }

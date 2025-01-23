@@ -1,20 +1,23 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment } from "react";
 
-import { Context } from "@/context/provider";
+import { Component } from "@/frontend/types/component";
+
+import ILayouts from "@/frontend/interfaces/layouts";
+import IContext from "@/context/interfaces/context";
+
+import useAppContext from "@/context/hooks/context";
 
 import ComponentNavTop from "@/frontend/components/partials/nav/top";
+import ComponentNavLeft from "@/frontend/components/partials/nav/left/left";
 
-import { Props_layouts } from "@/frontend/types/props";
-
-export default function Template({ children }: Props_layouts): JSX.Element {
-    const props = useContext(Context);
-
-    const [opacity, setOpacity] = useState<boolean>(false);
+export default function Template({ children }: ILayouts): Component {
+    const props: IContext = useAppContext();
 
     return (
         <Fragment>
-            <ComponentNavTop {...props} setOpacity={setOpacity} opacity={opacity} />
-            <main className={`relative w-full ${opacity && 'opacity-30'}`}>
+            <ComponentNavTop {...props} />
+            <ComponentNavLeft theme={props.theme} setTheme={props.setTheme} />
+            <main className="relative w-full">
                 <section className="mx-auto max-w-7xl px-3 sm:px-10">
                     {children}
                 </section>

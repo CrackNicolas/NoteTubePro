@@ -1,6 +1,6 @@
-import { Props_category } from "@/context/types/category";
+import { PropsCategory } from "@/context/types/category";
 
-export const categorys: Props_category[] = [
+export const categorys: PropsCategory[] = [
     {
         title: 'Viajes',
         use: true,
@@ -27,7 +27,7 @@ export const categorys: Props_category[] = [
         icon: 'others'
     }
 ]
-export const category: Props_category = {
+export const category: PropsCategory = {
     title: 'Viajes',
     use: true,
     icon: 'plane'

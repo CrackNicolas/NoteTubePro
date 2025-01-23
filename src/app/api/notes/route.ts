@@ -3,48 +3,49 @@ import { fileTypeFromBuffer } from "file-type";
 import { type NextRequest } from 'next/server';
 import { NextResponse } from "next/server";
 
-import { Props_note } from "@/context/types/note";
-import { Props_category } from "@/context/types/category";
-import { Props_response } from "@/context/types/response";
+import { PropsNote } from "@/context/types/note";
+import { PropsCategory } from "@/context/types/category";
+import { PropsResponse } from "@/context/types/response";
 
-import { Conect_database } from "@/backend/utils/db";
-import { File_transformer, File_edit, File_delete } from '@/backend/utils/cloudinary';
+import { conectDatabase } from "@/backend/utils/db";
+import { fileTransformer, fileEdit, fileDelete } from '@/backend/utils/cloudinary';
 
 import Notes from '@/backend/schemas/note';
-import Malware from '@/backend/security/anti_malware';
-import Autentication from '@/backend/logic/autentication';
-import { Anti_malware } from '@/backend/enums/anti_malware';
-import { Condition_file } from "@/backend/enums/condition_file";
+import malware from '@/backend/security/anti_malware';
+import autentication from '@/backend/logic/autentication';
+
+import { AntiMalware } from '@/backend/enums/anti_malware';
+import { ConditionFile } from "@/backend/enums/condition_file";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-    const user_id = Autentication(req.cookies);
-    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const userId = autentication(req.cookies);
+    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
 
-    const connection: boolean = await Conect_database();
-    if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
+    const connection: boolean = await conectDatabase();
+    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
 
     try {
-        const search: Props_note[] = await Notes.find({ user_id });
+        const search: PropsNote[] = await Notes.find({ userId });
 
-        return NextResponse.json<Props_response>({ status: 200, data: search });
+        return NextResponse.json<PropsResponse>({ status: 200, data: search });
     } catch (error: unknown) {
-        return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } })
+        return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } })
     }
 }
 export async function POST(req: NextRequest): Promise<NextResponse> {
-    const user_id = Autentication(req.cookies);
-    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const userId = autentication(req.cookies);
+    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const data = await req.formData();
 
-    const connection: boolean = await Conect_database();
-    if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
+    const connection: boolean = await conectDatabase();
+    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
 
     try {
-        const category_prev = data.get('category');
-        const category: Props_category = category_prev && typeof category_prev === 'string' ? JSON.parse(category_prev) : null;
+        const categoryPrev = data.get('category');
+        const category: PropsCategory = categoryPrev && typeof categoryPrev === 'string' ? JSON.parse(categoryPrev) : null;
 
-        const note_data: any = {
+        const noteData: any = {
             title: data.get('title'),
             description: data.get('description'),
             category: {
@@ -53,117 +54,117 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             },
             priority: data.get('priority'),
             featured: (data.get('featured') === 'SI'),
-            user_id
+            userId
         };
 
         const file = data.get('file') as File;
 
         if (file) {
-            const file_buffer = Buffer.from(await file.arrayBuffer());
-            const type = await fileTypeFromBuffer(file_buffer);
+            const fileBuffer = Buffer.from(await file.arrayBuffer()) as any;
+            const type = await fileTypeFromBuffer(fileBuffer);
 
             if (!type || !type.mime.startsWith('image/')) {
-                return NextResponse.json<Props_response>({ status: 400, info: { message: "Solo se permiten archivos de imagen" } });
+                return NextResponse.json<PropsResponse>({ status: 400, info: { message: "Solo se permiten archivos de imagen" } });
             }
 
-            const response_malware = await Malware({ file_buffer, type, file });
+            const responseMalware = await malware({ fileBuffer, type, file });
 
-            if (response_malware != Anti_malware.FREE) {
-                return NextResponse.json<Props_response>(
+            if (responseMalware != AntiMalware.FREE) {
+                return NextResponse.json<PropsResponse>(
                     {
                         status: 400, info: {
-                            message: (response_malware == Anti_malware.VIRUS) ? "Archivo con virus" : "Error al analizar el archivo"
+                            message: (responseMalware == AntiMalware.VIRUS) ? "Archivo con virus" : "Error al analizar el archivo"
                         }
                     }
                 );
             }
 
-            const { id, url } = await File_transformer(file);
+            const { id, url } = await fileTransformer(file);
             if (!url) {
-                return NextResponse.json<Props_response>({ status: 404, info: { message: "Archivo no encontrado" } });
+                return NextResponse.json<PropsResponse>({ status: 404, info: { message: "Archivo no encontrado" } });
             }
 
-            note_data.file = { id, name: file.name, url };
+            noteData.file = { id, name: file.name, url };
         }
 
-        const new_note = new Notes(note_data);
-        await new_note.save();
+        const newNote = new Notes(noteData);
+        await newNote.save();
 
-        return NextResponse.json<Props_response>({ status: 201, info: { message: `La nota "${data.get('title')}" fue creada con exito` } });
+        return NextResponse.json<PropsResponse>({ status: 201, info: { message: `La nota "${data.get('title')}" fue creada con exito` } });
     } catch (error: any) {
         if (error.code === 11000 && error.keyPattern && error.keyValue) {
-            return NextResponse.json<Props_response>({ status: 400, info: { message: `La nota "${error.keyValue.title}" ya existe` } })
+            return NextResponse.json<PropsResponse>({ status: 400, info: { message: `La nota "${error.keyValue.title}" ya existe` } })
         } else {
-            return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } })
+            return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } })
         }
     }
 }
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
-    const user_id = Autentication(req.cookies);
-    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const userId = autentication(req.cookies);
+    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const data = await req.formData();
 
-    const connection: boolean = await Conect_database();
-    if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
+    const connection: boolean = await conectDatabase();
+    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
 
     try {
-        const exists_note = await Notes.findById(data.get('_id'));
-        if (!exists_note) {
-            return NextResponse.json<Props_response>({ status: 404, info: { message: "Nota no encontrada" } });
+        const existsNote = await Notes.findById(data.get('_id'));
+        if (!existsNote) {
+            return NextResponse.json<PropsResponse>({ status: 404, info: { message: "Nota no encontrada" } });
         }
 
-        const category_prev = data.get('category');
-        const category: Props_category = (category_prev && typeof category_prev === 'string') ? JSON.parse(category_prev) : null;
+        const categoryPrev = data.get('category');
+        const category: PropsCategory = (categoryPrev && typeof categoryPrev === 'string') ? JSON.parse(categoryPrev) : null;
 
-        exists_note.title = data.get('title');
-        exists_note.description = data.get('description');
-        exists_note.category = {
+        existsNote.title = data.get('title');
+        existsNote.description = data.get('description');
+        existsNote.category = {
             title: category.title,
             icon: category.icon
         };
-        exists_note.priority = data.get('priority');
-        exists_note.featured = (data.get('featured') === 'SI');
-        exists_note.user_id = user_id;
+        existsNote.priority = data.get('priority');
+        existsNote.featured = (data.get('featured') === 'SI');
+        existsNote.userId = userId;
 
-        const condition_file_prev = data.get('condition_file');
-        const condition_file: Condition_file = (condition_file_prev && typeof condition_file_prev === 'string') ? JSON.parse(condition_file_prev) : null;
+        const conditionFilePrev = data.get('conditionFile');
+        const conditionFile: ConditionFile = (conditionFilePrev && typeof conditionFilePrev === 'string') ? JSON.parse(conditionFilePrev) : null;
 
-        switch (condition_file) {
-            case Condition_file.MODIFY:
+        switch (conditionFile) {
+            case ConditionFile.MODIFY:
                 const file = data.get('file') as File;
-                const file_buffer = Buffer.from(await file.arrayBuffer());
-                const type = await fileTypeFromBuffer(file_buffer);
+                const fileBuffer = Buffer.from(await file.arrayBuffer()) as any;
+                const type = await fileTypeFromBuffer(fileBuffer);
 
                 if (!type || !type.mime.startsWith('image/')) {
-                    return NextResponse.json<Props_response>({ status: 400, info: { message: "Solo se permiten archivos de imagen" } });
+                    return NextResponse.json<PropsResponse>({ status: 400, info: { message: "Solo se permiten archivos de imagen" } });
                 }
 
-                const response_malware = await Malware({ file_buffer, type, file });
+                const responseMalware = await malware({ fileBuffer, type, file });
 
-                if (response_malware != Anti_malware.FREE) {
-                    return NextResponse.json<Props_response>({
+                if (responseMalware != AntiMalware.FREE) {
+                    return NextResponse.json<PropsResponse>({
                         status: 400, info: {
-                            message: (response_malware == Anti_malware.VIRUS) ? "Archivo con virus" : "Error al analizar el archivo"
+                            message: (responseMalware == AntiMalware.VIRUS) ? "Archivo con virus" : "Error al analizar el archivo"
                         }
                     })
                 }
 
-                const { id, url } = await File_edit(exists_note.file.id, file);
-                if (!url) return NextResponse.json<Props_response>({ status: 404, info: { message: "Archivo no encontrado" } });
-                exists_note.file = { id, name: file.name, url };
+                const { id, url } = await fileEdit(existsNote.file.id, file);
+                if (!url) return NextResponse.json<PropsResponse>({ status: 404, info: { message: "Archivo no encontrado" } });
+                existsNote.file = { id, name: file.name, url };
                 break;
-            case Condition_file.DELETE:
-                await File_delete([exists_note.file.id]);
-                exists_note.file = undefined;
+            case ConditionFile.DELETE:
+                await fileDelete([existsNote.file.id]);
+                existsNote.file = undefined;
                 break;
         }
 
-        await exists_note.save();
+        await existsNote.save();
 
-        return NextResponse.json<Props_response>({ status: 200, info: { message: `La nota "${exists_note.title}" fue modificada` } });
+        return NextResponse.json<PropsResponse>({ status: 200, info: { message: `La nota "${existsNote.title}" fue modificada` } });
     } catch (error: unknown) {
-        return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } })
+        return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } })
     }
 }

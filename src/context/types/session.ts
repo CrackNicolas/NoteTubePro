@@ -1,15 +1,15 @@
-export type Props_session = {
+export type PropsSession = {
     id?: string,
     status?: boolean,
-    last_time?: string,
+    lastTime?: string,
     expiret?: string,
     origin?: {
-        IP_adress: string,
+        ipAdress: string,
         city: string
     },
-    user?: Props_user
+    user?: PropsUser
 }
-export type Props_user = {
+export type PropsUser = {
     name: string,
     email: string,
     image: string,

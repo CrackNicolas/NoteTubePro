@@ -1,6 +1,10 @@
+import { Component } from "@/frontend/types/component";
+
+import ILoading from "@/frontend/interfaces/loading";
+
 import ComponentTemplateLoading from "@/frontend/components/partials/template/list/loading";
 
-export default function ComponentLoading({ count }: { count: number }): JSX.Element {
+export default function ComponentLoading({ count }: ILoading): Component {
     return (
         <ComponentTemplateLoading count={count}>
             <div className="flex w-full flex-col items-start justify-between sm:px-4 px-3 pt-3 pb-4">

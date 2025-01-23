@@ -7,7 +7,7 @@ global.ResizeObserver = ResizeObserver;
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { Props_response } from '@/context/types/response';
+import { PropsResponse } from '@/context/types/response';
 
 import ComponentForm from '@/frontend/components/layouts/notes/container_form';
 import ComponentLabel from '@/frontend/components/partials/form/label';
@@ -15,17 +15,18 @@ import ComponentInput from '@/frontend/components/partials/form/input';
 import ComponentItemPriority from '@/frontend/components/partials/form/item_priority';
 import ComponentItemFeatured from '@/frontend/components/partials/form/item_featured';
 
+import { APP_ROUTES } from '@/frontend/constant/app_rutes';
 import { labels, note } from '@/frontend/__test__/mocks/notes'
 import { categorys, category } from '@/frontend/__test__/mocks/categorys';
 
 const mock = new MockAdapter(axios);
 
-mock.onGet('/api/categorys/true').reply<Props_response>(200, {
+mock.onGet('/api/categorys/true').reply<PropsResponse>(200, {
     status: 200,
     data: categorys
 });
 
-mock.onPost('/api/notes').reply<Props_response>(201, {
+mock.onPost('/api/notes').reply<PropsResponse>(201, {
     status: 201,
     info: {
         message: 'Nota creada'
@@ -38,14 +39,6 @@ mock.onPut('/api/notes').reply(200, {
         message: 'Nota editada'
     }
 });
-
-const params = new URLSearchParams();
-params.append('data', JSON.stringify({ note }));
-
-jest.mock("next/navigation", () => ({
-    ...jest.requireActual('next/navigation'),
-    useSearchParams: () => params,
-}))
 
 jest.mock('next/image', () => ({
     __esModule: true,
@@ -73,25 +66,25 @@ describe('Componente <Form/> principal', () => {
 
     test('Renderizacion correcta de elementos', () => {
         const component = render(
-            <ComponentForm category_selected={category} setCategory_selected={setSelected} note_selected={undefined} />
+            <ComponentForm categorySelected={category} setCategorySelected={setSelected} noteSelected={undefined} />
         );
 
-        const input_title = component.getByPlaceholderText('Escriba el titulo...');
-        const input_description = component.getByPlaceholderText('Escriba la descripcion...');
-        const inputs_priority = component.getAllByRole('radio');
-        const input_file = component.getByLabelText('Subir imagen...');
-        const label_title = component.getByTitle('Titulo');
-        const label_description = component.getByTitle('Descripcion');
-        const button_deshacer = component.getByRole('button', { name: 'Deshacer' });
+        const inputTitle = component.getByPlaceholderText('Escriba el titulo...');
+        const inputDescription = component.getByPlaceholderText('Escriba la descripcion...');
+        const inputsPriority = component.getAllByRole('radio');
+        const inputFile = component.getByLabelText('Subir imagen...');
+        const labelTitle = component.getByTitle('Titulo');
+        const labelDescription = component.getByTitle('Descripcion');
+        const buttonDeshacer = component.getByRole('button', { name: 'Deshacer' });
 
-        expect(input_title).toBeInTheDocument();
-        expect(input_description).toBeInTheDocument();
-        expect(label_title).toBeInTheDocument();
-        expect(label_description).toBeInTheDocument();
-        expect(input_file).toBeInTheDocument();
-        expect(button_deshacer).toBeInTheDocument();
+        expect(inputTitle).toBeInTheDocument();
+        expect(inputDescription).toBeInTheDocument();
+        expect(labelTitle).toBeInTheDocument();
+        expect(labelDescription).toBeInTheDocument();
+        expect(inputFile).toBeInTheDocument();
+        expect(buttonDeshacer).toBeInTheDocument();
 
-        inputs_priority.map(input => {
+        inputsPriority.map(input => {
             expect(input).toBeInTheDocument();
         })
 
@@ -102,37 +95,37 @@ describe('Componente <Form/> principal', () => {
     test('Renderizacion correcta al crear una nota', async () => {
         setSelected(undefined);
         const { getByTitle, getByRole, getByPlaceholderText, getByLabelText } = render(
-            <ComponentForm category_selected={category} setCategory_selected={setSelected} note_selected={undefined} />
+            <ComponentForm categorySelected={category} setCategorySelected={setSelected} noteSelected={undefined} />
         );
 
         const title = getByTitle('Titulo formulario');
-        const button_submit = getByTitle('Guardar');
+        const buttonSubmit = getByTitle('Guardar');
 
         expect(title.textContent).toBe('Crear nota');
-        expect(button_submit.textContent).toBe('Guardar');
+        expect(buttonSubmit.textContent).toBe('Guardar');
 
-        const input_title = getByPlaceholderText('Escriba el titulo...');
-        const input_description = getByPlaceholderText('Escriba la descripcion...');
-        const input_priority = getByRole('radio', { name: 'Alta' });
+        const inputTitle = getByPlaceholderText('Escriba el titulo...');
+        const inputDescription = getByPlaceholderText('Escriba la descripcion...');
+        const inputPriority = getByRole('radio', { name: 'Alta' });
 
-        fireEvent.change(input_title, { target: { value: note.title } });
-        fireEvent.change(input_description, { target: { value: note.description } });
-        fireEvent.click(input_priority);
+        fireEvent.change(inputTitle, { target: { value: note.title } });
+        fireEvent.change(inputDescription, { target: { value: note.description } });
+        fireEvent.click(inputPriority);
 
-        expect(input_title).toHaveValue(note.title);
-        expect(input_description).toHaveValue(note.description);
-        expect(input_priority).toBeChecked();
+        expect(inputTitle).toHaveValue(note.title);
+        expect(inputDescription).toHaveValue(note.description);
+        expect(inputPriority).toBeChecked();
         expect(getByTitle("Selecciona una imagen (máximo 1MB)")).toBeInTheDocument();
 
-        const input_file = getByLabelText('Subir imagen...');
+        const inputFile = getByLabelText('Subir imagen...');
 
-        fireEvent.change(input_file, {
+        fireEvent.change(inputFile, {
             target: { files: [new File(['archivo de prueba 1'], 'test-file.png', { type: 'image/*' })] },
         });
 
         expect(getByTitle("Imagen adecuada")).toBeInTheDocument();
 
-        fireEvent.change(input_file, {
+        fireEvent.change(inputFile, {
             target: { files: [new File(['archivo de prueba 2'], 'test-file.pdf', { type: 'pdf/' })] },
         });
 
@@ -140,69 +133,69 @@ describe('Componente <Form/> principal', () => {
 
         const slightlyBigFile = new File([new Blob([new Uint8Array(1024 * 1024 * 1.1)])], 'test-file.pdf', { type: 'image/*' });
 
-        fireEvent.change(input_file, {
+        fireEvent.change(inputFile, {
             target: { files: [slightlyBigFile] },
         });
 
         expect(getByTitle("Tu imagen no debe superar 1MB.")).toBeInTheDocument();
 
         await waitFor(() => {
-            fireEvent.submit(button_submit);
+            fireEvent.submit(buttonSubmit);
         })
     })
 
     test('Renderizacion correcta al editar una nota', async () => {
         const { getByTitle } = render(
-            <ComponentForm category_selected={category} setCategory_selected={setSelected} note_selected={note} />
+            <ComponentForm categorySelected={category} setCategorySelected={setSelected} noteSelected={note} />
         );
 
         const title = getByTitle('Titulo formulario');
-        const button_submit = getByTitle('Guardar');
+        const buttonSubmit = getByTitle('Guardar');
 
         expect(title.textContent).toBe('Actualizar nota');
-        expect(button_submit.textContent).toBe('Guardar');
+        expect(buttonSubmit.textContent).toBe('Guardar');
 
-        const remove_imagen = getByTitle('Quitar imagen');
+        const removeImagen = getByTitle('Quitar imagen');
 
-        fireEvent.click(remove_imagen);
+        fireEvent.click(removeImagen);
 
         await waitFor(() => {
-            fireEvent.submit(button_submit);
+            fireEvent.submit(buttonSubmit);
         })
     })
 
     describe('Renderizacion correcta al deshacer una operacion', () => {
         test('Con nota seleccionada', () => {
             const component = render(
-                <ComponentForm category_selected={category} setCategory_selected={setSelected} note_selected={note} />
+                <ComponentForm categorySelected={category} setCategorySelected={setSelected} noteSelected={note} />
             );
 
-            const input_title = component.getByPlaceholderText('Escriba el titulo...');
-            const input_description = component.getByPlaceholderText('Escriba la descripcion...');
-            const input_priority = component.getByText('Alta');
+            const inputTitle = component.getByPlaceholderText('Escriba el titulo...');
+            const inputDescription = component.getByPlaceholderText('Escriba la descripcion...');
+            const inputPriority = component.getByText('Alta');
 
-            expect(input_title).toHaveValue(note.title);
-            expect(input_description).toHaveValue(note.description);
-            expect(input_priority).toHaveClass('bg-secondary text-primary');
+            expect(inputTitle).toHaveValue(note.title);
+            expect(inputDescription).toHaveValue(note.description);
+            expect(inputPriority).toHaveClass('bg-secondary text-primary');
 
-            const button_deshacer = component.getByRole('button', { name: 'Deshacer' });
-            fireEvent.click(button_deshacer);
+            const buttonDeshacer = component.getByRole('button', { name: 'Deshacer' });
+            fireEvent.click(buttonDeshacer);
 
-            expect(input_title).toHaveValue('');
-            expect(input_description).toHaveValue('');
-            expect(input_priority).toHaveClass('text-secondary group-hover:bg-secondary group-hover:text-primary');
-            expect(mock_push).toHaveBeenCalledWith('/notes/search');
+            expect(inputTitle).toHaveValue('');
+            expect(inputDescription).toHaveValue('');
+            expect(inputPriority).toHaveClass('text-secondary group-hover:bg-secondary group-hover:text-primary');
+            expect(mock_push).toHaveBeenCalledWith(APP_ROUTES.notes.search);
         })
 
         test('Sin nota seleccionada', () => {
             const component = render(
-                <ComponentForm category_selected={category} setCategory_selected={setSelected} note_selected={undefined} />
+                <ComponentForm categorySelected={category} setCategorySelected={setSelected} noteSelected={undefined} />
             );
 
-            const button_deshacer = component.getByRole('button', { name: 'Deshacer' });
-            fireEvent.click(button_deshacer);
+            const buttonDeshacer = component.getByRole('button', { name: 'Deshacer' });
+            fireEvent.click(buttonDeshacer);
 
-            expect(mock_push).toHaveBeenCalledWith('/dashboard/main');
+            expect(mock_push).toHaveBeenCalledWith(APP_ROUTES.dashboard.main);
         });
     })
 
@@ -224,7 +217,7 @@ describe('Componente <Form/> principal', () => {
             describe(`Error ${validation.name}`, () => {
                 labels.forEach(label => {
                     test(`${label.title}`, () => {
-                        const { getByTitle } = render(<ComponentLabel title={label.title} html_for={label.name} errors={errors(label.name, validation.message)} />)
+                        const { getByTitle } = render(<ComponentLabel title={label.title} htmlFor={label.name} errors={errors(label.name, validation.message)} />)
                         const label_element = getByTitle(label.title);
                         expect(label_element.textContent).toMatch(validation.match);
                     })
@@ -235,7 +228,7 @@ describe('Componente <Form/> principal', () => {
         describe('Sin errores', () => {
             labels.forEach(label => {
                 test(`${label.title}`, () => {
-                    const { getByTitle } = render(<ComponentLabel title={label.title} html_for={label.name} errors={undefined} />)
+                    const { getByTitle } = render(<ComponentLabel title={label.title} htmlFor={label.name} errors={undefined} />)
                     const label_element = getByTitle(label.title);
                     expect(label_element.textContent).toMatch(new RegExp(label.title));
                 })
@@ -253,7 +246,7 @@ describe('Componente <Form/> principal', () => {
                     placeholder="Escriba..."
                     register={register}
                     error={undefined}
-                    description_class="border-opacity-50 bg-primary w-full rounded-md border-[0.1px] py-1.5 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
+                    descriptionClass="border-opacity-50 bg-primary w-full rounded-md border-[0.1px] py-1.5 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
                 />)
                 const input_element = getByPlaceholderText('Escriba...');
                 expect(input_element).toHaveClass('border-secondary text-secondary placeholder:text-secondary');
@@ -273,10 +266,10 @@ describe('Componente <Form/> principal', () => {
                         placeholder="Escriba el titulo..."
                         register={register}
                         error={validation.name}
-                        description_class="border-opacity-50 bg-primary w-full rounded-md border-[0.1px] py-1.5 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
+                        descriptionClass="border-opacity-50 bg-primary w-full rounded-md border-[0.1px] py-1.5 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
                     />)
-                    const input_title = getByPlaceholderText('Escriba el titulo...');
-                    expect(input_title).toHaveClass('border-error text-error placeholder:text-error');
+                    const inputTitle = getByPlaceholderText('Escriba el titulo...');
+                    expect(inputTitle).toHaveClass('border-error text-error placeholder:text-error');
                 })
             })
         })
@@ -290,10 +283,10 @@ describe('Componente <Form/> principal', () => {
                         placeholder="Escriba la descripcion..."
                         register={register}
                         error={validation.name}
-                        description_class="border-opacity-50 bg-primary w-full rounded-md border-[0.1px] min-h-[80px] scroll py-1.5 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
+                        descriptionClass="border-opacity-50 bg-primary w-full rounded-md border-[0.1px] min-h-[80px] scroll py-1.5 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
                     />)
-                    const input_description = getByPlaceholderText('Escriba la descripcion...');
-                    expect(input_description).toHaveClass('border-error text-error placeholder:text-error');
+                    const inputDescription = getByPlaceholderText('Escriba la descripcion...');
+                    expect(inputDescription).toHaveClass('border-error text-error placeholder:text-error');
                 })
             })
         })
@@ -307,16 +300,16 @@ describe('Componente <Form/> principal', () => {
                         const { getByTitle, getByText } = render(<ComponentItemPriority
                             id={item.name}
                             value={item.value}
-                            class_icon="text-red-500 rotate-[-180deg]"
+                            descriptionClass="text-red-500 rotate-[-180deg]"
                             paint={false}
                             error="required"
                             register={register}
                         />)
                         const label = getByTitle(`${item.value} prioridad`);
-                        const text_label = getByText(item.value);
+                        const textLabel = getByText(item.value);
 
                         expect(label).toHaveClass('border-error');
-                        expect(text_label).toHaveClass('text-error group-hover:bg-error group-hover:text-primary');
+                        expect(textLabel).toHaveClass('text-error group-hover:bg-error group-hover:text-primary');
                     })
                 })
             })

@@ -2,14 +2,14 @@ import axios, { AxiosRequestConfig } from "axios";
 
 type types = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-type Props = {
+type PropsRequest = {
     type: types,
     url: string,
     body?: object,
     config?: AxiosRequestConfig
 }
 
-export async function Request(props: Props): Promise<any> {
+export async function httpRequest(props: PropsRequest): Promise<any> {
     const { type, url, body, config } = props;
 
     let response;

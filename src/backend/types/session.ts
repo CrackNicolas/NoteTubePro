@@ -1,18 +1,18 @@
-export type Props_session = {
+export type PropsSession = {
     id: string,
     status: boolean,
-    last_time: string,
+    lastTime: string,
     expiret: string,
-    origin: Props_origin,
-    user: Props_user
+    origin: PropsOrigin,
+    user: PropsUser
 }
 
-type Props_origin = {
-    IP_adress: string,
+type PropsOrigin = {
+    ipAdress: string,
     city: string
 }
 
-type Props_user = {
+type PropsUser = {
     name: string,
     email: string,
     image: string,

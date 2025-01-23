@@ -1,91 +1,91 @@
 import { type NextRequest } from 'next/server';
 import { NextResponse } from "next/server";
 
-import { Props_response } from "@/context/types/response";
-import { Props_category } from "@/context/types/category";
+import { PropsResponse } from "@/context/types/response";
+import { PropsCategory } from "@/context/types/category";
 
-import { Conect_database } from "@/backend/utils/db";
+import { conectDatabase } from "@/backend/utils/db";
 
 import Category from '@/backend/schemas/category';
-import Autentication from '@/backend/logic/autentication';
+import autentication from '@/backend/logic/autentication';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-    const user_id = Autentication(req.cookies);
-    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const userId = autentication(req.cookies);
+    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
 
-    const connection: boolean = await Conect_database();
-    if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
+    const connection: boolean = await conectDatabase();
+    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
 
     try {
         const count: number = await Category.countDocuments();
         if (count === 0) {
             await Category.create([
-                { title: 'Proyecto', use: [{ value: true, user_id }], icon: 'proyects' },
-                { title: 'Trabajo', use: [{ value: true, user_id }], icon: 'briefcase' },
-                { title: 'Inversion', use: [{ value: true, user_id }], icon: 'investment' },
-                { title: 'Estudios', use: [{ value: true, user_id }], icon: 'studies' },
-                { title: 'Personal', use: [{ value: true, user_id }], icon: 'person' },
-                { title: 'Viajes', use: [{ value: true, user_id }], icon: 'plane' },
-                { title: 'Historias', use: [{ value: true, user_id }], icon: 'stories' },
-                { title: 'Peliculas', use: [{ value: true, user_id }], icon: 'film' },
-                { title: 'Musicas', use: [{ value: true, user_id }], icon: 'music' },
-                { title: 'Otros', use: [{ value: true, user_id }], icon: 'others' }
+                { title: 'Proyecto', use: [{ value: true, userId }], icon: 'proyects' },
+                { title: 'Trabajo', use: [{ value: true, userId }], icon: 'briefcase' },
+                { title: 'Inversion', use: [{ value: true, userId }], icon: 'investment' },
+                { title: 'Estudios', use: [{ value: true, userId }], icon: 'studies' },
+                { title: 'Personal', use: [{ value: true, userId }], icon: 'person' },
+                { title: 'Viajes', use: [{ value: true, userId }], icon: 'plane' },
+                { title: 'Historias', use: [{ value: true, userId }], icon: 'stories' },
+                { title: 'Peliculas', use: [{ value: true, userId }], icon: 'film' },
+                { title: 'Musicas', use: [{ value: true, userId }], icon: 'music' },
+                { title: 'Otros', use: [{ value: true, userId }], icon: 'others' }
             ])
         }
 
-        const user_category = await Category.findOne({ "use.user_id": user_id });
+        const userCategory = await Category.findOne({ "use.userId": userId });
 
-        if (!user_category) await Category.updateMany({}, { $push: { use: { value: true, user_id } } });
+        if (!userCategory) await Category.updateMany({}, { $push: { use: { value: true, userId } } });
 
-        const categorys = await Category.find({ "use.user_id": user_id });
+        const categorys = await Category.find({ "use.userId": userId });
 
-        let filter_categorys: Props_category[] = [];
+        let filterCategorys: PropsCategory[] = [];
 
         categorys.map(category => {
-            filter_categorys.push({
+            filterCategorys.push({
                 title: category.title,
-                use: category.use.find((prev: { value: true, user_id: string }) => prev.user_id == user_id).value,
+                use: category.use.find((prev: { value: true, userId: string }) => prev.userId == userId).value,
                 icon: category.icon
             })
         })
 
-        return NextResponse.json<Props_response>({ status: 200, data: filter_categorys });
+        return NextResponse.json<PropsResponse>({ status: 200, data: filterCategorys });
     } catch (error: unknown) {
-        return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } })
+        return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } })
     }
 }
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
-    const user_id = Autentication(req.cookies);
-    if (!user_id) return NextResponse.json<Props_response>({ status: 401, info: { message: "Credenciales invalidas" } });
+    const userId = autentication(req.cookies);
+    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
 
     const { title, use } = await req.json();
 
-    const connection: boolean = await Conect_database();
-    if (!connection) return NextResponse.json<Props_response>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
+    const connection: boolean = await conectDatabase();
+    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
 
     try {
         if (!use) {
-            const user_categorys = await Category.find({ "use.user_id": user_id });
+            const userCategorys = await Category.find({ "use.userId": userId });
 
-            const count: number = user_categorys.filter(category =>
-                category.use.some((prev: { user_id: string, value: boolean }) => prev.user_id === user_id && prev.value === true)
+            const count: number = userCategorys.filter(category =>
+                category.use.some((prev: { userId: string, value: boolean }) => prev.userId === userId && prev.value === true)
             ).length;
 
-            if (count === 2) return NextResponse.json<Props_response>({ status: 200, info: { message: 'Debes tener por lo menos 2 categorias en uso' } });
+            if (count === 2) return NextResponse.json<PropsResponse>({ status: 200, info: { message: 'Debes tener por lo menos 2 categorias en uso' } });
         }
 
-        const exists_category = await Category.findOne({ title });
+        const existsCategory = await Category.findOne({ title });
 
-        if (!exists_category) return NextResponse.json<Props_response>({ status: 404, info: { message: "Categoria no encontrada" } });
+        if (!existsCategory) return NextResponse.json<PropsResponse>({ status: 404, info: { message: "Categoria no encontrada" } });
 
-        const category = exists_category.use.find((prev: { user_id: string }) => prev.user_id === user_id);
+        const category = existsCategory.use.find((prev: { userId: string }) => prev.userId === userId);
         category.value = use;
 
-        await exists_category.save();
+        await existsCategory.save();
 
-        return NextResponse.json<Props_response>({ status: 200, info: { message: `Categoria "${title}" ${use ? 'configurada para su uso' : 'fuera de uso'} ` } });
+        return NextResponse.json<PropsResponse>({ status: 200, info: { message: `Categoria "${title}" ${use ? 'configurada para su uso' : 'fuera de uso'} ` } });
     } catch (error:unknown) {
-        return NextResponse.json<Props_response>({ status: 500, info: { message: "Errores con el servidor" } })
+        return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } })
     }
 }

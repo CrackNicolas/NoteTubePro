@@ -1,59 +1,60 @@
 'use client'
 
-import { useSearchParams } from "next/navigation";
-
 import { Fragment, useCallback, useEffect, useState } from "react";
+
+import { Component } from "@/frontend/types/component";
+
+import IContext from "@/context/interfaces/context";
+import useAppContext from "@/context/hooks/context";
+
+import { PropsNote } from "@/context/types/note";
+import { PropsCategory } from "@/context/types/category";
+
+import { httpRequest } from "@/backend/logic/requests";
 
 import ComponentItems from "@/frontend/components/layouts/category/list/items";
 import ComponentHeader from "@/frontend/components/partials/template/dashboard/header";
 import ComponentContainerForm from "@/frontend/components/layouts/notes/container_form";
 
-import { Request } from "@/backend/logic/requests";
-import { Props_note } from "@/context/types/note";
-import { Props_category } from "@/context/types/category";
+export default function ComponentNotes(): Component {
+    const [selectedNote, setSelectedNote] = useState<PropsNote | undefined>(undefined);
+    const [listCategorys, setListCategorys] = useState<PropsCategory[]>([]);
+    const [categorySelected, setCategorySelected] = useState<PropsCategory | undefined>(undefined);
 
-export default function ComponentNotes(): JSX.Element {
-    const [selected_note, setSelected_note] = useState<Props_note | undefined>(undefined);
-    const [list_categorys, setList_categorys] = useState<Props_category[]>([]);
-    const [category_selected, setCategory_selected] = useState<Props_category | undefined>(undefined);
+    const { note }: IContext = useAppContext();
 
-    const search_params = useSearchParams();
+    const select = (category: PropsCategory): void => setCategorySelected(category);
 
-    const select = (category: Props_category): void => setCategory_selected(category);
-
-    const load_categorys = useCallback(async (): Promise<void> => {
-        const { data } = await Request({ type: 'GET', url: '/api/categorys/true' });
+    const loadCategorys = useCallback(async (): Promise<void> => {
+        const { data } = await httpRequest({ type: 'GET', url: '/api/categorys/true' });
 
         if (data.status === 200) {
-            setList_categorys(data.data);
+            setListCategorys(data.data);
         }
         if (data.status === 500) {
-            setList_categorys([]);
+            setListCategorys([]);
         }
     }, [])
 
     useEffect(() => {
-        load_categorys();
-    }, [load_categorys])
+        loadCategorys();
+    }, [loadCategorys])
 
     useEffect(() => {
-        if (search_params.get('data') !== null) {
-            const { note } = JSON.parse(search_params.get('data') as string);
-            setSelected_note(note);
-            setCategory_selected(note.category);
-        }
-    }, [search_params]);
+        setSelectedNote(note);
+        setCategorySelected(note?.category);
+    }, [note]);
 
     return (
-        <article className="flex h-screen flex-col gap-y-6 justify-start pt-20">
+        <article className="flex h-screen 2xl:px-0 xl:px-1 sm:pl-3 flex-col gap-y-6 justify-start pt-20">
             {
-                !category_selected ?
+                !categorySelected ?
                     <Fragment>
                         <ComponentHeader title="Elige una categoría" subtitle="Selecciona una categoría para tu nota" />
-                        <ComponentItems categorys={list_categorys} select={select} use_paint={true} />
+                        <ComponentItems categorys={listCategorys} select={select} paint={true} />
                     </Fragment>
                     :
-                    <ComponentContainerForm category_selected={category_selected} setCategory_selected={setCategory_selected} note_selected={selected_note} />
+                    <ComponentContainerForm categorySelected={categorySelected} setCategorySelected={setCategorySelected} noteSelected={selectedNote} />
             }
         </article>
     )

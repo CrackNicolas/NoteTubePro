@@ -1,10 +1,10 @@
-import { Props_category } from "@/context/types/category"
+import { PropsCategory } from "@/context/types/category"
 
-export type Props_note = {
+export type PropsNote = {
     _id?: string,
     title: string,
     description: string,
-    category: Props_category,
+    category: PropsCategory,
     priority: string,
     featured: boolean
     file?: {
@@ -12,10 +12,10 @@ export type Props_note = {
         name: string,
         url: string
     },
-    user_id: string,
+    userId: string,
     createdAt: Date,
 }
-export type Props_delete_note = {
+export type PropsDeleteNote = {
     _id?: string,
     file?: string
 }

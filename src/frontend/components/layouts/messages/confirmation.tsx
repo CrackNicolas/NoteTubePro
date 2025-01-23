@@ -1,31 +1,31 @@
-import { Dispatch, SetStateAction } from "react";
+import { Component } from "@/frontend/types/component";
+
+import IModalBase from "@/frontend/interfaces/modal";
+
+import { PropsResponse, PropsStatus } from "@/context/types/response";
 
 import ComponentIcon from "@/frontend/components/partials/icon";
 import ComponentModal from "@/frontend/components/partials/modal";
 
-import { Props_response, Props_status } from "@/context/types/response";
-
-type Props = {
-    open: boolean,
+interface IMessageConfirmation extends IModalBase {
     reply?: () => void,
-    setOpen: Dispatch<SetStateAction<boolean>>,
-    response: Props_response,
-    button_close?: boolean
+    response: PropsResponse,
+    buttonClose?: boolean
 }
 
-export default function ComponentMessageConfirmation(props: Props): JSX.Element {
-    const { open, setOpen, response: { status, info }, reply = () => { setOpen(false) }, button_close = true } = props;
+export default function ComponentMessageConfirmation(props: IMessageConfirmation): Component {
+    const { open, setOpen, response: { status, info }, reply = () => { setOpen(false) }, buttonClose = true } = props;
 
-    const icon = (status: Props_status): JSX.Element => {
+    const icon = (status: PropsStatus): Component => {
         switch (status) {
             case 200: case 201: case 204:
-                return <ComponentIcon name='check' description_class='text-secondary' size={25} />
+                return <ComponentIcon name='check' descriptionClass='text-secondary' size={25} />
             case 400: case 401: case 403: case 404: case 500:
-                return <ComponentIcon name='close' description_class='text-error' size={25} />
+                return <ComponentIcon name='close' descriptionClass='text-error' size={25} />
         }
     }
 
-    const color = (status: Props_status): string => {
+    const color = (status: PropsStatus): string => {
         switch (status) {
             case 200: case 201: case 204:
                 return "secondary";
@@ -35,9 +35,9 @@ export default function ComponentMessageConfirmation(props: Props): JSX.Element 
     }
 
     return (
-        <ComponentModal open={open} setOpen={setOpen} color={color(status)} button_close={button_close} >
+        <ComponentModal open={open} setOpen={setOpen} color={color(status)} buttonClose={buttonClose} >
             <div className="flex flex-col w-full items-center text-center sm:mt-0 sm:text-left">
-                <span className={`flex place-items-center p-2.5 rounded-full bg-gray-900 ${!button_close && 'mt-4'}`}>
+                <span className={`flex place-items-center p-2.5 rounded-full bg-gray-900 ${!buttonClose && 'mt-4'}`}>
                     {
                         icon(status)
                     }

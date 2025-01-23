@@ -1,40 +1,38 @@
-import { Dispatch, SetStateAction } from "react";
+import { Component } from "@/frontend/types/component";
 
-import { Props_loading_notes } from "@/frontend/types/props";
-import { Props_delete_note, Props_note } from "@/context/types/note"
+import { PropsNote } from "@/context/types/note"
+import { PropsLoadingNotes } from "@/frontend/types/props";
+
+import IElement from "@/frontend/interfaces/elements/element";
+import INoteBase from "@/frontend/interfaces/note";
 
 import ComponentIcon from "@/frontend/components/partials/icon";
 import ComponentNote from "@/frontend/components/layouts/notes/note";
 import ComponentHeader from "@/frontend/components/partials/template/dashboard/header";
 import ComponentLoading from "@/frontend/components/layouts/notes/list/loading";
 
-type Props = {
-    state: boolean,
-    notes: Props_note[],
-    loading?: Props_loading_notes,
-    update_note: (note: Props_note) => void,
-    notes_selected: Props_delete_note[],
-    setNotes_selected: Dispatch<SetStateAction<Props_delete_note[]>>,
-    description_class?: string
+
+interface IList extends Pick<INoteBase, 'notes' | 'notesSelected' | 'setNotesSelected'>, Partial<Pick<IElement, 'descriptionClass'>>, Pick<IElement, 'state'> {
+    loading?: PropsLoadingNotes
 }
 
-export default function ComponentList(props: Props): JSX.Element {
-    const { loading, notes, update_note, description_class = '', state, notes_selected, setNotes_selected } = props;
+export default function ComponentList(props: IList): Component {
+    const { loading, notes, descriptionClass = '', state, notesSelected, setNotesSelected } = props;
 
     return (
-        <article className={`${description_class} grid grid-cols-1 xl:grid-cols-2 place-items-center gap-4`}>
+        <article className={`${descriptionClass} sm:pb-16 grid grid-cols-1 xl:grid-cols-2 place-items-center gap-4`}>
             {
                 (loading?.value) ?
                     <ComponentLoading count={14} />
                     :
-                    (notes.length === 0) ?
+                    (notes.length == 0) ?
                         <div className="col-span-full flex flex-col items-center gap-5 pt-12">
-                            <ComponentIcon name={loading?.icon} size={180} description_class={`size-[150px] sm:size-[200px] dark:text-dark-secondary text-secondary cursor-pointer`} />
+                            <ComponentIcon name={loading?.icon} size={180} descriptionClass={`size-[150px] sm:size-[200px] dark:text-dark-secondary text-secondary cursor-pointer`} />
                             <ComponentHeader title={loading?.description} />
                         </div>
                         :
-                        notes.map((note: Props_note) => {
-                            return <ComponentNote key={note._id} note={note} update_note={update_note} state={state} notes_selected={notes_selected} setNotes_selected={setNotes_selected} />
+                        notes.map((note: PropsNote) => {
+                            return <ComponentNote key={note._id} note={note} state={state} notesSelected={notesSelected} setNotesSelected={setNotesSelected} />
                         })
             }
         </article>

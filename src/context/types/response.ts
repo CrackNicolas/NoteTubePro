@@ -10,13 +10,16 @@
     500 - Solicitud incumplida por errores en el servidor
 */
 
-import { Props_note } from "@/context/types/note"
-import { Props_session } from "@/context/types/session"
-import { Props_category } from "@/context/types/category"
+import { PropsNote } from "@/context/types/note"
+import { PropsSession } from "@/context/types/session"
+import { PropsCategory } from "@/context/types/category"
 
-export type Props_response = {
-    status: Props_status
-    data?: Props_note[] | Props_note | Props_category[] | Props_session[]
-    info?: { message: string }
+export type PropsResponse = {
+    status: PropsStatus
+    data?: PropsNote[] | PropsNote | PropsCategory[] | PropsSession[]
+    info?: { 
+        message: string 
+    }
 }
-export type Props_status = 200 | 201 | 204 | 400 | 401 | 403 | 404 | 500;
+
+export type PropsStatus = 200 | 201 | 204 | 400 | 401 | 403 | 404 | 500;

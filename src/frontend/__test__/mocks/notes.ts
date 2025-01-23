@@ -1,8 +1,9 @@
-import { Props_note } from "@/context/types/note"
+import { PropsNote } from "@/context/types/note"
+import { PropsInputName } from "@/frontend/interfaces/elements/form/input";
 
-const current_date = new Date();
+const currentDate: Date = new Date();
 
-export const note: Props_note = {
+export const note: PropsNote = {
     _id: '1234',
     title: 'Programando',
     description: 'Realizar configuraciones en la aplicacion',
@@ -12,16 +13,16 @@ export const note: Props_note = {
     },
     priority: 'Alta',
     featured: true,
-    createdAt: current_date,
+    createdAt: currentDate,
     file: {
         id: '1234',
         name: 'Archivo',
         url: 'url'
     },
-    user_id: 'ddddd_d2e0jzKi44asdasd2eKJeR'
+    userId: 'ddddd_d2e0jzKi44asdasd2eKJeR'
 }
 
-export const notes: Props_note[] = [
+export const notes: PropsNote[] = [
     {
         _id: '1234',
         title: 'Titulo de prueba, accionando',
@@ -32,13 +33,13 @@ export const notes: Props_note[] = [
         },
         priority: 'Baja',
         featured: true,
-        createdAt: current_date,
+        createdAt: currentDate,
         file: {
             id: '1234',
             name: 'Archivo',
             url: 'url'
         },
-        user_id: 'dddsadsad2e0jzKi44asdasd2eKJeR'
+        userId: 'dddsadsad2e0jzKi44asdasd2eKJeR'
     },
     {
         _id: '4321',
@@ -50,8 +51,8 @@ export const notes: Props_note[] = [
         },
         priority: 'Media',
         featured: false,
-        createdAt: new Date(current_date.getFullYear(), current_date.getMonth() - 3, current_date.getDay() - 3),
-        user_id: 'ddsadsadsadd_d2e0jzKi44asdasd2eKJeR'
+        createdAt: new Date(currentDate.getFullYear(), currentDate.getMonth() - 3, currentDate.getDay() - 3),
+        userId: 'ddsadsadsadd_d2e0jzKi44asdasd2eKJeR'
     },
     {
         _id: '2223',
@@ -63,17 +64,17 @@ export const notes: Props_note[] = [
         },
         priority: 'Alta',
         featured: true,
-        createdAt: current_date,
+        createdAt: currentDate,
         file: {
             id: '1234',
             name: 'Archivo',
             url: 'url'
         },
-        user_id: 'dddjdjdjdjdj_d2e0jzKi44asdasd2eKJeR'
+        userId: 'dddjdjdjdjdj_d2e0jzKi44asdasd2eKJeR'
     }
 ]
 
-export const labels = [
+export const labels: { title: string, name: PropsInputName }[] = [
     { title: "Titulo", name: "title" },
     { title: "Descripcion", name: "description" },
     { title: "¿Destacar nota?", name: "featured" },

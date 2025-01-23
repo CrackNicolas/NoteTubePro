@@ -1,13 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
+import { Component } from "@/frontend/types/component";
+
+import IModalBase from "@/frontend/interfaces/modal";
 
 import ComponentModal from "@/frontend/components/partials/modal";
 
-type Props = {
-    open: boolean,
-    setOpen: Dispatch<SetStateAction<boolean>>
-}
-
-export default function ComponentMessageWait(props: Props): JSX.Element {
+export default function ComponentMessageWait(props: IModalBase): Component {
     const { open, setOpen } = props;
 
     return (

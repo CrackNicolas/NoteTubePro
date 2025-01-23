@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
+import { fireEvent, render, RenderResult } from '@testing-library/react'
 
 import ResizeObserver from 'resize-observer-polyfill';
 global.ResizeObserver = ResizeObserver;
@@ -10,6 +10,7 @@ import MockAdapter from 'axios-mock-adapter'
 import ComponentList from "@/frontend/components/layouts/category/list/container"
 import ComponentHeader from "@/frontend/components/partials/template/dashboard/header"
 
+import { APP_ROUTES } from '@/frontend/constant/app_rutes';
 import { categorys } from '@/frontend/__test__/mocks/categorys'
 
 const mock = new MockAdapter(axios);
@@ -46,9 +47,9 @@ describe('Componente <Category/>', () => {
     test('Renderizacion correcta loading Items', () => {
         const { getAllByTitle } = render(<ComponentList categorys={[]} setRestart={setRestart} />);
 
-        const items_loading = getAllByTitle('Cargando...');
+        const itemsLoading = getAllByTitle('Cargando...');
 
-        items_loading.map(item => {
+        itemsLoading.map(item => {
             expect(item).toBeInTheDocument();
         })
     });
@@ -66,7 +67,7 @@ describe('Componente <Category/>', () => {
 
             fireEvent.click(volver);
 
-            expect(mock_push).toHaveBeenCalledWith('/dashboard/config');
+            expect(mock_push).toHaveBeenCalledWith(APP_ROUTES.dashboard.config);
         });
 
     });

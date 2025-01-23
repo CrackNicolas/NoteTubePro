@@ -1,24 +1,20 @@
 'use client'
 
-import { ReactNode } from "react";
-
 import Link from "next/link";
 
-type Props = {
-    url: string,
-    title: string,
-    description_class: string,
-    children: ReactNode,
-    onClick?: () => void,
-    onMouseOver?: () => void,
-    onMouseLeave?: () => void
+import { Component } from "@/frontend/types/component";
+
+import IElement from "@/frontend/interfaces/elements/element";
+
+interface ILink extends Pick<IElement, 'title' |'children' | 'descriptionClass' | 'onClick' | 'onMouseLeave' | 'onMouseOver'> {
+    url: string
 }
 
-export default function ComponentLink(props: Props): JSX.Element {
-    const { url, title, description_class, children, onClick = () => { }, onMouseOver = () => { }, onMouseLeave = () => { } } = props;
+export default function ComponentLink(props: ILink): Component {
+    const { url, title, descriptionClass, children, onClick = () => { }, onMouseOver = () => { }, onMouseLeave = () => { } } = props;
 
     return (
-        <Link href={url} onClick={onClick} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} title={title} rel="noopener noreferrer" className={description_class}>
+        <Link href={url} onClick={onClick} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} title={title} rel="noopener noreferrer" className={descriptionClass}>
             {children}
         </Link>
     )

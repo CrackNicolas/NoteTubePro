@@ -4,7 +4,7 @@ const props = {
     isConnected: false
 }
 
-export async function Conect_database(): Promise<boolean> {
+export async function conectDatabase(): Promise<boolean> {
     try {
         if (props.isConnected) return true;
         const db = await connect(`${process.env.MONGODB_URL}`);

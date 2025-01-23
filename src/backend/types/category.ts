@@ -1,10 +1,10 @@
-export type Props_category = {
+export type PropsCategory = {
     title: string,
-    use?: Props_use[]
+    use?: PropsUse[]
     icon: string
 }
 
-type Props_use = {
+type PropsUse = {
     value: boolean,
-    user_id: string
+    userId: string
 }

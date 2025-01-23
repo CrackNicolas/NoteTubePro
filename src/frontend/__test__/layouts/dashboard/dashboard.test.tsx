@@ -1,11 +1,12 @@
 import '@testing-library/jest-dom'
 import { fireEvent, render, RenderResult } from '@testing-library/react'
 
+import { APP_ROUTES } from '@/frontend/constant/app_rutes'
+import { ItemsMain } from '@/frontend/constant/dashboard'
+import { ItemsConfig } from '@/frontend/constant/dashboard'
+
 import ComponentDashboardMain from '@/frontend/components/layouts/dashboard/main'
 import ComponentTemplateDashboard from '@/frontend/components/partials/template/dashboard/container'
-
-import { Items_main } from '@/frontend/constant/dashboard'
-import { Items_config } from '@/frontend/constant/dashboard'
 
 const mock_push = jest.fn();
 
@@ -20,7 +21,7 @@ describe('Componente <DashboardMain/>', () => {
     let component: RenderResult
 
     beforeEach(() => {
-        component = render(<ComponentDashboardMain items={Items_main} />);
+        component = render(<ComponentDashboardMain items={ItemsMain} />);
     });
 
     test('Renderizacion correcta en el Header', () => {
@@ -28,7 +29,7 @@ describe('Componente <DashboardMain/>', () => {
     });
 
     test('Renderizacion correcta en los Items', () => {
-        Items_main.forEach(item => {
+        ItemsMain.forEach(item => {
             const title = component.getByTitle(item.title);
             const icons = component.getAllByTestId('icon-item');
 
@@ -47,9 +48,9 @@ describe('Componente <DashboardMain/>', () => {
     test('Renderizacion correcta loading Items', () => {
         component.rerender(<ComponentDashboardMain items={[]} />);
 
-        const items_loading = component.getAllByTitle('Cargando...');
+        const itemsLoading = component.getAllByTitle('Cargando...');
 
-        items_loading.map(item => {
+        itemsLoading.map(item => {
             expect(item).toBeInTheDocument();
         })
     });
@@ -59,7 +60,7 @@ describe('Componente <DashboardConfig/>', () => {
     let component: RenderResult
 
     beforeEach(() => {
-        component = render(<ComponentTemplateDashboard items={Items_config} view_redirect={true} />);
+        component = render(<ComponentTemplateDashboard items={ItemsConfig} viewRedirect={true} />);
     });
 
     test('Renderizacion correcta en el Header', () => {
@@ -67,7 +68,7 @@ describe('Componente <DashboardConfig/>', () => {
     });
 
     test('Renderizacion correcta en los Items', () => {
-        Items_config.forEach(item => {
+        ItemsConfig.forEach(item => {
             expect(component.getByText(item.title)).toBeInTheDocument()
             expect(component.getByTitle(item.title)).toHaveAttribute('href', item.url);
             expect(component.getByText(item.description)).toBeInTheDocument()
@@ -79,7 +80,7 @@ describe('Componente <DashboardConfig/>', () => {
 
         fireEvent.click(volver);
 
-        expect(mock_push).toHaveBeenCalledWith('/dashboard/main');
+        expect(mock_push).toHaveBeenCalledWith(APP_ROUTES.dashboard.main);
     });
 })
 
