@@ -21,7 +21,7 @@ export default function ComponentNotes(): Component {
     const [listCategorys, setListCategorys] = useState<PropsCategory[]>([]);
     const [categorySelected, setCategorySelected] = useState<PropsCategory | undefined>(undefined);
 
-    const { note }: IContext = useAppContext();
+    const { note, opacity }: IContext = useAppContext();
 
     const select = (category: PropsCategory): void => setCategorySelected(category);
 
@@ -46,7 +46,7 @@ export default function ComponentNotes(): Component {
     }, [note]);
 
     return (
-        <article className="flex min-h-screen 2xl:px-0 sm:pl-5 flex-col gap-y-6 justify-start pt-20">
+        <article className={`${opacity && 'opacity-50'} flex min-h-screen 2xl:px-0 sm:pl-5 flex-col gap-y-6 justify-start pt-20`}>
             {
                 !categorySelected ?
                     <Fragment>

@@ -10,6 +10,9 @@ import { PropsCategory } from "@/context/types/category";
 import { PropsDeleteNote, PropsNote } from "@/context/types/note";
 import { PropsLoadingNotes, PropsParamsSearch } from "@/frontend/types/props";
 
+import IContext from "@/context/interfaces/context";
+import useAppContext from "@/context/hooks/context";
+
 import { httpRequest } from "@/backend/logic/requests";
 
 import ComponentIcon from "@/frontend/components/partials/icon";
@@ -23,6 +26,8 @@ import ComponentMessageConfirmation from "@/frontend/components/layouts/messages
 import ComponentMessageConfirmationDelete from "@/frontend/components/layouts/messages/confirmation_delete";
 
 export default function ComponentSearch(): Component {
+    const {opacity}: IContext = useAppContext();
+
     const { register, watch, setValue } = useForm();
 
     const title = watch('title');
@@ -58,7 +63,7 @@ export default function ComponentSearch(): Component {
         ) {
             controllerViewFilter(false);
         }
-    };
+    }
 
     useMouseDown({ action: handleClickOutside });
 
@@ -159,7 +164,7 @@ export default function ComponentSearch(): Component {
     }, [title, selectCategory, selectPriority, selectFeatured, selectDate, listenToChanges]);
 
     return (
-        <article className={`relative h-[calc(100vh-30px)] 2xl:px-0 sm:pl-5 flex flex-col gap-5 mt-[30px] pt-6`}>
+        <article className={`${opacity && 'opacity-50'} relative h-[calc(100vh-30px)] 2xl:px-0 sm:pl-5 flex flex-col gap-5 mt-[30px] pt-6`}>
             <article className="fixed max-w-7xl w-full mt-[3px] z-50">
                 <article className={`${viewFilter && 'sz:w-[calc(100%-80px)] md:w-[calc(100%-275px)]'} 2xl:w-[calc(100%-80px)] sm:w-[calc(100%-100px)] w-[calc(100%-25px)] pb-3 z-50 flex gap-y-6 gap-x-3 justify-between items-center dark:bg-dark-primary bg-primary transition-width`}>
                     {

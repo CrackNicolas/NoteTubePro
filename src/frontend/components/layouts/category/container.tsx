@@ -7,6 +7,9 @@ import { Component } from "@/frontend/types/component";
 import { PropsCategory } from "@/context/types/category";
 import { PropsResponse } from "@/context/types/response";
 
+import IContext from "@/context/interfaces/context";
+import useAppContext from "@/context/hooks/context";
+
 import { httpRequest } from "@/backend/logic/requests";
 
 import ComponentList from "@/frontend/components/layouts/category/list/container";
@@ -14,6 +17,8 @@ import ComponentHeader from "@/frontend/components/partials/template/dashboard/h
 import ComponentMessageConfirmation from "@/frontend/components/layouts/messages/confirmation";
 
 export default function ComponentCategory(): Component {
+    const {opacity}: IContext = useAppContext();
+
     const [listCategorys, setListCategorys] = useState<PropsCategory[]>([]);
 
     const [open, setOpen] = useState<boolean>(false);
@@ -39,7 +44,7 @@ export default function ComponentCategory(): Component {
     }, [restart])
 
     return (
-        <article className="relative min-h-screen 2xl:px-0 sm:pl-5 flex flex-col gap-12 sm:pt-20 pt-16 pb-7">
+        <article className={`${opacity && 'opacity-50'} relative min-h-screen 2xl:px-0 sm:pl-5 flex flex-col gap-12 sm:pt-20 pt-16 pb-7`}>
             <ComponentHeader title="Tus Categorías" subtitle="Toca para agregar o quitar categorías de tus notas" />
             <ComponentList categorys={listCategorys} setRestart={setRestart} />
             {

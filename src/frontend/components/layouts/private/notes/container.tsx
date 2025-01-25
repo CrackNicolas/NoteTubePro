@@ -23,7 +23,7 @@ export default function ComponentList(props: IList): Component {
         <article className="grid grid-cols-1 lg:grid-cols-2 place-items-center gap-4 pb-5">
             {
                 (notes.length === 0) ?
-                    <ComponentLoading count={10} />
+                    <ComponentLoading count={12} />
                     :
                     notes.map((note: PropsNote) => {
                         return (

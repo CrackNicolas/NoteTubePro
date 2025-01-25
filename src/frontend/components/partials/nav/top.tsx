@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Component } from "@/frontend/types/component";
 import { APP_ROUTES } from "@/frontend/constant/app_rutes";
 
 import IContext from "@/context/interfaces/context";
+import useMouseDown from "@/frontend/hooks/mousedown";
 import useCurrentPath from "@/frontend/hooks/path";
 
 import ComponentLink from "@/frontend/components/partials/link";
@@ -18,7 +19,17 @@ export default function ComponentNavTop(props: IContext): Component {
 
     const [focus, setFocus] = useState<string>('');
 
+    const refUserButton = useRef<HTMLDivElement>(null);
+
     const getFocus = (name: string): boolean => (focus === name);
+
+    const handleClickOutside = (event: MouseEvent): void => {
+        if (refUserButton.current && !refUserButton.current.contains(event.target as Node)) {
+            setOpacity(false);
+        }
+    }
+
+    useMouseDown({ action: handleClickOutside });
 
     return (
         <nav className="fixed w-full dark:bg-dark-primary bg-primary top-0 mt-[-7px] z-50">
@@ -48,7 +59,7 @@ export default function ComponentNavTop(props: IContext): Component {
                                 </ComponentLink>
                                 :
                                 (session.id) && (
-                                    <div onClick={() => setOpacity(!opacity)} className="flex gap-x-4 rounded-full" title="Usuario">
+                                    <div ref={refUserButton} onClick={() => setOpacity(!opacity)} className="flex gap-x-4 rounded-full" title="Usuario">
                                         {buttonSesion}
                                     </div>
                                 )

@@ -27,7 +27,7 @@ export const Context = createContext<IContext>({
 
 export default function TemplateContext(props: ITemplateContext): Component {
     const { children, value } = props;
-
+    
     return (
         <Context.Provider value={value}>
             <ProgressBar key={value.theme} color={ThemeColors[value.theme]} options={{ showSpinner: false }} />

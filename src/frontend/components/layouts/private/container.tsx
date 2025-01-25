@@ -48,7 +48,7 @@ export default function ComponentSessions(): Component {
     }, []);
 
     return (
-        <article className={`${opacity && 'opacity-40'} flex flex-col gap-5 2xl:px-0 sm:pl-5 pt-14 pb-10 min-h-screen max-h-screen`}>
+        <article className={`${opacity && 'opacity-40'} flex flex-col gap-5 2xl:px-0 sm:pl-5 pt-14 pb-10 min-h-screen`}>
             <ComponentHeader countSessions={sessions.length} userSelected={userSelected} setUserSelected={setUserSelected} />
             {
                 (userSelected) ?
