@@ -25,6 +25,7 @@ import TemplateContext from "@/context/template";
 export default function Provider({ children }: ILayouts): Component {
     const [note, setNote] = useState<PropsNote>();
     const [theme, setTheme] = useState<PropsTheme>(ThemeName.ligth);
+    const [opacity, setOpacity] = useState<boolean>(false);
     const [session, setSession] = useState<PropsSession>({});
 
     const dataUser = useUser();
@@ -76,6 +77,8 @@ export default function Provider({ children }: ILayouts): Component {
     }, [dataUser.user, loadUser])
 
     const contextValue: IContext = useMemo(() => ({
+        opacity,
+        setOpacity,
         sectionCurrent,
         session,
         buttonSesion: <ComponentUserButton />,

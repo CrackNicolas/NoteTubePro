@@ -12,9 +12,9 @@ import ComponentLink from "@/frontend/components/partials/link";
 import ComponentIcon from "@/frontend/components/partials/icon";
 
 export default function ComponentNavTop(props: IContext): Component {
-    const { session, buttonSesion } = props;
+    const { session, buttonSesion, setOpacity, opacity } = props;
 
-    const path: string = useCurrentPath();
+    const path: string = useCurrentPath(true);
 
     const [focus, setFocus] = useState<string>('');
 
@@ -22,10 +22,10 @@ export default function ComponentNavTop(props: IContext): Component {
 
     return (
         <nav className="fixed w-full dark:bg-dark-primary bg-primary top-0 mt-[-7px] z-50">
-            <article className="mx-auto max-w-7xl px-3 xl:pl-10 sm:pl-[53px] sm:pr-10">
+            <article className="mx-auto max-w-7xl pl-3 pr-2 2xl:pl-10 sm:pl-[60px] sm:pr-10">
                 <div className="relative flex gap-x-3 h-16 items-center justify-between">
                     <div className="flex items-center justify-center sm:items-stretch sm:justify-start">
-                        <ComponentLink url="/" title="Logo" onMouseOver={() => setFocus('logo')} onMouseLeave={() => setFocus('')} descriptionClass="flex gap-x-2 items-center">
+                        <ComponentLink url={APP_ROUTES.home} title="Logo" onMouseOver={() => setFocus('logo')} onMouseLeave={() => setFocus('')} descriptionClass="flex gap-x-2 items-center">
                             <ComponentIcon testid="icon-home" name={`${getFocus('logo') ? 'logo-fill' : 'logo'}`} size={24} descriptionClass="icon-home dark:text-dark-secondary text-secondary cursor-pointer" />
                             <strong className="dark:text-dark-tertiary text-tertiary text-lg">
                                 NoteTube
@@ -33,6 +33,11 @@ export default function ComponentNavTop(props: IContext): Component {
                         </ComponentLink>
                     </div>
                     <div className="relative inset-y-0 right-0 flex items-center pr-1 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                        {
+                            (path != APP_ROUTES.home && path != APP_ROUTES.signIn && !session.id) && (
+                                <span className="absolute right-0 animate-pulse dark:bg-dark-secondary bg-secondary opacity-30 rounded-full w-[28px] h-[28px] " />
+                            )
+                        }
                         {
                             (path == APP_ROUTES.home && !session.id) ?
                                 <ComponentLink url={APP_ROUTES.signIn} title="Iniciar sesion" descriptionClass="group border dark:border-dark-tertiary border-tertiary dark:hover:border-dark-secondary hover:border-secondary border-[0.1px] px-3 rounded-md flex py-[3px] flex items-center gap-x-1 outline-none transition duration-500">
@@ -42,13 +47,11 @@ export default function ComponentNavTop(props: IContext): Component {
                                     </span>
                                 </ComponentLink>
                                 :
-                                (session.id) ?
-                                    <div className="flex gap-x-4 rounded-full" title="Usuario">
+                                (session.id) && (
+                                    <div onClick={() => setOpacity(!opacity)} className="flex gap-x-4 rounded-full" title="Usuario">
                                         {buttonSesion}
                                     </div>
-                                    :
-                                    (path != APP_ROUTES.signIn) &&
-                                    <span className="animate-pulse dark:bg-dark-secondary bg-secondary opacity-30 rounded-full w-[32px] h-[32px] " />
+                                )
                         }
                     </div>
                 </div>

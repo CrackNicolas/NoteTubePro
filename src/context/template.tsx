@@ -15,6 +15,8 @@ interface ITemplateContext extends ILayouts {
 }
 
 export const Context = createContext<IContext>({
+    opacity: false,
+    setOpacity: () => {},
     sectionCurrent: '',
     session: {},
     buttonSesion: <ComponentUserButton />,

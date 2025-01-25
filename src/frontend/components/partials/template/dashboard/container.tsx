@@ -6,7 +6,10 @@ import { APP_ROUTES } from "@/frontend/constant/app_rutes"
 import { Component } from "@/frontend/types/component"
 import { PropsItemsDashboard } from "@/frontend/types/props"
 
+import IContext from "@/context/interfaces/context"
 import IElement from "@/frontend/interfaces/elements/element"
+
+import useAppContext from "@/context/hooks/context"
 
 import ComponentIcon from "@/frontend/components/partials/icon"
 import ComponentItem from "@/frontend/components/partials/template/dashboard/item"
@@ -27,8 +30,10 @@ export default function ComponentTemplateDashboard(props: ITemplateDashboard): C
 
     const router = useRouter();
 
+    const { opacity }: IContext = useAppContext();
+
     return (
-        <article className="min-h-screen relative dark:bg-dark-primary bg-primary 2xl:px-0 xl:px-1 sm:pl-3 sm:pt-20 pt-16 pb-9">
+        <article className={`${opacity && 'opacity-40'} min-h-screen relative dark:bg-dark-primary bg-primary 2xl:px-0 sm:pl-5 sm:pt-20 pt-16 pb-9`}>
             <ComponentHeader title={header.title} subtitle={header.subtitle} />
             <article className="relative pb-10 sm:pb-9 mx-auto place-items-center mt-1 grid max-w-2xl grid-cols-1 lg:gap-8 gap-3 pt-10 sm:mt-10 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {

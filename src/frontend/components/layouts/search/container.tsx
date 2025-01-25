@@ -159,57 +159,59 @@ export default function ComponentSearch(): Component {
     }, [title, selectCategory, selectPriority, selectFeatured, selectDate, listenToChanges]);
 
     return (
-        <article className={`relative h-[calc(100vh-30px)] 2xl:pl-0 xl:pl-1 sm:pl-3 flex flex-col gap-5 mt-[30px] pt-6`}>
-            <article className={`fixed pb-3 max-w-7xl pr-[29px] sm:pr-[93px] z-50 flex gap-y-6 gap-x-3 justify-between items-center dark:bg-dark-primary bg-primary transition-width ${viewFilter ? 'w-full sz:w-full md:w-[calc(100%-175px)]' : 'w-full'}`}>
-                {
-                    stateSelect ?
-                        <div className="flex gap-x-3">
-                            <span title={noteAll ? "Desmarcar todo" : "Marcar todo"} onClick={() => selectAll()} className={`my-auto border-[0.1px] cursor-pointer ${noteAll ? ' dark:border-dark-error border-error dark:bg-dark-primary bg-primary rounded-full px-[0.5px] ' : 'dark:border-dark-secondary border-secondary rounded-sm'}`}>
-                                <ComponentIcon
-                                    name='check'
-                                    size={12}
-                                    descriptionClass={`cursor-pointer ${noteAll ? 'dark:text-dark-error text-error m-auto mt-[1px] icon-transition icon-visible' : 'dark:text-dark-secondary text-secondary transition-width icon-transition icon-hidden'} `}
-                                />
-                            </span>
-                            <div className="flex gap-x-1.5">
-                                {
-                                    (notesSelected.length !== 0) && (
-                                        <button type="button" title="Eliminar" onClick={() => setOpenConfirmationDelete(true)} className="group cursor-pointer dark:hover:bg-dark-error hover:bg-error border-[0.1px] dark:border-dark-error border-error outline-none rounded-md px-2.5 py-[0.6px] " >
-                                            <span className="dark:group-hover:text-dark-primary group-hover:text-primary dark:text-dark-error text-error text-sm group-hover:font-semibold font-normal tracking-wider transition duration-500">
-                                                Eliminar
-                                            </span>
-                                        </button>
-                                    )
-                                }
-                                <button type="button" title="Cancelar eliminacion" onClick={() => closeDelete()} className="group cursor-pointer dark:hover:bg-dark-error hover:bg-error border-[0.1px] dark:border-dark-error border-error outline-none rounded-md px-2.5 py-[0.6px] " >
-                                    <span className="dark:group-hover:text-dark-primary group-hover:text-primary dark:text-dark-error text-error text-sm group-hover:font-semibold font-normal tracking-wider transition duration-500">
-                                        Cancelar
-                                    </span>
-                                </button>
+        <article className={`relative h-[calc(100vh-30px)] 2xl:px-0 sm:pl-5 flex flex-col gap-5 mt-[30px] pt-6`}>
+            <article className="fixed max-w-7xl w-full mt-[3px] z-50">
+                <article className={`${viewFilter && 'sz:w-[calc(100%-80px)] md:w-[calc(100%-275px)]'} 2xl:w-[calc(100%-80px)] sm:w-[calc(100%-100px)] w-[calc(100%-25px)] pb-3 z-50 flex gap-y-6 gap-x-3 justify-between items-center dark:bg-dark-primary bg-primary transition-width`}>
+                    {
+                        stateSelect ?
+                            <div className="flex gap-x-3">
+                                <span title={noteAll ? "Desmarcar todo" : "Marcar todo"} onClick={() => selectAll()} className={`my-auto border-[0.1px] cursor-pointer ${noteAll ? ' dark:border-dark-error border-error dark:bg-dark-primary bg-primary rounded-full px-[0.5px] ' : 'dark:border-dark-secondary border-secondary rounded-sm'}`}>
+                                    <ComponentIcon
+                                        name='check'
+                                        size={12}
+                                        descriptionClass={`cursor-pointer ${noteAll ? 'dark:text-dark-error text-error m-auto mt-[1px] icon-transition icon-visible' : 'dark:text-dark-secondary text-secondary transition-width icon-transition icon-hidden'} `}
+                                    />
+                                </span>
+                                <div className="flex gap-x-1.5">
+                                    {
+                                        (notesSelected.length !== 0) && (
+                                            <button type="button" title="Eliminar" onClick={() => setOpenConfirmationDelete(true)} className="group cursor-pointer dark:hover:bg-dark-error hover:bg-error border-[0.1px] dark:border-dark-error border-error outline-none rounded-md px-2.5 py-[0.6px] " >
+                                                <span className="dark:group-hover:text-dark-primary group-hover:text-primary dark:text-dark-error text-error text-sm group-hover:font-semibold font-normal tracking-wider transition duration-500">
+                                                    Eliminar
+                                                </span>
+                                            </button>
+                                        )
+                                    }
+                                    <button type="button" title="Cancelar eliminacion" onClick={() => closeDelete()} className="group cursor-pointer dark:hover:bg-dark-error hover:bg-error border-[0.1px] dark:border-dark-error border-error outline-none rounded-md px-2.5 py-[0.6px] " >
+                                        <span className="dark:group-hover:text-dark-primary group-hover:text-primary dark:text-dark-error text-error text-sm group-hover:font-semibold font-normal tracking-wider transition duration-500">
+                                            Cancelar
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
+                            :
+                            <ComponentInputSearch setValue={setValue} />
+                    }
+                    <div className="flex items-center gap-2 h-full">
+                        <div ref={refButtonCreateNote}>
+                            <ComponentButtonCreate />
                         </div>
-                        :
-                        <ComponentInputSearch setValue={setValue} />
-                }
-                <div className="flex items-center gap-2 h-full">
-                    <div ref={refButtonCreateNote}>
-                        <ComponentButtonCreate />
+                        {
+                            !stateSelect && (
+                                <button ref={refButtonDeleteNote} type="button" title="Eliminar notas" onClick={() => selectNote(true)} className={`outline-none ${listNotes.length === 0 && 'hidden'}`} >
+                                    <ComponentIcon name="delete" descriptionClass="cursor-pointer dark:hover:text-dark-error hover:text-error dark:text-dark-fifth text-fifth" size={20} viewBox="0 0 16 16" />
+                                </button>
+                            )
+                        }
+                        {
+                            !viewFilter && (
+                                <button ref={refButtonViewToggle} onClick={() => controllerViewFilter(!viewFilter)} type="button" title="Filtros" className="outline-none">
+                                    <ComponentIcon name="filter" descriptionClass="cursor-pointer dark:hover:text-dark-secondary hover:text-secondary dark:text-dark-fifth text-fifth" size={24} viewBox="0 0 16 16" />
+                                </button>
+                            )
+                        }
                     </div>
-                    {
-                        !stateSelect && (
-                            <button ref={refButtonDeleteNote} type="button" title="Eliminar notas" onClick={() => selectNote(true)} className={`outline-none ${listNotes.length === 0 && 'hidden'}`} >
-                                <ComponentIcon name="delete" descriptionClass="cursor-pointer dark:hover:text-dark-error hover:text-error dark:text-dark-fifth text-fifth" size={20} viewBox="0 0 16 16" />
-                            </button>
-                        )
-                    }
-                    {
-                        !viewFilter && (
-                            <button ref={refButtonViewToggle} onClick={() => controllerViewFilter(!viewFilter)} type="button" title="Filtros" className="outline-none">
-                                <ComponentIcon name="filter" descriptionClass="cursor-pointer dark:hover:text-dark-secondary hover:text-secondary dark:text-dark-fifth text-fifth" size={24} viewBox="0 0 16 16" />
-                            </button>
-                        )
-                    }
-                </div>
+                </article>
             </article>
             <article className="flex pb-16 sm:pb-10 pt-12">
                 <ComponentList
@@ -220,7 +222,7 @@ export default function ComponentSearch(): Component {
                     setNotesSelected={setNotesSelected}
                     descriptionClass={`transition-width ${viewFilter ? 'w-full sz:w-full md:w-[calc(100%-175px)]' : 'w-full'}`}
                 />
-                <div ref={refNavToggle} className={`fixed top-0 flex flex-col justify-between toggle-search ${viewFilter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-dark-primary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2 h-[100vh]`}>
+                <div ref={refNavToggle} className={`fixed min-h-screen top-0 flex flex-col justify-between toggle-search ${viewFilter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-dark-primary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2`}>
                     <div className="flex flex-col">
                         <div className="flex justify-between items-center py-1 border-b-[3px] rounded-md border-opacity-50 dark:border-dark-secondary border-secondary w-full">
                             <h4 className="dark:text-dark-tertiary text-tertiary opacity-70 tracking-wider font-semibold">

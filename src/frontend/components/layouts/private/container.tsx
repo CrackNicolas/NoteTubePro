@@ -12,10 +12,14 @@ import { httpRequest } from "@/backend/logic/requests";
 import ComponentHeader from "@/frontend/components/layouts/private/header";
 import ComponentListNotes from "@/frontend/components/layouts/private/notes/container";
 import ComponentListSessions from "@/frontend/components/layouts/private/sessions/container";
+import useAppContext from "@/context/hooks/context";
+import IContext from "@/context/interfaces/context";
 
 export default function ComponentSessions(): Component {
     const [sessions, setSessions] = useState<PropsSession[] | []>([]);
     const [notes, setNotes] = useState<PropsNote[] | []>([]);
+
+    const {opacity}:IContext = useAppContext();
 
     const [userSelected, setUserSelected] = useState<PropsSession>();
 
@@ -43,7 +47,7 @@ export default function ComponentSessions(): Component {
     }, []);
 
     return (
-        <article className="flex flex-col gap-5 2xl:px-0 xl:px-1 sm:pl-3 mt-[40px] pt-7 pb-10 min-h-screen">
+        <article className={`${opacity && 'opacity-40'} flex flex-col gap-5 2xl:px-0 sm:pl-5 pt-14 pb-10 min-h-screen max-h-screen`}>
             <ComponentHeader countSessions={sessions.length} userSelected={userSelected} setUserSelected={setUserSelected} />
             {
                 (userSelected) ?
