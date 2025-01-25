@@ -7,19 +7,20 @@ import { Component } from "@/frontend/types/component";
 import { PropsNote } from "@/context/types/note";
 import { PropsSession } from "@/context/types/session";
 
+import IContext from "@/context/interfaces/context";
+import useAppContext from "@/context/hooks/context";
+
 import { httpRequest } from "@/backend/logic/requests";
 
 import ComponentHeader from "@/frontend/components/layouts/private/header";
 import ComponentListNotes from "@/frontend/components/layouts/private/notes/container";
 import ComponentListSessions from "@/frontend/components/layouts/private/sessions/container";
-import useAppContext from "@/context/hooks/context";
-import IContext from "@/context/interfaces/context";
 
 export default function ComponentSessions(): Component {
     const [sessions, setSessions] = useState<PropsSession[] | []>([]);
     const [notes, setNotes] = useState<PropsNote[] | []>([]);
 
-    const {opacity}:IContext = useAppContext();
+    const { opacity }: IContext = useAppContext();
 
     const [userSelected, setUserSelected] = useState<PropsSession>();
 

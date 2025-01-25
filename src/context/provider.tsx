@@ -86,7 +86,7 @@ export default function Provider({ children }: ILayouts): Component {
         setTheme,
         note,
         setNote
-    }), [sectionCurrent, session, theme, note]);
+    }), [sectionCurrent, session, theme, note, opacity]);
 
     return (
         <TemplateContext value={contextValue}>
