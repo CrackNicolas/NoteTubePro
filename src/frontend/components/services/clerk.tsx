@@ -29,7 +29,7 @@ export function ComponentUserButton(): Component {
 export function ComponentSignIn(): Component {
     const props: IContext = useAppContext();
 
-    return <SignIn fallbackRedirectUrl={APP_ROUTES.dashboard.main} appearance={{
+    return <SignIn fallbackRedirectUrl={APP_ROUTES.home} appearance={{
         ...((props.theme == ThemeName.ligth) && { baseTheme: dark }),
         elements: {
             logoBox: "absolute right-2 top-2",

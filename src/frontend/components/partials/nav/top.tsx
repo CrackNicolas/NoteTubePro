@@ -45,12 +45,12 @@ export default function ComponentNavTop(props: IContext): Component {
                     </div>
                     <div className="relative inset-y-0 right-0 flex items-center pr-1 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                         {
-                            (path != APP_ROUTES.home && path != APP_ROUTES.signIn && !session.id) && (
+                            (path != APP_ROUTES.home && path != APP_ROUTES.signIn && !session.user) && (
                                 <span className="absolute right-0 animate-pulse dark:bg-dark-secondary bg-secondary opacity-30 rounded-full w-[28px] h-[28px] " />
                             )
                         }
                         {
-                            (path == APP_ROUTES.home && !session.id) ?
+                            (path == APP_ROUTES.home && !session.user) ?
                                 <ComponentLink url={APP_ROUTES.signIn} title="Iniciar sesion" descriptionClass="group border dark:border-dark-tertiary border-tertiary dark:hover:border-dark-secondary hover:border-secondary border-[0.1px] px-3 rounded-md flex py-[3px] flex items-center gap-x-1 outline-none transition duration-500">
                                     <ComponentIcon name="user" size={16} descriptionClass="dark:group-hover:text-dark-secondary group-hover:text-secondary dark:text-dark-tertiary text-tertiary cursor-pointer" />
                                     <span className="dark:group-hover:text-dark-secondary group-hover:text-secondary text-sm tracking-wider dark:text-dark-tertiary text-tertiary duration-500">

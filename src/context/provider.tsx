@@ -70,11 +70,11 @@ export default function Provider({ children }: ILayouts): Component {
             await httpRequest({ type: 'PUT', url: "/api/private/sessions", body: { id: session.id, status: false } });
             setSession({});
         }
-    }, [dataUser, session.id]);
+    }, [dataUser, session.id])
 
     useEffect(() => {
         loadUser();
-    }, [dataUser.user, loadUser])
+    }, [dataUser.isSignedIn, loadUser])
 
     const contextValue: IContext = useMemo(() => ({
         opacity,
