@@ -18,7 +18,10 @@ export const Context = createContext<IContext>({
     opacity: false,
     setOpacity: () => {},
     sectionCurrent: '',
-    session: {},
+    session: {
+        isSignedIn: false,
+        value: {}
+    },
     buttonSesion: <ComponentUserButton />,
     theme: ThemeName.ligth,
     setTheme: () => { },

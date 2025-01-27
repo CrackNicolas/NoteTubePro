@@ -13,5 +13,6 @@ export type PropsUser = {
     name: string,
     email: string,
     image: string,
+    lastSignInAt: Date | null,
     rol: string
 }

@@ -6,11 +6,14 @@ import { PropsDispatchBoolean, PropsDispatchTheme } from "@/frontend/types/dispa
 
 import INoteBase from "@/frontend/interfaces/note"
 
-export default interface IContext extends Partial<Pick<INoteBase, 'note'>>, Pick<INoteBase, 'setNote'>  {
+export default interface IContext extends Partial<Pick<INoteBase, 'note'>>, Pick<INoteBase, 'setNote'> {
     opacity: boolean,
     setOpacity: PropsDispatchBoolean,
     theme: PropsTheme,
-    session: PropsSession,
+    session: {
+        value: PropsSession,
+        isSignedIn?: boolean
+    }
     setTheme: PropsDispatchTheme,
     buttonSesion: Component,
     sectionCurrent: string

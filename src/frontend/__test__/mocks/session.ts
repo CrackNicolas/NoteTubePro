@@ -13,6 +13,7 @@ export const session: PropsSession = {
         name: 'Usuario 1',
         email: 'usuario@gmail.com',
         image: 'https://cdn.icon-icons.com/icons2/1381/PNG/512/systemusers_94754.png',
+        lastSignInAt: null,
         rol: 'admin'
     }
 }
@@ -31,6 +32,7 @@ export const sessions: PropsSession[] = [
             name: 'Usuario 1',
             email: 'usuario@gmail.com',
             image: 'https://cdn.icon-icons.com/icons2/1381/PNG/512/systemusers_94754.png',
+            lastSignInAt: null,
             rol: 'admin'
         }
     },

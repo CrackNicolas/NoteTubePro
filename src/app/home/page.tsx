@@ -1,7 +1,7 @@
 import { Component } from "@/frontend/types/component";
 
-import ComponentInit from "@/frontend/components/layouts/home/init";
+import ComponentHome from "@/frontend/components/layouts/home/container";
 
 export default function Home(): Component {
-  return <ComponentInit />
+  return <ComponentHome />
 }

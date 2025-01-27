@@ -1,5 +1,6 @@
 export const APP_ROUTES = {
-    home: '/',
+    init: '/',
+    home: '/home',
     dashboard: {
         main: "/dashboard/main",
         config: "/dashboard/config"
