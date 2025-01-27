@@ -13,6 +13,11 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'cdn.icon-icons.com'
+            },
+            {
+                protocol: 'https',
+                hostname: 'randomuser.me',
+                pathname: '/api/portraits/**'
             }
         ]
     },
