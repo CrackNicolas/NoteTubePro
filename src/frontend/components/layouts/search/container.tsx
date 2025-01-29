@@ -230,11 +230,11 @@ export default function ComponentSearch(): Component {
                 <div ref={refNavToggle} className={`fixed min-h-screen top-0 flex flex-col justify-between toggle-search ${viewFilter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-dark-primary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2`}>
                     <div className="flex flex-col">
                         <div className="flex justify-between items-center py-1 border-b-[3px] rounded-md border-opacity-50 dark:border-dark-secondary border-secondary w-full">
-                            <h4 className="dark:text-dark-tertiary text-tertiary opacity-70 tracking-wider font-semibold">
+                            <h4 className="text-gradient tracking-wider font-semibold">
                                 Filtrar notas
                             </h4>
                             <button ref={refButtonCloseToggle} type="button" title="Cerrar menu" onClick={() => controllerViewFilter(!viewFilter)} className="outline-none">
-                                <ComponentIcon name="close" descriptionClass="cursor-pointer dark:hover:text-dark-secondary hover:text-secondary hover:opacity-100 dark:text-dark-tertiary text-tertiary opacity-70" size={27} viewBox="0 0 16 16" />
+                                <ComponentIcon name="close" descriptionClass="cursor-pointer text-secondary text-opacity-60 dark:text-seventh" size={27} viewBox="0 0 16 16" />
                             </button>
                         </div>
                         <div className="relative flex flex-col gap-y-3 py-3 w-full">

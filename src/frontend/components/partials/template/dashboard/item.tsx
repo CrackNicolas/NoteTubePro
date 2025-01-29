@@ -36,7 +36,7 @@ export default function ComponentItem({ props }: IItem): Component {
 				<ComponentIcon name={`${focus ? `${icon + '-fill'}` : icon}`} testid="icon-item" size={20} descriptionClass="dark:text-dark-secondary text-secondary cursor-pointer" />
 			</div>
 			<div className="group relative">
-				<h3 className="line-clamp-1 text-lg font-normal hover:font-semibold tracking-wide dark:text-dark-secondary text-secondary">
+				<h3 className="line-clamp-1 text-md font-semibold tracking-wider dark:text-dark-secondary text-secondary">
 					{title}
 				</h3>
 				<p className="mt-2 line-clamp-2 text-sm leading-6 dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-50 hover:opacity-100 transition duration-700">

@@ -46,7 +46,7 @@ export default function ComponentNotes(): Component {
     }, [note]);
 
     return (
-        <article className={`${opacity && 'opacity-50'} flex min-h-screen 2xl:px-0 sm:pl-5 flex-col gap-y-6 justify-start pt-20`}>
+        <article className={`${opacity && 'opacity-50'} flex min-h-screen 2xl:px-0 sm:pl-5 flex-col gap-y-6 justify-start pt-20 mb-10 sm:mb-0`}>
             {
                 !categorySelected ?
                     <Fragment>

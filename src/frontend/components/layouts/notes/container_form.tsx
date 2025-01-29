@@ -163,7 +163,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                         </span>
                     )
                 }
-                <span title="Titulo formulario" className="text-2xl dark:text-dark-secondary text-secondary font-semibold text-center tracking-wider">
+                <span title="Titulo formulario" className="text-2xl text-gradient font-semibold text-center tracking-wider">
                     {(!noteSelected) ? 'Crear nota' : 'Actualizar nota'}
                 </span>
                 <span className="absolute right-0" title={`Categoria ${categorySelected?.title}`}>

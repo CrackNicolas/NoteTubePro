@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import { Component } from "@/frontend/types/component";
 import { APP_ROUTES } from "@/frontend/constant/app_rutes";
@@ -17,11 +17,7 @@ export default function ComponentNavTop(props: IContext): Component {
 
     const path: string = useCurrentPath(true);
 
-    const [focus, setFocus] = useState<string>('');
-
     const refUserButton = useRef<HTMLDivElement>(null);
-
-    const getFocus = (name: string): boolean => (focus === name);
 
     const handleClickOutside = (event: MouseEvent): void => {
         if (refUserButton.current && !refUserButton.current.contains(event.target as Node)) {
@@ -36,9 +32,9 @@ export default function ComponentNavTop(props: IContext): Component {
             <article className="mx-auto max-w-7xl pl-3 pr-2 2xl:pl-10 sm:pl-[60px] sm:pr-10">
                 <div className="relative flex gap-x-3 h-16 items-center justify-between">
                     <div className="flex items-center justify-center sm:items-stretch sm:justify-start">
-                        <ComponentLink url={APP_ROUTES.home} title="Logo" onMouseOver={() => setFocus('logo')} onMouseLeave={() => setFocus('')} descriptionClass="flex gap-x-2 items-center">
-                            <ComponentIcon testid="icon-home" name={`${getFocus('logo') ? 'logo-fill' : 'logo'}`} size={24} descriptionClass="icon-home dark:text-dark-secondary text-secondary cursor-pointer" />
-                            <strong className="dark:text-dark-tertiary text-tertiary text-lg">
+                        <ComponentLink url={APP_ROUTES.home} title="Logo" descriptionClass="flex gap-x-2 items-center">
+                            <ComponentIcon testid="icon-home" name="logo-fill" size={24} descriptionClass="icon-home text-secondary text-opacity-60 dark:text-seventh cursor-pointer" />
+                            <strong className="text-gradient text-xl">
                                 NoteTube
                             </strong>
                         </ComponentLink>

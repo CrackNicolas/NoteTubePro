@@ -1,16 +1,18 @@
+import { Component } from "@/frontend/types/component";
+
 import ComponentMotion from "@/frontend/components/partials/motion";
 import ComponentItemTestimoniesHome from "@/frontend/components/layouts/home/sections/testimonies/item";
 
-export default function ComponentTestimoniesHome(): JSX.Element {
+export default function ComponentTestimoniesHome(): Component {
     return (
-        <ComponentMotion type="section" descriptionClass="mt-16 flex flex-col items-center bg-black py-16 px-6 rounded-lg">
-            <h2 className="text-4xl font-extrabold text-tertiary">
+        <ComponentMotion type="section" descriptionClass="mt-16  flex flex-col bg-primary dark:bg-dark-primary items-center bg-primary py-16">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-gradient">
                 Testimonios Reales
             </h2>
-            <p className="mt-3 text-lg text-center text-gray-300 opacity-85 max-w-3xl">
+            <p className="mt-3 text-md sm:text-lg text-center text-tertiary dark:text-dark-tertiary opacity-60 dark:opacity-100 max-w-2xl">
                 Estos son algunos de los testimonios de usuarios que han mejorado su experiencia con nuestra app.
             </p>
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-7">
                 <ComponentItemTestimoniesHome
                     url="https://randomuser.me/api/portraits/men/50.jpg"
                     title="Juan Pérez"
