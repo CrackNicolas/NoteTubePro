@@ -4,10 +4,14 @@ import { APP_ROUTES } from "@/frontend/constant/app_rutes";
 
 import IElement from "@/frontend/interfaces/elements/element";
 import ComponentIcon from "@/frontend/components/partials/icon";
-import ComponentLink from "@/frontend/components/partials/link";
+import ComponentButtonMainHome from "@/frontend/components/layouts/home/button_main";
 
-export default function ComponentPresentationHeader(props: Pick<IElement, 'title' | 'subtitle'>): Component {
-    const { title, subtitle } = props;
+interface IPresentationHeader extends Pick<IElement, 'title' | 'subtitle'> {
+    button?: boolean
+}
+
+export default function ComponentPresentationHeader(props: IPresentationHeader): Component {
+    const { title, subtitle, button = true } = props;
 
     return (
         <Fragment>
@@ -20,12 +24,9 @@ export default function ComponentPresentationHeader(props: Pick<IElement, 'title
                     {subtitle}
                 </p>
             </div>
-            <ComponentLink url={APP_ROUTES.dashboard.main} title="Empezar" descriptionClass="bg-custom-gradient group mt-6 flex items-center gap-x-2 rounded-md bg-secondary dark:bg-dark-secondary text-primary dark:text-dark-primary px-6 py-3 text-lg font-semibold text-black shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-500">
-                <ComponentIcon name="box" size={20} descriptionClass="text-primary dark:text-dark-primary group-hover:rotate-[360deg] transition-transform duration-700" />
-                <span>
-                    Comienza Ahora
-                </span>
-            </ComponentLink>
+            {
+                button && <ComponentButtonMainHome url={APP_ROUTES.dashboard.main} title="Comienza Ahora"/>
+            }
         </Fragment>
     )
 }

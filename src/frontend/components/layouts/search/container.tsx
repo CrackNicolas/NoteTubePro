@@ -229,7 +229,7 @@ export default function ComponentSearch(): Component {
                 />
                 <div ref={refNavToggle} className={`fixed min-h-screen top-0 flex flex-col justify-between toggle-search ${viewFilter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-dark-primary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2`}>
                     <div className="flex flex-col">
-                        <div className="flex justify-between items-center py-1 border-b-[3px] rounded-md border-opacity-50 dark:border-dark-secondary border-secondary w-full">
+                        <div className="flex justify-between items-center py-1 border-b-[3px] rounded-md border-opacity-50 dark:border-seventh border-secondary w-full">
                             <h4 className="text-gradient tracking-wider font-semibold">
                                 Filtrar notas
                             </h4>

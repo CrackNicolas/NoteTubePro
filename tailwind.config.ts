@@ -17,6 +17,7 @@ const config: Config = {
 			},
 			backgroundImage: {
 				'custom-gradient': 'linear-gradient(to right, #3B82F6, #10B981)',
+				'custom-gradient-red': 'linear-gradient(to right, #ff0000, #141313)',
 				'text-gradient': 'linear-gradient(to right, #3B82F6, #10B981)',
 			},
 			colors: {

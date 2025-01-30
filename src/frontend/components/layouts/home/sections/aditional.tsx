@@ -1,9 +1,8 @@
 import { Component } from "@/frontend/types/component";
 import { APP_ROUTES } from "@/frontend/constant/app_rutes";
 
-import ComponentIcon from "@/frontend/components/partials/icon";
-import ComponentLink from "@/frontend/components/partials/link";
 import ComponentMotion from "@/frontend/components/partials/motion";
+import ComponentButtonMainHome from "@/frontend/components/layouts/home/button_main";
 
 export default function ComponentAditionalHome(): Component {
     return (
@@ -14,12 +13,7 @@ export default function ComponentAditionalHome(): Component {
             <p className="mt-3 text-md sm:text-lg text-center opacity-80 text-tertiary dark:text-dark-tertiary">
                 Da el primer paso hacia una experiencia inigualable.
             </p>
-            <ComponentLink url={APP_ROUTES.dashboard.main} title="Empezar" descriptionClass="bg-custom-gradient group mt-6 flex items-center gap-x-2 rounded-md bg-secondary dark:bg-dark-secondary text-primary dark:text-dark-primary px-6 py-3 text-lg font-semibold text-black shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-500">
-                <ComponentIcon name="box" size={20} descriptionClass="text-primary dark:text-dark-primary group-hover:rotate-[360deg] transition-transform duration-700" />
-                <span>
-                    Comienza Ahora
-                </span>
-            </ComponentLink>
+            <ComponentButtonMainHome url={APP_ROUTES.dashboard.main} title="Comienza Ahora" />
         </ComponentMotion>
     )
 }

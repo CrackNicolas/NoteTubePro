@@ -9,7 +9,7 @@ export default function ComponentTestimoniesHome(): Component {
             <h2 className="text-2xl sm:text-4xl font-extrabold text-gradient">
                 Testimonios Reales
             </h2>
-            <p className="mt-3 text-md sm:text-lg text-center text-tertiary dark:text-dark-tertiary opacity-60 dark:opacity-100 max-w-2xl">
+            <p className="mt-3 text-md sm:text-lg text-center text-tertiary dark:text-dark-tertiary opacity-60 dark:opacity-100 max-w-xl sm:max-w-2xl">
                 Estos son algunos de los testimonios de usuarios que han mejorado su experiencia con nuestra app.
             </p>
             <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-7">

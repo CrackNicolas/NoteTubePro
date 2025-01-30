@@ -28,15 +28,15 @@ export default function ComponentItem({ props }: IItem): Component {
 	}, [url])
 
 	return (
-		<ComponentLink url={url} onClick={() => view()} title={title} descriptionClass="flex w-full flex-col items-start justify-between dark:bg-dark-sixth bg-sixth sm:px-4 px-3 py-3 cursor-pointer rounded-md hover:shadow-sm dark:hover:shadow-dark-secondary hover:shadow-secondary transition duration-700" onMouseOver={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
+		<ComponentLink url={url} onClick={() => view()} title={title} descriptionClass="flex w-full flex-col items-start justify-between dark:bg-dark-sixth bg-sixth sm:px-4 px-3 py-3 cursor-pointer dark:shadow-2xl rounded-md hover:shadow-sm hover:shadow-secondary transition duration-700" onMouseOver={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
 			<div className="flex items-center justify-between w-full gap-x-4 text-xs pr-1">
 				<h6 className="dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-50 hover:opacity-100 transition duration-700">
 					{lastTime.replace('Creada', 'Ultima vez')}
 				</h6>
-				<ComponentIcon name={`${focus ? `${icon + '-fill'}` : icon}`} testid="icon-item" size={20} descriptionClass="dark:text-dark-secondary text-secondary cursor-pointer" />
+				<ComponentIcon name={`${focus ? `${icon + '-fill'}` : icon}`} testid="icon-item" size={20} descriptionClass={`${focus ? 'dark:text-seventh' : 'dark:text-dark-secondary'} text-secondary cursor-pointer`} />
 			</div>
 			<div className="group relative">
-				<h3 className="line-clamp-1 text-md font-semibold tracking-wider dark:text-dark-secondary text-secondary">
+				<h3 className="line-clamp-1 text-md font-normal tracking-wide dark:group-hover:text-gradient dark:text-dark-secondary text-secondary">
 					{title}
 				</h3>
 				<p className="mt-2 line-clamp-2 text-sm leading-6 dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-50 hover:opacity-100 transition duration-700">

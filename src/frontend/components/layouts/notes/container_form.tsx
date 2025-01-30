@@ -245,7 +245,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                             <ComponentLabel title={messageImage.value} htmlFor="" color={messageImage.paint ? 'dark:text-dark-secondary text-secondary' : 'dark:text-dark-error text-error'} />
                             {
                                 (viewFile) && (
-                                    <button onClick={() => removeFile()} type="button" name="Quitar imagen" title="Quitar imagen" className="dark:text-dark-secondary text-secondary bg-primary dark:bg-dark-primary hover:bg-secondary dark:hover:bg-dark-secondary hover:text-primary dark:hover:text-dark-primary text-[12.3px] border-[0.1px] border-secondary dark:border-dark-secondary px-2 rounded-md font-semibold tracking-wider">
+                                    <button onClick={() => removeFile()} type="button" name="Quitar imagen" title="Quitar imagen" className="dark:text-dark-secondary text-[12.3px] border-[0.1px] bg-custom-gradient border-none hover:text-tertiary px-2 rounded-md font-semibold tracking-wider">
                                         Quitar imagen
                                     </button>
                                 )
@@ -269,10 +269,10 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                     </div>
                 </div>
                 <div className="flex gap-x-10">
-                    <button type="submit" title="Guardar" name="Guardar" className="relative flex w-full justify-center rounded-md dark:text-dark-secondary text-secondary border-[0.1px] dark:border-dark-secondary border-secondary border-opacity-80 px-3 py-1 text-md font-normal hover:font-semibold dark:bg-dark-primary bg-primary tracking-wider dark:hover:bg-dark-sixth hover:bg-sixth outline-none">
+                    <button type="submit" title="Guardar" name="Guardar" className="relative flex w-full justify-center rounded-md hover:text-tertiary text-primary border-[0.1px] border-none px-3 py-1 text-md font-normal hover:font-semibold bg-custom-gradient tracking-wider outline-none">
                         Guardar
                     </button>
-                    <button onClick={() => restart(true)} type="button" name="Deshacer" title="Deshacer" className="relative flex w-full justify-center rounded-md dark:text-dark-error text-error border-[0.1px] dark:border-dark-error border-error border-opacity-80 px-3 py-1 text-md font-normal hover:font-semibold dark:bg-dark-primary bg-primary tracking-wider dark:hover:bg-dark-sixth hover:bg-sixth outline-none">
+                    <button onClick={() => restart(true)} type="button" name="Deshacer" title="Deshacer" className="relative flex hover:text-tertiary text-primary w-full justify-center rounded-md bg-custom-gradient-red px-3 py-1 text-md font-normal hover:font-semibold tracking-wider outline-none">
                         Deshacer
                     </button>
                 </div>

@@ -34,7 +34,7 @@ export default function ComponentHome(): Component {
     if (!session.value.user) return <ComponentLoadingHome />
 
     return (
-        <ComponentMotion type="article" descriptionClass={`${opacity && "opacity-40"} flex flex-col min-h-screen justify-between relative w-full px-6 lg:px-8 pb-16 sm:pb-5`} >
+        <ComponentMotion type="article" descriptionClass={`${opacity && "opacity-40"} overflow-x-hidden flex flex-col min-h-screen justify-between relative w-full px-1 sm:px-6 lg:px-8 pb-16 sm:pb-5`} >
             {confetti && <Confetti width={1100} height={1100} className="w-full h-full" numberOfPieces={600} />}
             <ComponentHeaderHome title={`Bienvenido, ${session.value.user.name.split(' ')[0]}!`} subtitle="Diseñada para inspirar, sorprender y facilitar tu vida." />
             <ComponentMainHome />

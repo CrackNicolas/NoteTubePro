@@ -17,7 +17,7 @@ export default function ComponentItemFeatured(props: IItemFeatured): Component {
         <Fragment>
             <ComponentInput type="radio" name="featured" id={value} value={value} descriptionClass="hidden" register={register} />
             <label htmlFor={value} title={`${value?.toLocaleLowerCase()} destacar`} className={`group border-opacity-50 ${(!error) ? 'dark:border-dark-secondary border-secondary' : 'dark:border-dark-error border-error'} col-span-1 border-[0.1px] rounded-md grid place-items-center overflow-hidden cursor-pointer w-full`}>
-                <span title={value} className={` ${paint ? 'dark:bg-dark-secondary bg-secondary dark:text-dark-primary text-primary' : ` ${(!error) ? 'dark:text-dark-secondary text-secondary dark:group-hover:bg-dark-secondary group-hover:bg-secondary dark:group-hover:text-dark-primary group-hover:text-primary' : 'dark:text-dark-error text-error dark:group-hover:bg-dark-error group-hover:bg-error dark:group-hover:text-dark-primary group-hover:text-primary'}  `} w-full text-center text-sm tracking-wider font-semibold cursor-pointer py-[5.1px] `}>
+                <span title={value} className={` ${paint ? 'bg-custom-gradient text-tertiary border-transparent' : ` ${(!error) ? 'dark:text-dark-secondary text-secondary group-hover:bg-custom-gradient group-hover:text-tertiary' : 'dark:text-dark-error text-error dark:group-hover:bg-dark-error group-hover:bg-error dark:group-hover:text-dark-primary group-hover:text-primary'}  `} w-full text-center text-sm tracking-wider font-semibold cursor-pointer py-[5.1px] `}>
                     {value}
                 </span>
             </label>
