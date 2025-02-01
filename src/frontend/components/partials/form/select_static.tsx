@@ -37,27 +37,27 @@ export default function ComponentSelect(props: ISelect): Component {
 
     useMouseDown({ action: handleClickOutside });
 
-    const optionSelected: boolean = (select != (title + '...'));
+    const optionSelected: boolean = (select != title);
 
-    const selected = (value: string): void => {
+    const selectedItem = (value: string): void => {
         setOpen(false);
-        setSelect((value === title) ? undefined : value);
+        setSelect(value);
     }
 
     return (
         <div ref={refSelect} className='relative flex w-full'>
-            <div title={title} onClick={() => setOpen(!open)} className={`flex justify-between items-center dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] ${open && 'rounded-b-none'} ${optionSelected && 'dark:border-dark-secondary border-secondary'} ${style.border} border-opacity-50 py-1 px-2 cursor-pointer`}>
-                <span title={`Seleccionar ${title}`} className={`${optionSelected && 'dark:text-dark-secondary text-secondary'} ${style.text} text-md`}>
+            <div title={title} onClick={() => setOpen(!open)} className={`flex justify-between items-center dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] ${open && 'rounded-b-none'} ${optionSelected && 'bg-custom-gradient border-primary text-tertiary'} ${style.border} border-opacity-50 py-1 px-2 cursor-pointer`}>
+                <span title={`Seleccionar ${title}`} className={`${optionSelected && 'dark:text-tertiary text-tertiary'} ${style.text} text-md`}>
                     {select}
                 </span>
-                <ComponentIcon name={open ? 'caret-up' : 'caret-down'} size={20} descriptionClass={`${optionSelected && 'dark:text-dark-secondary text-secondary'} ${style?.text} cursor-pointer`} />
+                <ComponentIcon name={open ? 'caret-up' : 'caret-down'} size={20} descriptionClass={`${optionSelected && 'dark:text-tertiary text-tertiary'} ${style?.text} cursor-pointer`} />
             </div>
             <ul ref={list} title="Lista de opciones" className={`${(!open) && 'hidden'} absolute z-10 mt-[32px] w-full dark:bg-dark-primary bg-primary border-[0.1px] ${style.border} rounded-b-md border-opacity-50`}>
                 {
-                    select != `${title}...` && (
-                        <li onClick={() => selected(`${title}...`)} title={`${title}...`} className="group flex justify-between dark:hover:bg-dark-secondary hover:bg-secondary items-center px-2 py-1 cursor-pointer hover:font-semibold">
+                    select != title && (
+                        <li onClick={() => selectedItem(title)} title={title} className="group flex justify-between dark:hover:bg-dark-secondary hover:bg-secondary items-center px-2 py-1 cursor-pointer hover:font-semibold">
                             <span className={`text-md font-normal group-hover:font-semibold dark:group-hover:text-dark-primary group-hover:text-primary ${style.text}`}>
-                                {title}...
+                                {title}
                             </span>
                         </li>
                     )
@@ -65,7 +65,7 @@ export default function ComponentSelect(props: ISelect): Component {
                 {
                     items.map((item: PropsItemsSelect, index: number) => {
                         return (
-                            <li key={index} onClick={() => selected(item.value)} title={item.value} className="group flex justify-between items-center dark:hover:bg-dark-secondary hover:bg-secondary px-2 py-1 cursor-pointer">
+                            <li key={index} onClick={() => selectedItem(item.value)} title={item.value} className="group flex justify-between items-center dark:hover:bg-dark-secondary hover:bg-secondary px-2 py-1 cursor-pointer">
                                 <span className={`text-md font-normal dark:group-hover:text-dark-primary group-hover:text-primary ${style.text}`}>
                                     {item.value}
                                 </span>

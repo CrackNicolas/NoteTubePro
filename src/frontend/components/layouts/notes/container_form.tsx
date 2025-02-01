@@ -167,7 +167,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                     {(!noteSelected) ? 'Crear nota' : 'Actualizar nota'}
                 </span>
                 <span className="absolute right-0" title={`Categoria ${categorySelected?.title}`}>
-                    <ComponentIcon name={(noteSelected) ? noteSelected?.category.icon : categorySelected?.icon} size={24} descriptionClass="dark:text-dark-secondary text-secondary" />
+                    <ComponentIcon name={(noteSelected) ? noteSelected?.category.icon : categorySelected?.icon} size={24} descriptionClass="text-secondary text-opacity-60 dark:text-seventh" />
                 </span>
             </div>
             <form method="POST" onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-6">
@@ -245,8 +245,11 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                             <ComponentLabel title={messageImage.value} htmlFor="" color={messageImage.paint ? 'dark:text-dark-secondary text-secondary' : 'dark:text-dark-error text-error'} />
                             {
                                 (viewFile) && (
-                                    <button onClick={() => removeFile()} type="button" name="Quitar imagen" title="Quitar imagen" className="text-[12.3px] border-[0.1px] bg-custom-gradient border-none hover:text-tertiary px-2 rounded-md font-semibold tracking-wider">
-                                        Quitar imagen
+                                    <button onClick={() => removeFile()} type="button" name="Quitar imagen" title="Quitar imagen" className="group flex gap-x-1.5 items-center border-[0.1px] bg-custom-gradient border-none px-2 rounded-md">
+                                        <ComponentIcon name='image' size={10} descriptionClass="group-hover:text-tertiary text-primary" />
+                                        <span className="text-[12.3px] group-hover:text-tertiary text-primary font-semibold tracking-wider transition duration-500">
+                                            Quitar imagen
+                                        </span>
                                     </button>
                                 )
                             }

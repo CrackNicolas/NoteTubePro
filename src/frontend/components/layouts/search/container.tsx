@@ -42,15 +42,15 @@ export default function ComponentSearch(): Component {
     const [search, setSearch] = useState<string>('');
     const [response, setResponse] = useState<PropsResponse>();
     const [listNotes, setListNotes] = useState<PropsNote[]>([]);
-    const [selectDate, setSelectDate] = useState<string | undefined>('Fecha...');
+    const [selectDate, setSelectDate] = useState<string | undefined>('Fecha');
     const [viewFilter, setViewFilter] = useState<boolean>(false);
     const [stateSelect, setStateSelect] = useState<boolean>(false);
     const [loadingNotes, setLoadingNotes] = useState<PropsLoadingNotes>();
     const [notesSelected, setNotesSelected] = useState<PropsDeleteNote[]>([]);
     const [loadingMessage, setLoadingMessage] = useState<boolean>(false);
-    const [selectCategory, setSelectCategory] = useState<PropsCategory>({ title: 'Categoria...' });
-    const [selectPriority, setSelectPriority] = useState<string | undefined>('Prioridad...');
-    const [selectFeatured, setSelectFeatured] = useState<string | undefined>('Nota destacada...');
+    const [selectCategory, setSelectCategory] = useState<PropsCategory>({ title: 'Categoria' });
+    const [selectPriority, setSelectPriority] = useState<string | undefined>('Prioridad');
+    const [selectFeatured, setSelectFeatured] = useState<string | undefined>('Nota destacada');
     const [openConfirmationDelete, setOpenConfirmationDelete] = useState<boolean>(false);
 
     const handleClickOutside = (event: MouseEvent): void => {
@@ -68,10 +68,10 @@ export default function ComponentSearch(): Component {
     useMouseDown({ action: handleClickOutside });
 
     const restart = (): void => {
-        setSelectCategory({ title: 'Categoria...' });
-        setSelectPriority('Prioridad...');
-        setSelectFeatured('Nota destacada...');
-        setSelectDate('Fecha...');
+        setSelectCategory({ title: 'Categoria' });
+        setSelectPriority('Prioridad');
+        setSelectFeatured('Nota destacada');
+        setSelectDate('Fecha');
     }
 
     const closeDelete = (): void => {
@@ -123,10 +123,10 @@ export default function ComponentSearch(): Component {
     const listenToChanges = useCallback(async (): Promise<void> => {
         const criteria: PropsParamsSearch = {
             title: (title !== '') ? title : undefined,
-            category: (selectCategory.title !== 'Categoria...') ? selectCategory : undefined,
-            priority: (selectPriority !== 'Prioridad...') ? selectPriority : undefined,
-            dates: (selectDate !== 'Fecha...') ? selectDate : undefined,
-            featured: (selectFeatured !== 'Nota destacada...') ? (selectFeatured === 'SI') : undefined,
+            category: (selectCategory.title !== 'Categoria') ? selectCategory : undefined,
+            priority: (selectPriority !== 'Prioridad') ? selectPriority : undefined,
+            dates: (selectDate !== 'Fecha') ? selectDate : undefined,
+            featured: (selectFeatured !== 'Nota destacada') ? (selectFeatured === 'SI') : undefined,
         }
 
         setSearch(JSON.stringify(criteria));

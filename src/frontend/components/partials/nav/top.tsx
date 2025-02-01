@@ -42,7 +42,7 @@ export default function ComponentNavTop(props: IContext): Component {
                     <div className="relative inset-y-0 right-0 flex items-center pr-1 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                         {
                             (path != APP_ROUTES.init && path != APP_ROUTES.signIn && !session.value.user) && (
-                                <span className="absolute right-0 animate-pulse dark:bg-dark-secondary bg-secondary opacity-30 rounded-full w-[28px] h-[28px] " />
+                                <span  title="Usuario" className="absolute right-0 animate-pulse dark:bg-dark-secondary bg-secondary opacity-30 rounded-full w-[28px] h-[28px] " />
                             )
                         }
                         {
