@@ -13,7 +13,7 @@ export default function ComponentAditionalHome(): Component {
             <p className="mt-3 text-md sm:text-lg text-center opacity-80 text-tertiary dark:text-dark-tertiary">
                 Da el primer paso hacia una experiencia inigualable.
             </p>
-            <ComponentButtonMainHome url={APP_ROUTES.dashboard.main} title="Comienza Ahora" />
+            <ComponentButtonMainHome url={APP_ROUTES.dashboard.main} title="Comienza ahora" />
         </ComponentMotion>
     )
 }

@@ -20,7 +20,7 @@ export default function ComponentInit(): Component {
                     <ComponentButtonMainHome url={APP_ROUTES.home} title="Click para iniciar" />
                 </div>
             </article>
-            <span className="text-center text-sm dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-60 font-normal tracking-wide">
+            <span className="mb-10 sm:mb-0 text-center text-sm dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-60 font-normal tracking-wide">
                 Version {process.env.PROJECT_VERSION}
             </span>
         </article>

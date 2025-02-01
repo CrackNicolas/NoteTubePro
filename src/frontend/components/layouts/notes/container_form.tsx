@@ -245,7 +245,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                             <ComponentLabel title={messageImage.value} htmlFor="" color={messageImage.paint ? 'dark:text-dark-secondary text-secondary' : 'dark:text-dark-error text-error'} />
                             {
                                 (viewFile) && (
-                                    <button onClick={() => removeFile()} type="button" name="Quitar imagen" title="Quitar imagen" className="dark:text-dark-secondary text-[12.3px] border-[0.1px] bg-custom-gradient border-none hover:text-tertiary px-2 rounded-md font-semibold tracking-wider">
+                                    <button onClick={() => removeFile()} type="button" name="Quitar imagen" title="Quitar imagen" className="text-[12.3px] border-[0.1px] bg-custom-gradient border-none hover:text-tertiary px-2 rounded-md font-semibold tracking-wider">
                                         Quitar imagen
                                     </button>
                                 )

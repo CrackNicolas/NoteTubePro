@@ -20,7 +20,7 @@ export default function ComponentPresentationHeader(props: IPresentationHeader):
                 <h1 className="text-gradient text-center font-bold tracking-wider dark:text-dark-tertiary text-tertiary text-2xl sm:text-6xl">
                     {title}
                 </h1>
-                <p className="text-center text-md sm:text-lg leading-8 dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-80 tracking-wider">
+                <p className="text-center text-md sm:text-lg leading-6 dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-80 tracking-wider">
                     {subtitle}
                 </p>
             </div>
