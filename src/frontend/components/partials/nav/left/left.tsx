@@ -19,7 +19,7 @@ export default function ComponentNavLeft(props: INavLeft): Component {
 
     return (
         <nav className={`${opacity && 'opacity-40'} fixed sm:min-h-screen py-1.5 sm:py-0 bottom-0 w-full sm:top-12 z-50 2xl:w-[50px] sm:w-[40px] dark:bg-dark-primary bg-primary`}>
-            <ul className="flex sm:grid sm:place-items-center">
+            <div className="flex sm:grid sm:place-items-center">
                 <ComponentItemNavLeft url={APP_ROUTES.home} title="Inicio" name="home" />
                 <ComponentItemNavLeft url={APP_ROUTES.dashboard.main} title="Panel" name="panel" />
                 <ComponentItemNavLeft 
@@ -28,7 +28,7 @@ export default function ComponentNavLeft(props: INavLeft): Component {
                     type={TypeButtonNav.THEME} 
                     name={`moon-star${(theme === ThemeName.dark)? '':'-fill'}`} 
                 />
-            </ul>
+            </div>
         </nav>
     )
 }

@@ -38,12 +38,12 @@ export default function ComponentItemNavLeft(props: INavLeft): Component {
 
     return (
         <ComponentLink url={url} title={title} descriptionClass="w-full" onClick={onClick} onMouseOver={() => setFocus(name)} onMouseLeave={() => setFocus('')}>
-            <li className={`group grid place-items-center sm:gap-1 cursor-pointer ${descriptionClass}`} title={title}>
+            <div className={`group grid place-items-center sm:gap-1 cursor-pointer ${descriptionClass}`} title={title}>
                 <ComponentIcon name={getNameIcon(name)} size={23} viewBox="0 0.2 16 16" descriptionClass={`${paintItem(url)} dark:group-hover:text-seventh group-hover:text-secondary cursor-pointer`} />
                 <span className={`${paintItem(url)} dark:group-hover:text-seventh group-hover:text-secondary dark:font-semibold font-normal text-[11.3px] transition duration-500 `}>
                     {title}
                 </span>
-            </li>
+            </div>
         </ComponentLink>
     )
 }
