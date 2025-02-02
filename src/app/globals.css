@@ -48,7 +48,7 @@ body::-webkit-scrollbar-thumb,
 .scroll::-webkit-scrollbar-thumb,
 .scroll-select::-webkit-scrollbar-thumb,
 .scroll-text::-webkit-scrollbar-thumb {
-  background: theme("colors.dark.secondary");
+  background: theme("colors.dark.primary");
 }
 
 body::-webkit-scrollbar-thumb:hover,
