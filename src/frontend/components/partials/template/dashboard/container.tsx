@@ -14,6 +14,7 @@ import useAppContext from "@/context/hooks/context"
 import ComponentIcon from "@/frontend/components/partials/icon"
 import ComponentItem from "@/frontend/components/partials/template/dashboard/item"
 import ComponentHeader from "@/frontend/components/partials/template/dashboard/header"
+import ComponentMotion from "@/frontend/components/partials/motion"
 import ComponentLoading from "@/frontend/components/partials/template/dashboard/loading"
 
 interface ITemplateDashboard {
@@ -33,9 +34,9 @@ export default function ComponentTemplateDashboard(props: ITemplateDashboard): C
     const { opacity }: IContext = useAppContext();
 
     return (
-        <article className={`${opacity && 'opacity-40'} min-h-screen relative dark:bg-dark-primary bg-primary 2xl:px-0 sm:pl-5 sm:pt-20 pt-16 pb-9`}>
+        <ComponentMotion type="article" descriptionClass={`${opacity && 'opacity-40'} min-h-screen relative dark:bg-dark-primary bg-primary 2xl:px-0 sm:pl-5 sm:pt-20 pt-16 pb-9`}>
             <ComponentHeader title={header.title} subtitle={header.subtitle} />
-            <article className="relative pb-10 sm:pb-9 mx-auto place-items-center mt-1 grid max-w-2xl grid-cols-1 lg:gap-8 gap-3 pt-10 sm:mt-10 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            <ComponentMotion type="article" descriptionClass="relative pb-10 sm:pb-9 mx-auto place-items-center mt-1 grid max-w-2xl grid-cols-1 lg:gap-8 gap-3 pt-10 sm:mt-10 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {
                     viewRedirect && (
                         <span className="absolute top-0 left-0 dark:bg-dark-primary bg-primary rounded-full p-1.5 dark:hover:bg-dark-room hover:bg-room transition duration-500" title="Volver atras" onClick={() => router.push(APP_ROUTES.dashboard.main)}>
@@ -51,7 +52,7 @@ export default function ComponentTemplateDashboard(props: ITemplateDashboard): C
                             return <ComponentItem key={index} props={item} />
                         })
                 }
-            </article>
-        </article>
+            </ComponentMotion>
+        </ComponentMotion>
     )
 }
