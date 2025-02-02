@@ -28,25 +28,25 @@ export default function ComponentMessageConfirmation(props: IMessageConfirmation
     const color = (status: PropsStatus): string => {
         switch (status) {
             case 200: case 201: case 204:
-                return "secondary";
+                return "gradient";
             case 400: case 401: case 403: case 404: case 500:
                 return "error";
         }
     }
 
     return (
-        <ComponentModal open={open} setOpen={setOpen} color={color(status)} buttonClose={buttonClose} >
+        <ComponentModal open={open} setOpen={setOpen} color={(color(status) === 'gradient')? 'secondary':'error' } buttonClose={buttonClose} >
             <div className="flex flex-col w-full items-center text-center sm:mt-0 sm:text-left">
                 <span className={`flex place-items-center p-2.5 rounded-full bg-gray-900 ${!buttonClose && 'mt-4'}`}>
                     {
                         icon(status)
                     }
                 </span>
-                <p className="mt-2 text-center text-xl dark:text-dark-tertiary text-tertiary opacity-50 dark:opacity-100">
+                <p className={`mt-2 text-center text-xl text-${color(status)}`}>
                     {info?.message}
                 </p>
             </div>
-            <button type="button" name="Aceptar" onClick={() => reply()} className={`outline-none rounded-full w-[200px] dark:bg-dark-primary bg-primary dark:hover:bg-dark-${color(status)} dark:hover:border-transparent dark:hover:text-dark-primary hover:opacity-100  dark:opacity-100 opacity-70 cursor-pointer dark:text-dark-${color(status)} text-${color(status)} border-[0.1px] dark:border-dark-${color(status)} border-${color(status)} `}>
+            <button type="button" name="Aceptar" onClick={() => reply()} className={`outline-none rounded-full w-[200px] ${(color(status)== 'error')? 'bg-custom-gradient-red':'bg-custom-gradient'} dark:hover:bg-dark-${color(status)} text-tertiary hover:opacity-100 dark:opacity-100 opacity-70 cursor-pointer `}>
                 Aceptar
             </button>
         </ComponentModal>

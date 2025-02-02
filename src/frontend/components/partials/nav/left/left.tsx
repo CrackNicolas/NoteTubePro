@@ -2,6 +2,8 @@ import { Component } from "@/frontend/types/component";
 import { APP_ROUTES } from "@/frontend/constant/app_rutes";
 
 import { changeTopic } from "@/frontend/logic/styles/theme"
+import { TypeButtonNav } from "@/frontend/enums/type_item_nav";
+import { ThemeName, ThemeTextPresentation } from "@/frontend/types/theme";
 
 import IContext from "@/context/interfaces/context";
 import useAppContext from "@/context/hooks/context";
@@ -20,7 +22,12 @@ export default function ComponentNavLeft(props: INavLeft): Component {
             <ul className="flex sm:grid sm:place-items-center">
                 <ComponentItemNavLeft url={APP_ROUTES.home} title="Inicio" name="home" />
                 <ComponentItemNavLeft url={APP_ROUTES.dashboard.main} title="Panel" name="panel" />
-                <ComponentItemNavLeft onClick={() => changeTopic({ theme, setTheme })} title="Tema" name="moon-star" />
+                <ComponentItemNavLeft 
+                    onClick={() => changeTopic({ theme, setTheme })} 
+                    title={ThemeTextPresentation[theme]} 
+                    type={TypeButtonNav.THEME} 
+                    name={`moon-star${(theme === ThemeName.dark)? '':'-fill'}`} 
+                />
             </ul>
         </nav>
     )

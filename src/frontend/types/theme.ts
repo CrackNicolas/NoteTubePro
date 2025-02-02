@@ -8,4 +8,9 @@ export const ThemeColors = {
     [ThemeName.ligth]: "#00ffff",
 }
 
+export const ThemeTextPresentation = {
+    [ThemeName.dark]: "Claro",
+    [ThemeName.ligth]: "Oscuro"
+}
+
 export type PropsTheme = ThemeName;
