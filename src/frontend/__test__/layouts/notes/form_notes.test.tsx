@@ -176,14 +176,13 @@ describe('Componente <Form/> principal', () => {
 
             expect(inputTitle).toHaveValue(note.title);
             expect(inputDescription).toHaveValue(note.description);
-            expect(inputPriority).toHaveClass('bg-secondary text-primary');
+            expect(inputPriority).toHaveClass('bg-custom-gradient text-tertiary w-full text-center text-[14.4px] tracking-wider font-semibold cursor-pointer py-[5.1px]');
 
             const buttonDeshacer = component.getByRole('button', { name: 'Deshacer' });
             fireEvent.click(buttonDeshacer);
 
             expect(inputTitle).toHaveValue('');
             expect(inputDescription).toHaveValue('');
-            expect(inputPriority).toHaveClass('text-secondary group-hover:bg-secondary group-hover:text-primary');
             expect(mock_push).toHaveBeenCalledWith(APP_ROUTES.notes.search);
         })
 

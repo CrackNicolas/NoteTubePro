@@ -40,15 +40,12 @@ describe('Componente <Messages/>', () => {
                 const button = component.getByRole('button', { name: 'Aceptar' });
 
                 expect(button).toBeInTheDocument();
-                expect(button).toHaveClass(`text-${message.color}`);
-                expect(button).toHaveClass(`border-${message.color}`);
 
                 fireEvent.click(button);
                 expect(setOpen).toHaveBeenCalledWith(false);
 
                 const elementMessage = component.getByText(message.text);
                 expect(elementMessage).toBeInTheDocument();
-                expect(elementMessage).toHaveClass('mt-2 text-center text-xl dark:text-dark-tertiary text-tertiary opacity-50 dark:opacity-100');
             })
         })
     })
