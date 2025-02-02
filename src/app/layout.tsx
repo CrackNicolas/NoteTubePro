@@ -16,7 +16,7 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-	title: 'Aplicacion de notas',
+	title: 'NoteTube',
 	description: 'Creado por Beltran Ricardo Nicolas Alejo',
 	keywords: ['Next.js', 'React', 'JavaScript', 'TypeScript', 'Tailwind', 'CSS', 'HTML'],
 	icons: {

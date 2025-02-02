@@ -7,8 +7,8 @@ export default function manifest(): Manifest {
         display: "browser",
         scope: "/",
         start_url: "/",
-        name: "Aplicacion de notas",
-        short_name: "Notas",
+        name: "NoteTube",
+        short_name: "NoteTube",
         description: "Aplicacion para crear notas",
         icons: [
             {
