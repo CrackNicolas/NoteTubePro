@@ -153,6 +153,10 @@ export default function ComponentContainerForm(props: IContainerForm): Component
         }
     }, [noteSelected, reset, setCategorySelected, setValue])
 
+    useEffect(() => {
+        restart(true);
+    },[]);
+
     return (
         <div className={`flex flex-col mt-[-23px] gap-y-4 w-full sm:w-[450px] mx-auto`}>
             <div className="relative flex justify-center items-center">
