@@ -154,7 +154,9 @@ export default function ComponentContainerForm(props: IContainerForm): Component
     }, [noteSelected, reset, setCategorySelected, setValue])
 
     useEffect(() => {
-        restart(false);
+        if(!noteSelected){
+            restart(false);
+        }
     },[]);
 
     return (
