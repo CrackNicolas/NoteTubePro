@@ -1,0 +1,297 @@
+{
+    "init": {
+        "title": "Aplicación de notas",
+        "subtitle": "¡Organiza tu vida, toma notas sin límites",
+        "button": "Click para iniciar"
+    },
+    "menu": {
+        "left": {
+            "home": "Inicio",
+            "panel": "Panel",
+            "theme": {
+                "text_1": "Claro",
+                "text_2": "Oscuro"
+            }
+        },
+        "top": {
+            "user": "Usuario",
+            "button": "Iniciar sesion"
+        }
+    },
+    "home": {
+        "title": "Bienvenido",
+        "subtitle": "Diseñada para inspirar, sorprender y facilitar tu vida.",
+        "button": "Comienza ahora",
+        "loading": {
+            "message": "¡Estamos preparando todo para ti!"
+        },
+        "sections": {
+            "main": {
+                "article_1": {
+                    "title": "Organización Inteligente",
+                    "subtitle": "Clasifica, prioriza y encuentra tus notas fácilmente."
+                },
+                "article_2": {
+                    "title": "Acceso Rápido",
+                    "subtitle": "Busca y edita notas al instante con solo un clic."
+                },
+                "article_3": {
+                    "title": "Flexibilidad Total",
+                    "subtitle": "Añade imágenes, categorías y destaca lo más importante."
+                }
+            },
+            "testimonies": {
+                "title": "Opiniones de Usuarios",
+                "subtitle": "Descubre cómo nuestra aplicación ha ayudado a otros a organizar sus ideas y mejorar su productividad.",
+                "items": {
+                    "description_1": "Me encanta lo fácil que es gestionar mis notas con imágenes y categorías. ¡Por fin tengo todo organizado sin esfuerzo!",
+                    "description_2": "El sistema de prioridades me ayuda a enfocarme en lo más importante. Nunca había sido tan productiva.",
+                    "description_3": "Antes usaba varias apps para organizarme, pero esta lo tiene todo: notas, imágenes, categorías y una interfaz genial.",
+                    "description_4": "La posibilidad de destacar notas y clasificarlas por categorías me ha ahorrado mucho tiempo. ¡Totalmente recomendada!"
+                }
+            },
+            "footer": {
+                "title": "¿Estás listo para comenzar?",
+                "subtitle": "Da el primer paso hacia una experiencia inigualable.",
+                "button": "Comienza ahora",
+                "details": "Todos los derechos reservados."
+            }
+        }
+    },
+    "dashboard": {
+        "title": "Panel de control",
+        "subtitle": "Organiza tu mundo, mantente al tanto de lo más importante.",
+        "button": "Volver atras",
+        "details": {
+            "default": "Prueba nuestra funcion"
+        },
+        "sections": {
+            "article_1": {
+                "title": "Crear nota",
+                "subtitle": "Escribe y guarda tus ideas o recordatorios importantes. Mantén tus notas organizadas."
+            },
+            "article_2": {
+                "title": "Configuracion de notas",
+                "subtitle": "Configura tus notas para mejorar tu experiencia personalizando diversos aspectos."
+            },
+            "article_3": {
+                "title": "Mis notas creadas",
+                "subtitle": "Encuentra rápidamente tus notas con esta funcion y mejora tu productividad en un instante."
+            },
+            "article_4": {
+                "title": "Administracion de categorias",
+                "subtitle": "Realiza la creacion, edicion, eliminacion y visualizacion de categorias con facilidad."
+            }
+        }
+    },
+    "notes": {
+        "title": "Elige una categoría",
+        "subtitle": "Selecciona una categoría para tu nota",
+        "form": {
+            "buttons": {
+                "create": "Guardar",
+                "close": "Deshacer"
+            },
+            "title": {
+                "details": "Titulo formulario",
+                "create": "Crear nota",
+                "update": "Actualizar nota"
+            },
+            "items": {
+                "title": {
+                    "label": "Titulo",
+                    "input": "Escriba el titulo",
+                    "messages": {
+                        "required": "Titulo requerido",
+                        "minLength": "El titulo deber ser mayor a 5 caracteres",
+                        "maxLength": "El titulo deber ser menor a 45 caracteres",
+                        "pattern": "Solo caracteres válidos, sin dobles espacios"
+                    }
+                },
+                "description": {
+                    "label": "Descripcion",
+                    "input": "Escriba la descripcion",
+                    "messages": {
+                        "required": "Descripcion requerida",
+                        "minLength": "La descripcion deber ser mayor a 15 caracteres",
+                        "maxLength": "La descripcion deber ser menor a 500 caracteres",
+                        "pattern": "Solo caracteres válidos, sin dobles espacios"
+                    }
+                },
+                "priority": {
+                    "title": "Prioridad",
+                    "options": {
+                        "text_1": "Alta",
+                        "text_2": "Media",
+                        "text_3": "Baja"
+                    },
+                    "messages": {
+                        "required": "Prioridad requerida"
+                    }
+                },
+                "stand_out": {
+                    "title": "¿Destacar nota?",
+                    "options": {
+                        "text_1": "SI",
+                        "text_2": "NO"
+                    },
+                    "messages": {
+                        "required": "Selecciona una opcion"
+                    }
+                },
+                "image": {
+                    "upload": {
+                        "text_1": "Seleccionar para subir una imagen",
+                        "text_2": "Subir imagen"
+                    },
+                    "button": "Quitar imagen",
+                    "title": {
+                        "init": "Selecciona una imagen (máximo 1MB)",
+                        "error_1": "Solo se permiten imagenes",
+                        "error_2": "Tu imagen no debe superar 1MB.",
+                        "exito": "Imagen adecuada"
+                    }
+                }
+            }
+        }
+    },
+    "categories": {
+        "default": "Categoria",
+        "use": {
+            "true": "configurada para su uso",
+            "false": "fuera de uso"
+        },
+        "select": "Seleccionar categoria",
+        "list": "Lista de categorias",
+        "title": "Tus categorías",
+        "subtitle": "Toca para agregar o quitar categorías de tus notas",
+        "items": {
+            "proyects": "Proyecto",
+            "briefcase": "Trabajo",
+            "investment": "Inversion",
+            "studies": "Estudios",
+            "person": "Personal",
+            "plane": "Viajes",
+            "stories": "Historias",
+            "film": "Peliculas",
+            "music": "Musicas",
+            "others": "Otros"
+        }
+    },
+    "search": {
+        "messages": {
+            "text_1": "¡Ups! aun no tienes tu primer nota",
+            "text_2": "No se encontraron resultados"
+        },
+        "nav": {
+            "input_search": "Buscar",
+            "buttons": {
+                "create": "Crear nota",
+                "marcar": {
+                    "text_1": "Marcar todo",
+                    "text_2": "Desmarcar todo"
+                },
+                "delete": {
+                    "text_1": "Eliminar",
+                    "text_2": "Eliminar notas"
+                },
+                "close": {
+                    "text_1": "Cancelar",
+                    "text_2": "Cancelar eliminacion"
+                }
+            }
+        },
+        "toggle": {
+            "title": "Filtrar notas",
+            "buttons": {
+                "limpiar": "Limpiar filtro",
+                "close": "Cerrar menu"
+            },
+            "selects": {
+                "date": {
+                    "default": "Fecha",
+                    "options": {
+                        "text_1": "Hoy",
+                        "text_2": "Ayer",
+                        "text_3": "Hace 7 dias",
+                        "text_4": "Hace 1 mes"
+                    }
+                },
+                "priority": "Prioridad",
+                "highlight": "Nota destacada",
+                "category": "Categoria"
+            }
+        }
+    },
+    "messages": {
+        "exito": {
+            "button": "Aceptar"
+        },
+        "wait": "Espere por favor",
+        "error": {
+            "server": "Errores con el servidor",
+            "database": "Error al conectarse a la base de datos"
+        },
+        "confirmation": {
+            "title": "¿Seguro que deseas eliminar?",
+            "options": {
+                "text_1": "SI",
+                "text_2": "NO"
+            }
+        }
+    },
+    "not_found": {
+        "title": "Parece que te has perdido",
+        "subtitle": "La página que estás buscando no existe.",
+        "button": {
+            "text_1": "Volver al inicio",
+            "text_2": "Volver al inicio de la aplicacion"
+        }
+    },
+    "without_internet": {
+        "title": "Conéctate a Internet",
+        "subtitle": "Sin conexion a Internet. Comprueba la conexion.",
+        "button": "Reintentar"
+    },
+    "loading": {
+        "messages": {
+            "default": "Cargando",
+            "notes": "Cargando nota",
+            "categories": "Cargando categorias"
+        }
+    },
+    "time": {
+        "init": "Recien creada",
+        "create": "Hace",
+        "prefijos": {
+            "año": "año",
+            "mes": "mes",
+            "dia": "día",
+            "hs": "hs",
+            "min": "min",
+            "seg": "seg"
+        }
+    },
+    "format_time": {
+        "meses": {
+            "ene": "ene",
+            "feb": "fer",
+            "mar": "mar",
+            "abr": "abr",
+            "may": "may",
+            "jun": "jun",
+            "jul": "jul",
+            "ago": "ago",
+            "sep": "sep",
+            "oct": "oct",
+            "nov": "nov",
+            "dic": "dic"
+        },
+        "prefijos": {
+            "text_1": "Creada",
+            "text_2": "el",
+            "text_3": "de",
+            "text_4": "Ultima vez"
+        }
+    }
+}

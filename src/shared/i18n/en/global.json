@@ -1,0 +1,234 @@
+{
+    "init": {
+        "title": "Notes application",
+        "subtitle": "Organize your life, take notes without limits!",
+        "button": "Click to start"
+    },
+    "menu": {
+        "left": {
+            "home": "Start",
+            "panel": "Panel",
+            "theme": {
+                "text_1": "Clear",
+                "text_2": "Dark"
+            }
+        },
+        "top": {
+            "user": "User",
+            "button": "Login"
+        }
+    },
+    "home": {
+        "title": "Welcome",
+        "subtitle": "Designed to inspire, surprise and make your life easier.",
+        "button": "Start now",
+        "loading": {
+            "message": "We are preparing everything for you!"
+        },
+        "sections": {
+            "main": {
+                "article_1": {
+                    "title": "Smart Organization",
+                    "subtitle": "Easily categorize, prioritize, and find your notes."
+                },
+                "article_2": {
+                    "title": "Quick Access",
+                    "subtitle": "Search and edit notes instantly with just one click."
+                },
+                "article_3": {
+                    "title": "Total Flexibility",
+                    "subtitle": "Add images, categories and highlight what's most important."
+                }
+            },
+            "testimonies": {
+                "title": "User Reviews",
+                "subtitle": "Find out how our app has helped others organize their ideas and improve their productivity.",
+                "items": {
+                    "description_1": "I love how easy it is to manage my notes with images and categories. I finally have everything organized without any effort!",
+                    "description_2": "The priority system helps me focus on what's most important. I've never been so productive.",
+                    "description_3": "I used to use several apps to organize myself, but this one has it all: notes, images, categories, and a great interface.",
+                    "description_4": "The ability to star notes and categorize them has saved me a lot of time. Highly recommended!"
+                }
+            },
+            "footer": {
+                "title": "Are you ready to get started?",
+                "subtitle": "Take the first step towards an unparalleled experience.",
+                "button": "Start now",
+                "details": "All rights reserved."
+            }
+        }
+    },
+    "dashboard": {
+        "title": "control Panel",
+        "subtitle": "Organize your world, stay on top of what matters most.",
+        "button": "Go back",
+        "details": {
+            "default": "Try our feature"
+        },
+        "sections": {
+            "article_1": {
+                "title": "Create note",
+                "subtitle": "Write down and save your important ideas or reminders. Keep your notes organized."
+            },
+            "article_2": {
+                "title": "Notes Settings",
+                "subtitle": "Configure your notes to enhance your experience by customizing various aspects."
+            },
+            "article_3": {
+                "title": "My created notes",
+                "subtitle": "Quickly find your notes with this feature and improve your productivity in an instant."
+            },
+            "article_4": {
+                "title": "Category Management",
+                "subtitle": "Create, edit, delete and view categories with ease."
+            }
+        }
+    },
+    "notes": {
+        "title": "Choose a category",
+        "subtitle": "Select a category for your note",
+        "form": {
+            "buttons": {
+                "create": "Save",
+                "close": "Undo"
+            },
+            "title": {
+                "create": "Create nota",
+                "update": "Update nota"
+            },
+            "items": {
+                "title": {
+                    "label": "Title",
+                    "input": "Write the title",
+                    "messages": {
+                        "required": "Title required",
+                        "minLength": "The title must be more than 5 characters",
+                        "maxLength": "The title must be less than 45 characters.",
+                        "pattern": "Only valid characters, no double spaces"
+                    }
+                },
+                "description": {
+                    "label": "Description",
+                    "input": "Write the description",
+                    "messages": {
+                        "required": "Description required",
+                        "minLength": "The description must be longer than 15 characters",
+                        "maxLength": "The description must be less than 500 characters.",
+                        "pattern": "Only valid characters, no double spaces"
+                    }
+                },
+                "priority": {
+                    "title": "Priority",
+                    "options": {
+                        "text_1": "High",
+                        "text_2": "Average",
+                        "text_3": "Low"
+                    },
+                    "messages": {
+                        "required": "Priority required"
+                    }
+                },
+                "stand_out": {
+                    "title": "Highlight note?",
+                    "options": {
+                        "text_1": "Yeah",
+                        "text_2": "Not"
+                    },
+                    "messages": {
+                        "required": "Select an option"
+                    }
+                },
+                "image": {
+                    "upload": {
+                        "text_1": "Select to upload an image",
+                        "text_2": "Subir imagen"
+                    },
+                    "button": "Quitar imagen",
+                    "title": {
+                        "init": "Select an image (maximum 1MB)",
+                        "error_1": "Only images are allowed",
+                        "error_2": "Your image must not exceed 1MB.",
+                        "exito": "Suitable image"
+                    }
+                }
+            }
+        }
+    },
+    "categories": {
+        "default": "Categoria",
+        "title": "Your categories",
+        "subtitle": "Tap to add or remove categories from your notes",
+        "items": {
+            "proyects": "Project",
+            "briefcase": "Work",
+            "investment": "Investment",
+            "studies": "Studies",
+            "person": "Staff",
+            "plane": "Travel",
+            "stories": "Stories",
+            "film": "Movies",
+            "music": "Musics",
+            "others": "Others"
+        }
+    },
+    "search": {
+        "messages": {
+            "text_1": "¡Ups! aun no tienes tu primer nota",
+            "text_2": "No se encontraron resultados"
+        },
+        "nav": {
+            "input_search": "Search",
+            "button_create": "Create nota"
+        },
+        "toggle": {
+            "title": "Filter notes",
+            "button": "Clear filter",
+            "selects": {
+                "date": "Date",
+                "priority": "Priority",
+                "highlight": "Featured Note",
+                "category": "Category"
+            }
+        }
+    },
+    "messages": {
+        "exito": {
+            "button": "Aceptar"
+        },
+        "wait": "Please wait",
+        "error": {
+            "server": "Server errors",
+            "database": "Error connecting to database",
+            "categori": {
+                "text_1": "Debes tener por lo menos 2 categorias en uso",
+                "text_2": "Categoria no encontrada"
+            }
+        },
+        "confirmation": {
+            "title": "Are you sure you want to delete?",
+            "options": {
+                "text_1": "Yeah",
+                "text_2": "Not"
+            }
+        }
+    },
+    "not_found": {
+        "title": "Parece que te has perdido",
+        "subtitle": "La página que estás buscando no existe.",
+        "button": {
+            "text_1": "Volver al inicio",
+            "text_2": "Volver al inicio de la aplicacion"
+        }
+    },
+    "without_internet": {
+        "title": "Conéctate a Internet",
+        "subtitle": "Sin conexion a Internet. Comprueba la conexion.",
+        "button": "Reintentar"
+    },
+    "loading": {
+        "messages": {
+            "default": "Cargando",
+            "notes": "Cargando nota"
+        }
+    }
+}
