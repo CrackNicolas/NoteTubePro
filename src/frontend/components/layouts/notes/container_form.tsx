@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image';
+import { HttpStatusCode } from 'axios';
 import { useRouter } from 'next/navigation';
 
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -10,12 +11,16 @@ import { Component } from '@/frontend/types/component';
 import { APP_ROUTES } from '@/frontend/constant/app_rutes';
 
 import { PropsNote } from '@/context/types/note';
-import { PropsResponse } from '@/context/types/response';
+import { PropsResponse } from '@/shared/types/response';
 import { PropsCategory } from '@/context/types/category';
 import { PropsDispatchCategoryNotRequired } from '@/frontend/types/dispatch';
 
-import { httpRequest } from '@/backend/logic/requests';
+import { httpRequest } from '@/shared/logic/requests';
+import { ValueBoolean } from '@/frontend/enums/boolean';
 import { ConditionFile } from '@/backend/enums/condition_file';
+import { ValuePriority } from '@/shared/enums/note/priority';
+
+import useAppTranslation from '@/shared/hooks/translation';
 
 import ComponentIcon from '@/frontend/components/partials/icon';
 import ComponentInput from '@/frontend/components/partials/form/input';
@@ -23,6 +28,7 @@ import ComponentLabel from '@/frontend/components/partials/form/label';
 import ComponentMessageWait from '@/frontend/components/layouts/messages/wait';
 import ComponentItemPriority from '@/frontend/components/partials/form/item_priority';
 import ComponentItemFeatured from '@/frontend/components/partials/form/item_featured';
+import ComponentButtonGoBack from '@/frontend/components/partials/button_go_back';
 import ComponentMessageConfirmation from '@/frontend/components/layouts/messages/confirmation';
 
 interface IContainerForm {
@@ -34,6 +40,8 @@ interface IContainerForm {
 export default function ComponentContainerForm(props: IContainerForm): Component {
     const { categorySelected, setCategorySelected, noteSelected } = props;
 
+    const { translate } = useAppTranslation();
+
     const router = useRouter();
 
     const MAX_FILE_SIZE: number = 1 * 1024 * 1024; // 1MB en bytes
@@ -43,7 +51,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
     const [loading, setLoading] = useState<boolean>(false);
     const [response, setResponse] = useState<PropsResponse>();
     const [viewFile, setViewFile] = useState<string | undefined>(undefined);
-    const [messageImage, setMessageImage] = useState<{ paint: boolean, value: string }>({ paint: true, value: 'Selecciona una imagen (máximo 1MB)' });
+    const [messageImage, setMessageImage] = useState<{ paint: boolean, value: string }>({ paint: true, value: translate('notes.form.items.image.title.init') });
     const [valuesExists, setValuesExists] = useState<boolean>(false);
     const [confirmationDeleteFile, setConfirmationDeleteFile] = useState<boolean>(false);
 
@@ -59,7 +67,6 @@ export default function ComponentContainerForm(props: IContainerForm): Component
     }
 
     const openModal = (data: PropsResponse): void => {
-        restart(false);
         setOpen(true);
         setResponse(data);
     }
@@ -69,12 +76,12 @@ export default function ComponentContainerForm(props: IContainerForm): Component
 
         if (newFile && !newFile.type.startsWith('image/')) {
             event.target.value = "";
-            setMessageImage({ paint: false, value: 'Solo se permiten imagenes' });
+            setMessageImage({ paint: false, value: translate('notes.form.items.image.title.error_1') });
         } else if (newFile && newFile.size > MAX_FILE_SIZE) {
             event.target.value = "";
-            setMessageImage({ paint: false, value: 'Tu imagen no debe superar 1MB.' });
+            setMessageImage({ paint: false, value: translate('notes.form.items.image.title.error_2') });
         } else {
-            setMessageImage({ paint: true, value: 'Imagen adecuada' });
+            setMessageImage({ paint: true, value: translate('notes.form.items.image.title.exito') });
             setFile(newFile);
             setViewFile(URL.createObjectURL(newFile as File));
             setConfirmationDeleteFile(false);
@@ -85,7 +92,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
         setFile(undefined);
         (document.getElementById("file-upload") as HTMLInputElement).value = "";
         setViewFile(undefined);
-        setMessageImage({ paint: true, value: 'Selecciona una imagen (máximo 1MB)' });
+        setMessageImage({ paint: true, value: translate('notes.form.items.image.title.init') });
         setConfirmationDeleteFile(!confirmationDeleteFile);
     }
 
@@ -132,20 +139,27 @@ export default function ComponentContainerForm(props: IContainerForm): Component
 
     const reply = (): void => {
         setOpen(false);
-        router.push(APP_ROUTES.notes.search);
+        if (response?.status === HttpStatusCode.Created || response?.status === HttpStatusCode.Ok) {
+            restart(false);
+            router.push(APP_ROUTES.notes.search);
+        }
     }
+
+    useEffect(() => {
+        setMessageImage(prev => ({ ...prev, value: translate('notes.form.items.image.title.init') }));
+    }, [translate('notes.form.items.image.title.init')]);
 
     useEffect(() => {
         reset();
         setValue('title', noteSelected?.title);
         setValue('description', noteSelected?.description);
         setValue('priority', noteSelected?.priority);
-        setValue('featured', noteSelected?.featured ? 'SI' : 'NO');
+        setValue('featured', noteSelected?.featured ? ValueBoolean.YEAH : ValueBoolean.NOT);
         setValue('category', noteSelected?.category);
-
+        
         if (noteSelected?.file?.id) {
             setViewFile(noteSelected?.file?.url)
-            setMessageImage({ paint: true, value: 'Imagen adecuada' });
+            setMessageImage({ paint: true, value: translate('notes.form.items.image.title.exito') });
         }
 
         if (noteSelected?.category) {
@@ -153,76 +167,64 @@ export default function ComponentContainerForm(props: IContainerForm): Component
         }
     }, [noteSelected, reset, setCategorySelected, setValue])
 
-    useEffect(() => {
-        if(!noteSelected){
-            restart(false);
-        }
-    },[]);
-
     return (
         <div className={`flex flex-col mt-[-23px] gap-y-4 w-full sm:w-[450px] mx-auto`}>
             <div className="relative flex justify-center items-center">
-                {
-                    (!noteSelected) && (
-                        <span onClick={() => setCategorySelected(undefined)} className="absolute left-0 dark:bg-dark-primary bg-primary rounded-full p-1 dark:hover:bg-dark-room hover:bg-room transition duration-5" title="Volver atras">
-                            <ComponentIcon name="return" size={22} descriptionClass="rotate-[-180deg] dark:text-dark-secondary text-secondary cursor-pointer" />
-                        </span>
-                    )
-                }
-                <span title="Titulo formulario" className="text-2xl text-gradient font-semibold text-center tracking-wider">
-                    {(!noteSelected) ? 'Crear nota' : 'Actualizar nota'}
+                {(!noteSelected) && <ComponentButtonGoBack onClick={() => setCategorySelected(undefined)} descriptionClass="left-0 p-1" />}
+                <span title={translate('notes.form.title.details')} className="text-2xl text-gradient font-semibold text-center tracking-wider">
+                    {(!noteSelected) ? translate('notes.form.title.create') : translate('notes.form.title.update')}
                 </span>
-                <span className="absolute right-0" title={`Categoria ${categorySelected?.title}`}>
+                <span className="absolute right-0" title={`${translate('categories.default')} ${translate(`categories.items.${categorySelected?.icon}`)}`}>
                     <ComponentIcon name={(noteSelected) ? noteSelected?.category.icon : categorySelected?.icon} size={24} descriptionClass="text-secondary text-opacity-60 dark:text-seventh" />
                 </span>
             </div>
             <form method="POST" onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-6">
                 <div className="flex flex-col gap-y-4">
                     <div className="flex flex-col gap-y-0.5">
-                        <ComponentLabel title="Titulo" htmlFor="title" errors={errors} />
+                        <ComponentLabel title={translate('notes.form.items.title.label')} htmlFor="title" errors={errors} />
                         <ComponentInput
                             type="text"
                             name="title"
                             error={errors.title?.type}
                             register={register}
-                            placeholder="Escriba el titulo..."
+                            placeholder={`${translate('notes.form.items.title.input')}...`}
                             descriptionClass="border-opacity-50 dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] py-1 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
                         />
                     </div>
                     <div className="flex flex-col gap-y-0.5">
-                        <ComponentLabel valuesExists={valuesExists} title="Descripcion" htmlFor="description" errors={errors} />
+                        <ComponentLabel valuesExists={valuesExists} title={translate('notes.form.items.description.label')} htmlFor="description" errors={errors} />
                         <ComponentInput
                             rows={3}
                             name="description"
                             error={errors.description?.type}
                             register={register}
-                            placeholder="Escriba la descripcion..."
+                            placeholder={`${translate('notes.form.items.description.input')}...`}
                             descriptionClass="border-opacity-50 dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] min-h-[65px] scroll-text py-1 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
                         />
                     </div>
                     <div className="flex flex-col gap-y-0.5">
-                        <ComponentLabel title="Prioridad" htmlFor="priority" errors={errors} />
+                        <ComponentLabel title={translate('notes.form.items.priority.label')} htmlFor="priority" errors={errors} />
                         <div className="grid grid-cols-3 gap-x-1">
                             <ComponentItemPriority
                                 id="option_1"
-                                value='Alta'
-                                paint={watch('priority') === "Alta"}
+                                value={ValuePriority.High}
+                                paint={watch('priority') === ValuePriority.High}
                                 error={errors.priority?.type}
                                 register={register}
                                 descriptionClass="text-red-500 rotate-[-180deg]"
                             />
                             <ComponentItemPriority
                                 id="option_2"
-                                value='Media'
-                                paint={watch('priority') === "Media"}
+                                value={ValuePriority.Medium}
+                                paint={watch('priority') === ValuePriority.Medium}
                                 error={errors.priority?.type}
                                 register={register}
                                 descriptionClass="text-yellow-500 rotate-[-180deg]"
                             />
                             <ComponentItemPriority
                                 id="option_3"
-                                value='Baja'
-                                paint={watch('priority') === "Baja"}
+                                value={ValuePriority.Low}
+                                paint={watch('priority') === ValuePriority.Low}
                                 error={errors.priority?.type}
                                 register={register}
                                 descriptionClass="text-green-500"
@@ -230,17 +232,17 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                         </div>
                     </div>
                     <div className="grid grid-cols-2 items-center my-1">
-                        <ComponentLabel title="¿Destacar nota?" htmlFor="featured" errors={errors} />
+                        <ComponentLabel title={translate('notes.form.items.featured.title')} htmlFor="featured" errors={errors} />
                         <div className='flex w-full gap-x-2'>
                             <ComponentItemFeatured
-                                value='SI'
-                                paint={watch('featured') === 'SI'}
+                                value={ValueBoolean.YEAH}
+                                paint={watch('featured') === ValueBoolean.YEAH}
                                 error={errors.featured?.type}
                                 register={register}
                             />
                             <ComponentItemFeatured
-                                value='NO'
-                                paint={watch('featured') === 'NO'}
+                                value={ValueBoolean.NOT}
+                                paint={watch('featured') === ValueBoolean.NOT}
                                 error={errors.featured?.type}
                                 register={register}
                             />
@@ -251,26 +253,25 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                             <ComponentLabel title={messageImage.value} htmlFor="" color={messageImage.paint ? 'dark:text-dark-secondary text-secondary' : 'dark:text-dark-error text-error'} />
                             {
                                 (viewFile) && (
-                                    <button onClick={() => removeFile()} type="button" name="Quitar imagen" title="Quitar imagen" className="group flex gap-x-1.5 items-center border-[0.1px] bg-custom-gradient border-none px-2 rounded-md">
+                                    <button onClick={() => removeFile()} type="button" name={translate('notes.form.items.image.button')} title={translate('notes.form.items.image.button')} className="group flex gap-x-1.5 items-center border-[0.1px] bg-custom-gradient border-none px-2 rounded-md">
                                         <ComponentIcon name='image' size={10} descriptionClass="group-hover:text-tertiary text-primary" />
                                         <span className="text-[12.3px] group-hover:text-tertiary text-primary font-semibold tracking-wider transition duration-500">
-                                            Quitar imagen
+                                            {translate('notes.form.items.image.button')}
                                         </span>
                                     </button>
                                 )
                             }
                         </div>
-                        <label htmlFor="file-upload" title="Seleccionar para subir una imagen" className="grid gap-y-0.5 place-items-center mt-0.5 p-1 dark:border-dark-secondary border-secondary border-opacity-20 dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] cursor-pointer hover:border-opacity-60 transition duration-500">
+                        <label htmlFor="file-upload" title={translate('notes.form.items.image.upload.text_1')} className="grid gap-y-0.5 place-items-center mt-0.5 p-1 dark:border-dark-secondary border-secondary border-opacity-20 dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] cursor-pointer hover:border-opacity-60 transition duration-500">
                             {
                                 ((!file || !noteSelected?.file?.id) && (!viewFile)) ?
                                     <ComponentIcon name="upload-file" size={27} descriptionClass="icon-home dark:text-dark-secondary text-secondary cursor-pointer" />
                                     :
                                     <Image src={viewFile ?? ""} alt="" width={60} height={60} className="max-w-[70px] max-h-[70px] rounded-md" />
                             }
-
                             <span className='line-clamp-1 dark:text-dark-secondary text-secondary text-md font-normal tracking-wide'>
                                 {
-                                    (!file || !noteSelected?.file?.id) && (!viewFile) && "Subir imagen..."
+                                    (!file || !noteSelected?.file?.id) && (!viewFile) && `${translate('notes.form.items.image.upload.text_2')}...`
                                 }
                             </span>
                             <input id="file-upload" accept="image/*" name="file-upload" type="file" onChange={event => captureFile(event)} className="sr-only" />
@@ -278,20 +279,16 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                     </div>
                 </div>
                 <div className="flex gap-x-10">
-                    <button type="submit" title="Guardar" name="Guardar" className="relative flex w-full justify-center rounded-md hover:text-tertiary text-primary border-[0.1px] border-none px-3 py-1 text-md font-normal hover:font-semibold bg-custom-gradient tracking-wider outline-none">
-                        Guardar
+                    <button type="submit" title={translate('notes.form.buttons.create')} name={translate('notes.form.buttons.create')} className="relative flex w-full justify-center rounded-md hover:text-tertiary text-primary border-[0.1px] border-none px-3 py-1 text-md font-normal hover:font-semibold bg-custom-gradient tracking-wider outline-none">
+                        {translate('notes.form.buttons.create')}
                     </button>
-                    <button onClick={() => restart(true)} type="button" name="Deshacer" title="Deshacer" className="relative flex hover:text-tertiary text-primary w-full justify-center rounded-md bg-custom-gradient-red px-3 py-1 text-md font-normal hover:font-semibold tracking-wider outline-none">
-                        Deshacer
+                    <button onClick={() => restart(true)} type="button" name={translate('notes.form.buttons.close')} title={translate('notes.form.buttons.close')} className="relative flex hover:text-tertiary text-primary w-full justify-center rounded-md bg-custom-gradient-red px-3 py-1 text-md font-normal hover:font-semibold tracking-wider outline-none">
+                        {translate('notes.form.buttons.close')}
                     </button>
                 </div>
             </form>
-            {
-                (response) && <ComponentMessageConfirmation open={open} setOpen={setOpen} response={response} reply={reply} buttonClose={false} />
-            }
-            {
-                (loading) && <ComponentMessageWait open={loading} setOpen={setLoading} />
-            }
+            {response && <ComponentMessageConfirmation open={open} setOpen={setOpen} response={response} reply={reply} buttonClose={false} />}
+            {loading && <ComponentMessageWait open={loading} setOpen={setLoading} />}
         </div >
     )
 }

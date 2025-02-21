@@ -1,6 +1,6 @@
-import IElement from "@/frontend/interfaces/elements/element";
-
 import { Component } from "@/frontend/types/component";
+
+import IElement from "@/frontend/interfaces/elements/element";
 import ComponentMotion from "@/frontend/components/partials/motion";
 
 interface IHeader extends Partial<Pick<IElement, 'title' | 'subtitle'>> {}

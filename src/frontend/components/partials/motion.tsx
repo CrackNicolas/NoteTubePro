@@ -32,7 +32,7 @@ const staggeredFadeIn = {
 }
 
 interface IMotion extends Pick<IElement, 'descriptionClass'>, ILayouts {
-    type: 'header' | 'div' | 'section' | 'article'
+    type: 'header' | 'div' | 'section' | 'article' | 'popover'
 }
 
 export default function ComponentMotion(props: IMotion): JSX.Element {
@@ -54,6 +54,12 @@ export default function ComponentMotion(props: IMotion): JSX.Element {
                 <motion.section className={descriptionClass} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggeredFadeIn}>
                     {children}
                 </motion.section>
+            )
+        case 'popover':
+            return (
+                <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 3, y: 0 }} className={descriptionClass}>
+                    {children}
+                </motion.div>
             )
     }
 }

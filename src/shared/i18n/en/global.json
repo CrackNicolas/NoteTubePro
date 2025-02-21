@@ -1,4 +1,7 @@
 {
+    "metadata": {
+        "description": "Created by Beltran Ricardo Nicolas Alejo"
+    },
     "init": {
         "title": "Notes application",
         "subtitle": "Organize your life, take notes without limits!",
@@ -9,13 +12,22 @@
             "home": "Start",
             "panel": "Panel",
             "theme": {
-                "text_1": "Clear",
-                "text_2": "Dark"
+                "oscuro": "Clear",
+                "claro": "Dark"
             }
         },
         "top": {
             "user": "User",
-            "button": "Login"
+            "buttons":{
+                "login":  "Login",
+                "translate": {
+                    "title": "Translator",
+                    "options":{
+                        "spanish": "Spanish ",
+                        "english": "English"
+                    }
+                }
+            }
         }
     },
     "home": {
@@ -59,28 +71,32 @@
         }
     },
     "dashboard": {
-        "title": "control Panel",
+        "title": "Control Panel",
         "subtitle": "Organize your world, stay on top of what matters most.",
         "button": "Go back",
         "details": {
             "default": "Try our feature"
         },
         "sections": {
-            "article_1": {
+            "sessions": {
+                "title": "User Activity Log",
+                "description": "Monitor user sessions and activities for better management."
+            },
+            "create_note": {
                 "title": "Create note",
-                "subtitle": "Write down and save your important ideas or reminders. Keep your notes organized."
+                "description": "Write down and save your important ideas or reminders. Keep your notes organized."
             },
-            "article_2": {
+            "note_settings": {
                 "title": "Notes Settings",
-                "subtitle": "Configure your notes to enhance your experience by customizing various aspects."
+                "description": "Configure your notes to enhance your experience by customizing various aspects."
             },
-            "article_3": {
+            "list_notes": {
                 "title": "My created notes",
-                "subtitle": "Quickly find your notes with this feature and improve your productivity in an instant."
+                "description": "Quickly find your notes with this feature and improve your productivity in an instant."
             },
-            "article_4": {
+            "category_management": {
                 "title": "Category Management",
-                "subtitle": "Create, edit, delete and view categories with ease."
+                "description": "Create, edit, delete and view categories with ease."
             }
         }
     },
@@ -88,11 +104,23 @@
         "title": "Choose a category",
         "subtitle": "Select a category for your note",
         "form": {
+            "note": {
+                "default": "Note",
+                "selected": "Selected note",
+                "unselected": "Mark note",
+                "time_elapsed": "Elapsed time",
+                "button": "Edit",
+                "view": {
+                    "date": "Creation date",
+                    "image": "See image"
+                }
+            },
             "buttons": {
                 "create": "Save",
                 "close": "Undo"
             },
             "title": {
+                "details": "Form Title",
                 "create": "Create nota",
                 "update": "Update nota"
             },
@@ -101,6 +129,7 @@
                     "label": "Title",
                     "input": "Write the title",
                     "messages": {
+                        "duplicate": "It would be advisable to enter something other than the title",
                         "required": "Title required",
                         "minLength": "The title must be more than 5 characters",
                         "maxLength": "The title must be less than 45 characters.",
@@ -118,21 +147,25 @@
                     }
                 },
                 "priority": {
-                    "title": "Priority",
+                    "label": "Priority",
                     "options": {
-                        "text_1": "High",
-                        "text_2": "Average",
-                        "text_3": "Low"
+                        "alta": "High",
+                        "media": "Average",
+                        "baja": "Low"
                     },
                     "messages": {
                         "required": "Priority required"
                     }
                 },
-                "stand_out": {
+                "featured": {
                     "title": "Highlight note?",
+                    "details": {
+                        "text_1": "featured",
+                        "text_2": "not featured"
+                    },
                     "options": {
-                        "text_1": "Yeah",
-                        "text_2": "Not"
+                        "si": "Yeah",
+                        "no": "Not"
                     },
                     "messages": {
                         "required": "Select an option"
@@ -141,9 +174,9 @@
                 "image": {
                     "upload": {
                         "text_1": "Select to upload an image",
-                        "text_2": "Subir imagen"
+                        "text_2": "Upload image"
                     },
-                    "button": "Quitar imagen",
+                    "button": "Remove image",
                     "title": {
                         "init": "Select an image (maximum 1MB)",
                         "error_1": "Only images are allowed",
@@ -155,7 +188,13 @@
         }
     },
     "categories": {
-        "default": "Categoria",
+        "default": "Category",
+        "use": {
+            "true": "configured for use",
+            "false": "out of use"
+        },
+        "select": "Select category",
+        "list": "List of categories",
         "title": "Your categories",
         "subtitle": "Tap to add or remove categories from your notes",
         "items": {
@@ -173,62 +212,151 @@
     },
     "search": {
         "messages": {
-            "text_1": "¡Ups! aun no tienes tu primer nota",
-            "text_2": "No se encontraron resultados"
+            "text_1": "Oops! You still don't have your first grade",
+            "text_2": "No results found"
         },
         "nav": {
             "input_search": "Search",
-            "button_create": "Create nota"
+            "icon": "Search notes",
+            "buttons": {
+                "create": "Create note",
+                "mark": {
+                    "text_1": "Mark all",
+                    "text_2": "Uncheck all"
+                },
+                "delete": {
+                    "text_1": "Delete",
+                    "text_2": "Delete notes"
+                },
+                "close": {
+                    "text_1": "Cancel",
+                    "text_2": "Cancel deletion"
+                }
+            }
         },
         "toggle": {
             "title": "Filter notes",
-            "button": "Clear filter",
+            "buttons": {
+                "clean": "Clear filter",
+                "close": "Close menu"
+            },
             "selects": {
-                "date": "Date",
+                "date": {
+                    "default": "Date",
+                    "options": {
+                        "hoy": "Today",
+                        "ayer": "Yesterday",
+                        "hace 7 dias": "7 days ago",
+                        "hace 1 mes": "1 month ago"
+                    }
+                },
                 "priority": "Priority",
-                "highlight": "Featured Note",
+                "highlight": "Featured note",
                 "category": "Category"
             }
         }
     },
     "messages": {
+        "entity": {
+            "Acceso no autorizado": "Unauthorized access",
+            "Ocurrió un error desconocido": "An unknown error occurred",
+            "Recurso no encontrado": "Resource not found",
+            "Credenciales invalidas": "Invalid credentials",
+            "Solicitud inválida. Por favor, revisa los datos enviados": "Invalid request. Please review the data sent",
+            "Operación exitosa, sin contenido para retornar": "Successful operation, no content to return",
+            "Recurso creado exitosamente": "Resource created successfully",
+            "Operación realizada con éxito": "Operation completed successfully",
+            "Error al conectarse a la base de datos": "Error connecting to database",
+            "Problemas con el servidor": "Server problems",
+            "Categoría no encontrada": "Category not found",
+            "Debes tener por lo menos 2 categorías en uso": "You must have at least 2 categories in use",
+            "Categoría configurada para su uso": "Category configured for use",
+            "Categoría fuera de uso": "Category out of use",
+            "Nota modificada con éxito": "Note modified successfully",
+            "Nota creada con éxito": "Note created successfully",
+            "Solo se permiten archivos de imagen": "Only image files are allowed",
+            "Nota no encontrada": "Note not found",
+            "Error al analizar el archivo": "Error parsing file",
+            "Archivo con virus": "File with virus",
+            "Archivo no encontrado": "File not found",
+            "Nota eliminada": "Note deleted",
+            "Notas eliminadas": "Deleted Notes",
+            "Error de eliminación": "Delete error",
+            "Error la nota que intentas crear ya existe": "Error the note you are trying to create already exists"
+        },
+        "modal": {
+            "button": "Close"
+        },
         "exito": {
-            "button": "Aceptar"
+            "button": "Accept"
         },
         "wait": "Please wait",
-        "error": {
-            "server": "Server errors",
-            "database": "Error connecting to database",
-            "categori": {
-                "text_1": "Debes tener por lo menos 2 categorias en uso",
-                "text_2": "Categoria no encontrada"
-            }
-        },
         "confirmation": {
             "title": "Are you sure you want to delete?",
             "options": {
-                "text_1": "Yeah",
-                "text_2": "Not"
+                "si": "Yeah",
+                "no": "Not"
             }
         }
     },
     "not_found": {
-        "title": "Parece que te has perdido",
-        "subtitle": "La página que estás buscando no existe.",
+        "title": "It seems that you have lost your way",
+        "subtitle": "The page you are looking for does not exist.",
         "button": {
-            "text_1": "Volver al inicio",
-            "text_2": "Volver al inicio de la aplicacion"
+            "text_1": "Back to top",
+            "text_2": "Return to the top of the application"
         }
     },
     "without_internet": {
-        "title": "Conéctate a Internet",
-        "subtitle": "Sin conexion a Internet. Comprueba la conexion.",
-        "button": "Reintentar"
+        "title": "Connect to the Internet",
+        "subtitle": "No internet connection. Please check your connection.",
+        "button": "Retry"
     },
     "loading": {
         "messages": {
-            "default": "Cargando",
-            "notes": "Cargando nota"
+            "default": "Loading",
+            "notes": "Loading note",
+            "categories": "Loading categories"
+        }
+    },
+    "time": {
+        "init": "Newly created",
+        "create": "Does",
+        "prefixes": {
+            "año": "year",
+            "mes": "month",
+            "dia": "day",
+            "seg": "sec"
+        }
+    },
+    "format_time": {
+        "months": {
+            "ene": "jan",
+            "feb": "feb",
+            "mar": "mar",
+            "abr": "apr",
+            "may": "may",
+            "jun": "jun",
+            "jul": "jul",
+            "ago": "aug",
+            "sep": "sep",
+            "oct": "oct",
+            "nov": "nov",
+            "dic": "dec"
+        },
+        "prefixes": {
+            "text_1": "Created",
+            "text_2": "on",
+            "text_3": "of",
+            "text_4": "Last time"
+        }
+    },
+    "clerk": {
+        "signIn": {
+            "button_close": "Log out",
+            "input": {
+                "placeholder": "Enter your email"
+            }
         }
     }
 }

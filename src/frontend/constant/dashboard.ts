@@ -6,33 +6,28 @@ export const ItemsMain: PropsItemsDashboard[] = [
     {
         url: APP_ROUTES.sessions,
         icon: "users",
-        title: "Registro de actividad de usuarios",
-        description: "Monitorea las sesiones y actividades de los usuarios para una mejor gestión."
+        nameTranslate: "sessions"
     },
     {
         url: APP_ROUTES.notes.init,
         icon: "note",
-        title: "Crear nota",
-        description: "Escribe y guarda tus ideas o recordatorios importantes. Mantén tus notas organizadas."
+        nameTranslate: "create_note"
     },
     {
         url: APP_ROUTES.dashboard.config,
         icon: "setting",
-        title: "Configuracion de notas",
-        description: "Configura tus notas para mejorar tu experiencia personalizando diversos aspectos."
+        nameTranslate: "note_settings"
     },
     {
         url: APP_ROUTES.notes.search,
         icon: "list",
-        title: "Mis notas creadas",
-        description: "Encuentra rápidamente tus notas con esta funcion y mejora tu productividad en un instante."
+        nameTranslate: "list_notes"
     }
 ]
 export const ItemsConfig: PropsItemsDashboard[] = [
     {
         url: APP_ROUTES.notes.category,
         icon: "setting",
-        title: "Administracion de categorias",
-        description: "Realiza la creacion, edicion, eliminacion y visualizacion de categorias con facilidad."
+        nameTranslate: "category_management"
     }
 ]

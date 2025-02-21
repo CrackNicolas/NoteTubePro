@@ -5,6 +5,7 @@ import { Component } from '@/frontend/types/component';
 
 import ILayouts from '@/frontend/interfaces/layouts';
 import IModalBase from '@/frontend/interfaces/modal';
+import useAppTranslation from '@/shared/hooks/translation';
 
 import ComponentIcon from "@/frontend/components/partials/icon";
 
@@ -15,6 +16,8 @@ interface IModal extends IModalBase, ILayouts {
 
 export default function ComponentModal(props: IModal): Component {
     const { children, open, setOpen, color = "secondary", buttonClose = true } = props;
+
+    const { translate } = useAppTranslation();
 
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -30,7 +33,7 @@ export default function ComponentModal(props: IModal): Component {
                                     <ComponentIcon name='logo' descriptionClass={`absolute top-1.5 left-2 dark:text-dark-${color} text-${color} dark:opacity-100 opacity-70 `} size={20} />
                                     {
                                         buttonClose && (
-                                            <button type='button' title="Boton cerrar" onClick={() => setOpen(false)} className="outline-none" >
+                                            <button type='button' title={translate('messages.modal.button')} onClick={() => setOpen(false)} className="outline-none" >
                                                 <ComponentIcon name='close' descriptionClass={`absolute top-0 right-0 dark:text-dark-${color} text-${color} dark:opacity-100 opacity-70 cursor-pointer`} size={30} />
                                             </button>
                                         )

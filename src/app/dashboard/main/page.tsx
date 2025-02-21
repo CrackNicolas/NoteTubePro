@@ -8,10 +8,11 @@ import { APP_ROUTES } from "@/frontend/constant/app_rutes";
 import IContext from "@/context/interfaces/context";
 import useAppContext from "@/context/hooks/context";
 
+import { RolUser } from "@/shared/enums/user/rol";
 import { ItemsMain } from "@/frontend/constant/dashboard"
 import { PropsItemsDashboard } from "@/frontend/types/props"
 
-import { httpRequest } from "@/backend/logic/requests";
+import { httpRequest } from "@/shared/logic/requests";
 
 import ComponentDashboardMain from "@/frontend/components/layouts/dashboard/main";
 
@@ -24,11 +25,11 @@ export default function Dashboard(): Component {
 		try {
 			const { data } = await httpRequest({ type: 'GET', url: `/api/role/${session.value.id}` });
 
-			switch (data.data) {
-				case 'admin':
+			switch (data.details) {
+				case RolUser.ADMIN:
 					setItems(ItemsMain);
 					break;
-				case 'member':
+				case RolUser.MEMBER:
 					const filtered_items: PropsItemsDashboard[] = ItemsMain.filter((item:PropsItemsDashboard) => item.url !== APP_ROUTES.sessions);
 					setItems(filtered_items);
 					break;

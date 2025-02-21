@@ -10,7 +10,7 @@ import { PropsSession } from "@/context/types/session";
 import IContext from "@/context/interfaces/context";
 import useAppContext from "@/context/hooks/context";
 
-import { httpRequest } from "@/backend/logic/requests";
+import { httpRequest } from "@/shared/logic/requests";
 
 import ComponentHeader from "@/frontend/components/layouts/private/header";
 import ComponentListNotes from "@/frontend/components/layouts/private/notes/container";
@@ -31,7 +31,7 @@ export default function ComponentSessions(): Component {
         const { data } = await httpRequest({ type: 'GET', url: `/api/private/notes/${session.id}` });
 
         if (data.status === 200) {
-            setNotes(data.data);
+            setNotes(data.details);
         }
     }
 
@@ -39,7 +39,7 @@ export default function ComponentSessions(): Component {
         const { data } = await httpRequest({ type: 'GET', url: '/api/private/sessions' });
 
         if (data.status === 200) {
-            setSessions(data.data);
+            setSessions(data.details);
         }
     }
 

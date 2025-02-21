@@ -15,6 +15,5 @@ export default interface IContext extends Partial<Pick<INoteBase, 'note'>>, Pick
         isSignedIn?: boolean
     }
     setTheme: PropsDispatchTheme,
-    buttonSesion: Component,
-    sectionCurrent: string
+    buttonSesion: Component
 }

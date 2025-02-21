@@ -7,7 +7,7 @@ global.ResizeObserver = ResizeObserver;
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { PropsResponse } from '@/context/types/response';
+import { PropsResponse } from '@/shared/types/response';
 
 import ComponentForm from '@/frontend/components/layouts/notes/container_form';
 import ComponentLabel from '@/frontend/components/partials/form/label';
@@ -18,12 +18,14 @@ import ComponentItemFeatured from '@/frontend/components/partials/form/item_feat
 import { APP_ROUTES } from '@/frontend/constant/app_rutes';
 import { labels, note } from '@/frontend/__test__/mocks/notes'
 import { categorys, category } from '@/frontend/__test__/mocks/categorys';
+import { TypeErrorForm } from '@/frontend/enums/form/errors/name';
+import { ValuePriority } from '@/shared/enums/note/priority';
 
 const mock = new MockAdapter(axios);
 
 mock.onGet('/api/categorys/true').reply<PropsResponse>(200, {
     status: 200,
-    data: categorys
+    details: categorys
 });
 
 mock.onPost('/api/notes').reply<PropsResponse>(201, {
@@ -200,10 +202,10 @@ describe('Componente <Form/> principal', () => {
 
     describe('Renderizacion correcta de mensajes de error', () => {
         const validations = [
-            { name: "required", message: "requerido", match: /requerido/ },
-            { name: "minLength", message: "caracteres", match: /caracteres/ },
-            { name: "maxLength", message: "caracteres", match: /caracteres/ },
-            { name: "pattern", message: "caracteres no permitidos", match: /caracteres no permitidos/ }
+            { name: TypeErrorForm.REQUIRED, message: "requerido", match: /requerido/ },
+            { name: TypeErrorForm.MIN_LENGTH, message: "caracteres", match: /caracteres/ },
+            { name: TypeErrorForm.MAX_LENGTH, message: "caracteres", match: /caracteres/ },
+            { name: TypeErrorForm.PATTERN, message: "caracteres no permitidos", match: /caracteres no permitidos/ }
         ]
 
         const errors = (name: string, message: string) => {
@@ -254,7 +256,7 @@ describe('Componente <Form/> principal', () => {
     })
 
     describe('Validacion correcta de errores en los inputs', () => {
-        const validations = [{ name: "required" }, { name: "minLength" }, { name: "maxLength" }, { name: "pattern" }]
+        const validations = [{ name: TypeErrorForm.REQUIRED }, { name: TypeErrorForm.MIN_LENGTH }, { name: TypeErrorForm.MAX_LENGTH }, { name: TypeErrorForm.PATTERN }]
 
         describe('Titulo', () => {
             validations.forEach(validation => {
@@ -291,7 +293,7 @@ describe('Componente <Form/> principal', () => {
         })
 
         describe('Prioridad', () => {
-            const items = [{ name: "1", value: "Alta" }, { name: "2", value: "Media" }, { name: "3", value: "Baja" }];
+            const items = [{ name: "1", value: ValuePriority.High }, { name: "2", value: ValuePriority.Medium }, { name: "3", value: ValuePriority.Low }];
 
             describe('Error required', () => {
                 items.forEach(item => {
@@ -301,7 +303,7 @@ describe('Componente <Form/> principal', () => {
                             value={item.value}
                             descriptionClass="text-red-500 rotate-[-180deg]"
                             paint={false}
-                            error="required"
+                            error={TypeErrorForm.REQUIRED}
                             register={register}
                         />)
                         const label = getByTitle(`${item.value} prioridad`);
@@ -319,7 +321,7 @@ describe('Componente <Form/> principal', () => {
                 const { getByTitle } = render(<ComponentItemFeatured
                     value='SI'
                     paint={false}
-                    error="required"
+                    error={TypeErrorForm.REQUIRED}
                     register={register}
                 />)
 

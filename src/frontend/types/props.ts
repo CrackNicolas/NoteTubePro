@@ -13,8 +13,7 @@ export type PropsItemsSelect = {
 export type PropsItemsDashboard = {
     url: string,
     icon: string,
-    title: string,
-    description: string
+    nameTranslate: string
 }
 
 export type PropsLoadingNotes = {

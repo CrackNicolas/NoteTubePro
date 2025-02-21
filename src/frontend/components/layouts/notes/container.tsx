@@ -1,16 +1,20 @@
 'use client'
 
+import { useRouter } from "next/navigation";
 import { Fragment, useCallback, useEffect, useState } from "react";
 
 import { Component } from "@/frontend/types/component";
 
 import IContext from "@/context/interfaces/context";
 import useAppContext from "@/context/hooks/context";
+import useAppTranslation from "@/shared/hooks/translation";
 
 import { PropsNote } from "@/context/types/note";
+import { APP_ROUTES } from "@/frontend/constant/app_rutes";
+import { ValueBoolean } from "@/frontend/enums/boolean";
 import { PropsCategory } from "@/context/types/category";
 
-import { httpRequest } from "@/backend/logic/requests";
+import { httpRequest } from "@/shared/logic/requests";
 
 import ComponentItems from "@/frontend/components/layouts/category/list/items";
 import ComponentHeader from "@/frontend/components/partials/template/dashboard/header";
@@ -20,8 +24,13 @@ export default function ComponentNotes(): Component {
     const [selectedNote, setSelectedNote] = useState<PropsNote | undefined>(undefined);
     const [listCategorys, setListCategorys] = useState<PropsCategory[]>([]);
     const [categorySelected, setCategorySelected] = useState<PropsCategory | undefined>(undefined);
-
+    
+    const lastPage = localStorage.getItem('last_page') as string;
+    
     const { note, opacity }: IContext = useAppContext();
+    const { translate } = useAppTranslation();
+    
+    const router = useRouter();
 
     const select = (category: PropsCategory): void => setCategorySelected(category);
 
@@ -29,7 +38,7 @@ export default function ComponentNotes(): Component {
         const { data } = await httpRequest({ type: 'GET', url: '/api/categorys/true' });
 
         if (data.status === 200) {
-            setListCategorys(data.data);
+            setListCategorys(data.details);
         }
         if (data.status === 500) {
             setListCategorys([]);
@@ -37,12 +46,19 @@ export default function ComponentNotes(): Component {
     }, [])
 
     useEffect(() => {
-        loadCategorys();
+        if (lastPage === ValueBoolean.NOT) {
+            loadCategorys();
+        }
     }, [loadCategorys])
 
     useEffect(() => {
-        setSelectedNote(note);
-        setCategorySelected(note?.category);
+        if (lastPage === ValueBoolean.YEAH) {
+            setSelectedNote(note);
+            setCategorySelected(note?.category);
+            if (!note) {
+                router.push(APP_ROUTES.notes.search);
+            }
+        }
     }, [note]);
 
     return (
@@ -50,7 +66,7 @@ export default function ComponentNotes(): Component {
             {
                 !categorySelected ?
                     <Fragment>
-                        <ComponentHeader title="Elige una categoría" subtitle="Selecciona una categoría para tu nota" />
+                        <ComponentHeader title={translate('notes.title')} subtitle={translate('notes.subtitle')} />
                         <ComponentItems categorys={listCategorys} select={select} paint={true} />
                     </Fragment>
                     :

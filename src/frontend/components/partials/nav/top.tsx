@@ -8,24 +8,32 @@ import { APP_ROUTES } from "@/frontend/constant/app_rutes";
 import IContext from "@/context/interfaces/context";
 import useMouseDown from "@/frontend/hooks/mousedown";
 import useCurrentPath from "@/frontend/hooks/path";
+import useAppTranslation from "@/shared/hooks/translation";
 
 import ComponentLink from "@/frontend/components/partials/link";
 import ComponentIcon from "@/frontend/components/partials/icon";
+import ComponentButtonLanguage from "@/frontend/components/partials/button_language";
 
 export default function ComponentNavTop(props: IContext): Component {
     const { session, buttonSesion, setOpacity, opacity } = props;
+
+    const { translate } = useAppTranslation();
 
     const path: string = useCurrentPath(true);
 
     const refUserButton = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent): void => {
-        if (refUserButton.current && !refUserButton.current.contains(event.target as Node)) {
+        if ((refUserButton.current && !refUserButton.current.contains(event.target as Node))) {
             setOpacity(false);
         }
     }
 
     useMouseDown({ action: handleClickOutside });
+
+    const loadedUser: boolean = (session.value.id != undefined);
+    const loadingUser: boolean = (path != APP_ROUTES.init && path != APP_ROUTES.signIn && !session.value.user);
+    const withoutLoggingIN: boolean = (path == APP_ROUTES.init && !session.value.user);
 
     return (
         <nav className="fixed w-full dark:bg-dark-primary bg-primary top-0 mt-[-7px] z-40">
@@ -39,23 +47,24 @@ export default function ComponentNavTop(props: IContext): Component {
                             </strong>
                         </ComponentLink>
                     </div>
-                    <div className="relative inset-y-0 right-0 flex items-center pr-1 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <div className={`${!(loadingUser || loadedUser) && 'relative'} inset-y-0 right-0 flex items-center pr-1 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
+                        <ComponentButtonLanguage movePosition={(loadingUser || loadedUser)} />
                         {
-                            (path != APP_ROUTES.init && path != APP_ROUTES.signIn && !session.value.user) && (
-                                <span  title="Usuario" className="absolute right-0 animate-pulse dark:bg-dark-secondary bg-secondary opacity-30 rounded-full w-[28px] h-[28px] " />
+                            loadingUser && (
+                                <span title={translate('menu.top.user')} className="absolute right-0 animate-pulse dark:bg-dark-secondary bg-secondary opacity-30 rounded-full w-[28px] h-[28px]" />
                             )
                         }
                         {
-                            (path == APP_ROUTES.init && !session.value.user) ?
-                                <ComponentLink url={APP_ROUTES.signIn} title="Iniciar sesion" descriptionClass="group dark:bg-custom-gradient dark:border-transparent border dark:border-dark-tertiary border-tertiary hover:border-secondary border-[0.1px] px-3 rounded-md flex py-[3px] flex items-center gap-x-1 outline-none transition duration-500">
+                            withoutLoggingIN ?
+                                <ComponentLink url={APP_ROUTES.signIn} title={translate('menu.top.buttons.login')} descriptionClass="group dark:bg-custom-gradient dark:border-transparent border dark:border-dark-tertiary border-tertiary hover:border-secondary border-[0.1px] pl-2 pr-2.5 rounded-md flex py-[3px] flex items-center gap-x-1 outline-none transition duration-500">
                                     <ComponentIcon name="user" size={17} descriptionClass="dark:text-primary dark:group-hover:text-tertiary group-hover:text-secondary dark:text-dark-tertiary text-tertiary cursor-pointer" />
-                                    <span className="dark:text-primary dark:group-hover:text-tertiary  group-hover:text-secondary text-sm tracking-wider text-tertiary duration-500">
-                                        Iniciar sesion
+                                    <span className="dark:text-primary dark:group-hover:text-tertiary  group-hover:text-secondary text-sm dark:font-semibold tracking-wider text-tertiary duration-500">
+                                        {translate('menu.top.buttons.login')}
                                     </span>
                                 </ComponentLink>
                                 :
-                                (session.value.id) && (
-                                    <div ref={refUserButton} onClick={() => setOpacity(!opacity)} className="flex gap-x-4 rounded-full" title="Usuario">
+                                loadedUser && (
+                                    <div ref={refUserButton} onClick={() => setOpacity(!opacity)} className="flex gap-x-4 rounded-full" title={translate('menu.top.user')}>
                                         {buttonSesion}
                                     </div>
                                 )

@@ -1,51 +1,42 @@
 import { type NextRequest } from 'next/server';
 import { NextResponse } from "next/server";
 
-import { PropsResponse } from '@/context/types/response';
+import { PropsResponse } from '@/shared/types/response';
 import { PropsDeleteNote, PropsNote } from '@/context/types/note';
 
-import { query } from '@/backend/api/query';
+import { query } from '@/backend/logic/query';
 import { fileDelete } from '@/backend/utils/cloudinary';
-import { conectDatabase } from "@/backend/utils/db";
+import { MessagesNote } from '@/shared/enums/messages/note';
+import { handleApiRequest } from '@/backend/handlers/request';
 
 import Notes from '@/backend/schemas/note';
-import autentication from '@/backend/logic/autentication';
 
 export async function GET(req: NextRequest, { params: { segment } }: { params: { segment: string } }): Promise<NextResponse> {
-    const userId = autentication(req.cookies);
-    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
+    return handleApiRequest({
+        cookies: req.cookies,
+        processRequest: async (userId: string): Promise<PropsResponse> => {
+            const notes: PropsNote[] = await Notes.find(query(userId, segment));
 
-    const connection: boolean = await conectDatabase();
-    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
-
-    try {
-        const notes: PropsNote[] = await Notes.find(query(userId, segment));
-
-        return NextResponse.json<PropsResponse>({ status: 200, data: notes })
-    } catch (error: unknown) {
-        return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } })
-    }
+            return { status: 200, details: notes }
+        }
+    })
 }
+
 export async function DELETE(req: NextRequest, { params: { segment } }: { params: { segment: string } }): Promise<NextResponse> {
-    const userId = autentication(req.cookies);
-    if (!userId) return NextResponse.json<PropsResponse>({ status: 401, info: { message: "Credenciales invalidas" } });
+    return handleApiRequest({
+        cookies: req.cookies,
+        processRequest: async (userId: string): Promise<PropsResponse> => {
+            const notes = JSON.parse(segment);
 
-    const notes = JSON.parse(segment);
+            const resultMongodb = await Notes.deleteMany(
+                { _id: { $in: notes.map((note: PropsDeleteNote) => note._id) } }
+            )
 
-    const connection: boolean = await conectDatabase();
-    if (!connection) return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Error al conectarse a la base de datos" } });
+            if (resultMongodb.deletedCount == 0) return { status: 500, info: { message: MessagesNote.DELETE_FAILED } }
 
-    try {
-        const resultMongodb = await Notes.deleteMany(
-            { _id: { $in: notes.map((n: PropsDeleteNote) => n._id) } }
-        );
+            await fileDelete(notes.filter((note: PropsDeleteNote) => note.file !== undefined).map((note: PropsDeleteNote) => note.file));
 
-        await fileDelete(
-            notes.filter((n: PropsDeleteNote) => n.file !== undefined).map((n: PropsDeleteNote) => n.file)
-        );
-
-        return NextResponse.json<PropsResponse>({ status: 200, info: { message: `${(notes.length === 1) ? '1 nota eliminada' : `${resultMongodb.deletedCount} de ${notes.length} notas eliminadas`}` } })
-    } catch (error: unknown) {
-        return NextResponse.json<PropsResponse>({ status: 500, info: { message: "Errores con el servidor" } })
-    }
+            return { status: 200, info: { message: (notes.length === 1) ? MessagesNote.DELETE : MessagesNote.DELETES } }
+        }
+    })
 }

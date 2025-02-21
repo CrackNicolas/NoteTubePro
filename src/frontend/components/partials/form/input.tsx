@@ -18,7 +18,7 @@ export default function ComponentInput(props: IInput): Component {
             .replace(/\.{2,}/g, ".")                                 // Reduce múltiples puntos a uno
             .replace(/,{2,}/g, ",")                                  // Reduce múltiples comas a una
             .replace(/_{2,}/g, "_")                                  // Reduce múltiples guiones bajos a uno
-            .replace(/\b\w{23,}\b/g, (match) => match.slice(0, 22)); // Limita palabras a 9 caracteres
+            .replace(/\b\w{23,}\b/g, (match: string) => match.slice(0, 22)); // Limita palabras a 9 caracteres
     }
 
     const propsInput: object = {
@@ -38,7 +38,7 @@ export default function ComponentInput(props: IInput): Component {
                 :
                 <input
                     {...propsInput}
-                    onChange={(type != "radio") ? (event) => additionalValidation(event) : undefined}
+                    onChange={(type != "radio") ? (event: ChangeEvent<HTMLInputElement>) => additionalValidation(event) : undefined}
                 />
             :
             <textarea

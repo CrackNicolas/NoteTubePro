@@ -1,3 +1,5 @@
+"use client"
+
 import { Component } from "@/frontend/types/component";
 import { ComponentSignIn } from "@/frontend/components/services/clerk";
 

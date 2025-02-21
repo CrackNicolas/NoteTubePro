@@ -1,8 +1,9 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 
-import useCurrentPath from "@/frontend/hooks/path";
 import { APP_ROUTES } from "@/frontend/constant/app_rutes";
+
+import useCurrentPath from "@/frontend/hooks/path";
 
 export default function useOnlineStatusRedirect(): void {
     const path: string = useCurrentPath();

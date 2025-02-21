@@ -1,3 +1,5 @@
+import { ValueDate } from "@/shared/enums/note/date";
+
 export function query(userId: string, segment: string): object {
     if (!segment) return { userId: userId };
 
@@ -18,21 +20,21 @@ export function query(userId: string, segment: string): object {
     let currentDate: Date = new Date();
 
     switch (criteria.dates) {
-        case 'Hoy':
+        case ValueDate.TODAY:
             date['$gte'] = startDay(new Date());
             date['$lt'] = endDay(new Date());
             break;
-        case 'Ayer':
+        case ValueDate.YESTERDAY:
             currentDate.setDate(currentDate.getDate() - 1);
             date['$gte'] = startDay(new Date(currentDate));
             date['$lt'] = endDay(new Date(currentDate));
             break;
-        case 'Hace 7 dias':
+        case ValueDate.AGO_7_DAYS:
             currentDate.setDate(currentDate.getDate() - 7);
             date['$gte'] = startDay(new Date(currentDate));
             date['$lt'] = endDay(new Date());
             break;
-        case 'Hace 1 mes':
+        case ValueDate.AGO_1_MONTH:
             currentDate.setMonth(currentDate.getMonth() - 1);
             date['$gte'] = startDay(new Date(currentDate));
             date['$lt'] = endDay(new Date());

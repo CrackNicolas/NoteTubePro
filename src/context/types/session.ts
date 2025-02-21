@@ -1,3 +1,5 @@
+import { RolUser } from "@/shared/enums/user/rol"
+
 export type PropsSession = {
     id?: string,
     status?: boolean,
@@ -9,10 +11,11 @@ export type PropsSession = {
     },
     user?: PropsUser
 }
+
 export type PropsUser = {
     name: string,
     email: string,
     image: string,
     lastSignInAt: Date | null,
-    rol: string
+    rol: RolUser
 }

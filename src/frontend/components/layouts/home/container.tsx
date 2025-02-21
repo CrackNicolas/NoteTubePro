@@ -7,6 +7,7 @@ import { Component } from "@/frontend/types/component";
 
 import IContext from "@/context/interfaces/context";
 import useAppContext from "@/context/hooks/context";
+import useAppTranslation from '@/shared/hooks/translation';
 
 import ComponentMotion from "@/frontend/components/partials/motion";
 import ComponentMainHome from "@/frontend/components/layouts/home/sections/main/container";
@@ -18,6 +19,8 @@ import ComponentTestimoniesHome from "@/frontend/components/layouts/home/section
 
 export default function ComponentHome(): Component {
     const { session, opacity }: IContext = useAppContext();
+
+    const { translate } = useAppTranslation();
 
     const [confetti, setConfetti] = useState<boolean>(false);
 
@@ -36,7 +39,7 @@ export default function ComponentHome(): Component {
     return (
         <ComponentMotion type="article" descriptionClass={`${opacity && "opacity-40"} overflow-x-hidden flex flex-col min-h-screen justify-between relative w-full px-1 sm:px-6 lg:px-8 pb-16 sm:pb-5`} >
             {confetti && <Confetti width={1100} height={1100} className="w-full h-full" numberOfPieces={600} />}
-            <ComponentHeaderHome title={`Bienvenido, ${session.value.user.name.split(' ')[0]}!`} subtitle="Diseñada para inspirar, sorprender y facilitar tu vida." />
+            <ComponentHeaderHome title={`${translate('home.title')}, ${session.value.user.name.split(' ')[0]}!`} subtitle={translate('home.subtitle')} />
             <ComponentMainHome />
             <ComponentTestimoniesHome />
             <ComponentAditionalHome />

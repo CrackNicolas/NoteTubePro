@@ -1,4 +1,7 @@
 {
+    "metadata": {
+        "description": "Creado por Beltran Ricardo Nicolas Alejo"
+    },
     "init": {
         "title": "Aplicación de notas",
         "subtitle": "¡Organiza tu vida, toma notas sin límites",
@@ -9,13 +12,22 @@
             "home": "Inicio",
             "panel": "Panel",
             "theme": {
-                "text_1": "Claro",
-                "text_2": "Oscuro"
+                "oscuro": "Claro",
+                "claro": "Oscuro"
             }
         },
         "top": {
             "user": "Usuario",
-            "button": "Iniciar sesion"
+            "buttons": {
+                "login": "Iniciar sesion",
+                "translate": {
+                    "title": "Traductor",
+                    "options":{
+                        "spanish": "Español",
+                        "english": "Ingles"
+                    }
+                }
+            }
         }
     },
     "home": {
@@ -66,21 +78,25 @@
             "default": "Prueba nuestra funcion"
         },
         "sections": {
-            "article_1": {
+            "sessions": {
+                "title": "Registro de actividad de usuarios",
+                "description": "Monitorea las sesiones y actividades de los usuarios para una mejor gestión."
+            },
+            "create_note": {
                 "title": "Crear nota",
-                "subtitle": "Escribe y guarda tus ideas o recordatorios importantes. Mantén tus notas organizadas."
+                "description": "Escribe y guarda tus ideas o recordatorios importantes. Mantén tus notas organizadas."
             },
-            "article_2": {
+            "note_settings": {
                 "title": "Configuracion de notas",
-                "subtitle": "Configura tus notas para mejorar tu experiencia personalizando diversos aspectos."
+                "description": "Configura tus notas para mejorar tu experiencia personalizando diversos aspectos."
             },
-            "article_3": {
+            "list_notes": {
                 "title": "Mis notas creadas",
-                "subtitle": "Encuentra rápidamente tus notas con esta funcion y mejora tu productividad en un instante."
+                "description": "Encuentra rápidamente tus notas con esta funcion y mejora tu productividad en un instante."
             },
-            "article_4": {
+            "category_management": {
                 "title": "Administracion de categorias",
-                "subtitle": "Realiza la creacion, edicion, eliminacion y visualizacion de categorias con facilidad."
+                "description": "Realiza la creacion, edicion, eliminacion y visualizacion de categorias con facilidad."
             }
         }
     },
@@ -88,6 +104,17 @@
         "title": "Elige una categoría",
         "subtitle": "Selecciona una categoría para tu nota",
         "form": {
+            "note": {
+                "default": "Nota",
+                "selected": "Nota seleccionada",
+                "unselected": "Marcar nota",
+                "time_elapsed": "Tiempo transcurrido",
+                "button": "Editar",
+                "view": {
+                    "date": "Fecha de creacion",
+                    "image": "Ver imagen"
+                }
+            },
             "buttons": {
                 "create": "Guardar",
                 "close": "Deshacer"
@@ -102,6 +129,7 @@
                     "label": "Titulo",
                     "input": "Escriba el titulo",
                     "messages": {
+                        "duplicate": "Lo recomendable seria que ingrese algo distinto al titulo",
                         "required": "Titulo requerido",
                         "minLength": "El titulo deber ser mayor a 5 caracteres",
                         "maxLength": "El titulo deber ser menor a 45 caracteres",
@@ -119,21 +147,25 @@
                     }
                 },
                 "priority": {
-                    "title": "Prioridad",
+                    "label": "Prioridad",
                     "options": {
-                        "text_1": "Alta",
-                        "text_2": "Media",
-                        "text_3": "Baja"
+                        "alta": "Alta",
+                        "media": "Media",
+                        "baja": "Baja"
                     },
                     "messages": {
                         "required": "Prioridad requerida"
                     }
                 },
-                "stand_out": {
+                "featured": {
                     "title": "¿Destacar nota?",
+                    "details": {
+                        "text_1": "destacada",
+                        "text_2": "no destacada"
+                    },
                     "options": {
-                        "text_1": "SI",
-                        "text_2": "NO"
+                        "si": "SI",
+                        "no": "NO"
                     },
                     "messages": {
                         "required": "Selecciona una opcion"
@@ -185,9 +217,10 @@
         },
         "nav": {
             "input_search": "Buscar",
+            "icon": "Buscar notas",
             "buttons": {
                 "create": "Crear nota",
-                "marcar": {
+                "mark": {
                     "text_1": "Marcar todo",
                     "text_2": "Desmarcar todo"
                 },
@@ -204,17 +237,17 @@
         "toggle": {
             "title": "Filtrar notas",
             "buttons": {
-                "limpiar": "Limpiar filtro",
+                "clean": "Limpiar filtro",
                 "close": "Cerrar menu"
             },
             "selects": {
                 "date": {
                     "default": "Fecha",
                     "options": {
-                        "text_1": "Hoy",
-                        "text_2": "Ayer",
-                        "text_3": "Hace 7 dias",
-                        "text_4": "Hace 1 mes"
+                        "hoy": "Hoy",
+                        "ayer": "Ayer",
+                        "hace 7 dias": "Hace 7 dias",
+                        "hace 1 mes": "Hace 1 mes"
                     }
                 },
                 "priority": "Prioridad",
@@ -224,19 +257,45 @@
         }
     },
     "messages": {
+        "entity": {
+            "Acceso no autorizado": "Acceso no autorizado",
+            "Ocurrió un error desconocido": "Ocurrió un error desconocido",
+            "Recurso no encontrado": "Recurso no encontrado",
+            "Credenciales invalidas": "Credenciales invalidas",
+            "Solicitud inválida. Por favor, revisa los datos enviados": "Solicitud inválida. Por favor, revisa los datos enviados",
+            "Operación exitosa, sin contenido para retornar": "Operación exitosa, sin contenido para retornar",
+            "Recurso creado exitosamente": "Recurso creado exitosamente",
+            "Operación realizada con éxito": "Operación realizada con éxito",
+            "Error al conectarse a la base de datos": "Error al conectarse a la base de datos",
+            "Problemas con el servidor": "Problemas con el servidor",
+            "Categoría no encontrada": "Categoría no encontrada",
+            "Debes tener por lo menos 2 categorías en uso": "Debes tener por lo menos 2 categorías en uso",
+            "Categoría configurada para su uso": "Categoría configurada para su uso",
+            "Categoría fuera de uso": "Categoría fuera de uso",
+            "Nota modificada con éxito": "Nota modificada con éxito",
+            "Nota creada con éxito": "Nota creada con éxito",
+            "Solo se permiten archivos de imagen": "Solo se permiten archivos de imagen",
+            "Nota no encontrada": "Nota no encontrada",
+            "Error al analizar el archivo": "Error al analizar el archivo",
+            "Archivo con virus": "Archivo con virus",
+            "Archivo no encontrado": "Archivo no encontrado",
+            "Nota eliminada": "Nota eliminada",
+            "Notas eliminadas": "Notas eliminadas",
+            "Error de eliminación": "Error de eliminación",
+            "Error la nota que intentas crear ya existe": "Error la nota que intentas crear ya existe"
+        },
+        "modal": {
+            "button": "Cerrar"
+        },
         "exito": {
             "button": "Aceptar"
         },
         "wait": "Espere por favor",
-        "error": {
-            "server": "Errores con el servidor",
-            "database": "Error al conectarse a la base de datos"
-        },
         "confirmation": {
             "title": "¿Seguro que deseas eliminar?",
             "options": {
-                "text_1": "SI",
-                "text_2": "NO"
+                "si": "SI",
+                "no": "NO"
             }
         }
     },
@@ -263,19 +322,17 @@
     "time": {
         "init": "Recien creada",
         "create": "Hace",
-        "prefijos": {
+        "prefixes": {
             "año": "año",
             "mes": "mes",
             "dia": "día",
-            "hs": "hs",
-            "min": "min",
             "seg": "seg"
         }
     },
     "format_time": {
-        "meses": {
+        "months": {
             "ene": "ene",
-            "feb": "fer",
+            "feb": "feb",
             "mar": "mar",
             "abr": "abr",
             "may": "may",
@@ -287,11 +344,19 @@
             "nov": "nov",
             "dic": "dic"
         },
-        "prefijos": {
+        "prefixes": {
             "text_1": "Creada",
             "text_2": "el",
             "text_3": "de",
             "text_4": "Ultima vez"
+        }
+    },
+    "clerk": {
+        "signIn": {
+            "button_close": "Cerrar sesión",
+            "input": {
+                "placeholder": "Introduce tu correo electrónico"
+            }
         }
     }
 }

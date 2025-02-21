@@ -1,3 +1,4 @@
+import { RolUser } from "@/shared/enums/user/rol";
 import { PropsSession } from "@/context/types/session";
 
 export const session: PropsSession = {
@@ -14,7 +15,7 @@ export const session: PropsSession = {
         email: 'usuario@gmail.com',
         image: 'https://cdn.icon-icons.com/icons2/1381/PNG/512/systemusers_94754.png',
         lastSignInAt: null,
-        rol: 'admin'
+        rol: RolUser.ADMIN
     }
 }
 
@@ -33,7 +34,7 @@ export const sessions: PropsSession[] = [
             email: 'usuario@gmail.com',
             image: 'https://cdn.icon-icons.com/icons2/1381/PNG/512/systemusers_94754.png',
             lastSignInAt: null,
-            rol: 'admin'
+            rol: RolUser.ADMIN
         }
     },
     {

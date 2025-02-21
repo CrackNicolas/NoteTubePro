@@ -1,9 +1,7 @@
-import axios, { AxiosRequestConfig } from "axios";
-
-type types = 'GET' | 'POST' | 'PUT' | 'DELETE';
+import axios, { AxiosRequestConfig, Method } from "axios";
 
 type PropsRequest = {
-    type: types,
+    type: Method,
     url: string,
     body?: object,
     config?: AxiosRequestConfig

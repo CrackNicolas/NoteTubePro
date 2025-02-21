@@ -11,7 +11,6 @@ import ComponentNote from "@/frontend/components/layouts/notes/note";
 import ComponentHeader from "@/frontend/components/partials/template/dashboard/header";
 import ComponentLoading from "@/frontend/components/layouts/notes/list/loading";
 
-
 interface IList extends Pick<INoteBase, 'notes' | 'notesSelected' | 'setNotesSelected'>, Partial<Pick<IElement, 'descriptionClass'>>, Pick<IElement, 'state'> {
     loading?: PropsLoadingNotes
 }

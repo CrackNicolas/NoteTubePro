@@ -1,3 +1,5 @@
+"use client"
+
 import { Fragment } from "react";
 
 import { Component } from "@/frontend/types/component";

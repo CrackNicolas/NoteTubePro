@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { Component } from "@/frontend/types/component";
 import { APP_ROUTES } from "@/frontend/constant/app_rutes";
 
+import useAppTranslation from "@/shared/hooks/translation";
+
 import IElement from "@/frontend/interfaces/elements/element";
 import ComponentIcon from "@/frontend/components/partials/icon";
 import ComponentButtonMainHome from "@/frontend/components/layouts/home/button_main";
@@ -12,6 +14,8 @@ interface IPresentationHeader extends Pick<IElement, 'title' | 'subtitle'> {
 
 export default function ComponentPresentationHeader(props: IPresentationHeader): Component {
     const { title, subtitle, button = true } = props;
+
+    const { translate } = useAppTranslation();
 
     return (
         <Fragment>
@@ -25,7 +29,7 @@ export default function ComponentPresentationHeader(props: IPresentationHeader):
                 </p>
             </div>
             {
-                button && <ComponentButtonMainHome url={APP_ROUTES.dashboard.main} title="Comienza Ahora"/>
+                button && <ComponentButtonMainHome url={APP_ROUTES.dashboard.main} title={translate('home.button')} />
             }
         </Fragment>
     )

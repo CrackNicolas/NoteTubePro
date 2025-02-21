@@ -14,10 +14,9 @@ interface ITemplateContext extends ILayouts {
     value: IContext
 }
 
-export const Context = createContext<IContext>({
+export const IntanceContextApp = createContext<IContext>({
     opacity: false,
-    setOpacity: () => {},
-    sectionCurrent: '',
+    setOpacity: () => { },
     session: {
         isSignedIn: false,
         value: {}
@@ -30,13 +29,13 @@ export const Context = createContext<IContext>({
 
 export default function TemplateContext(props: ITemplateContext): Component {
     const { children, value } = props;
-    
+
     return (
-        <Context.Provider value={value}>
+        <IntanceContextApp.Provider value={value}>
             <ProgressBar key={value.theme} color={ThemeColors[value.theme]} options={{ showSpinner: false }} />
             <Template>
                 {children}
             </Template>
-        </Context.Provider>
+        </IntanceContextApp.Provider>
     )
 }

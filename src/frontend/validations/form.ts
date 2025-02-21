@@ -1,78 +1,82 @@
 import { REGEX_PATTERNS } from "@/frontend/constant/regex";
 
+import { TypeErrorForm } from "@/frontend/enums/form/errors/name";
+
 import { PropsInputName } from "@/frontend/interfaces/elements/form/input";
 
 type PropsValidation = {
-    required?: {
+    [TypeErrorForm.REQUIRED]?: {
         value: boolean,
         message: string
-    };
-    minLength?: {
-        value: number,
-        message: string
-    };
-    maxLength?: {
+    },
+    [TypeErrorForm.MIN_LENGTH]?: {
         value: number,
         message: string
     },
-    pattern?: {
+    [TypeErrorForm.MAX_LENGTH]?: {
+        value: number,
+        message: string
+    },
+    [TypeErrorForm.PATTERN]?: {
         value: RegExp,
         message: string
     }
 }
 
 export const validation = (name: PropsInputName, required: boolean = true): PropsValidation => {
+    const ruteTranslate = (error: TypeErrorForm) => `notes.form.items.${name}.messages.${error}`
+
     switch (name) {
         case 'title':
             return {
-                required: {
+                [TypeErrorForm.REQUIRED]: {
                     value: required,
-                    message: 'Titulo requerido'
+                    message: ruteTranslate(TypeErrorForm.REQUIRED)
                 },
-                minLength: {
+                [TypeErrorForm.MIN_LENGTH]: {
                     value: 5,
-                    message: 'El titulo deber ser mayor a 5 caracteres'
+                    message: ruteTranslate(TypeErrorForm.MIN_LENGTH)
                 },
-                maxLength: {
+                [TypeErrorForm.MAX_LENGTH]: {
                     value: 45,
-                    message: 'El titulo deber ser menor a 45 caracteres'
+                    message: ruteTranslate(TypeErrorForm.MAX_LENGTH)
                 },
-                pattern: {
+                [TypeErrorForm.PATTERN]: {
                     value: REGEX_PATTERNS.title,
-                    message: 'Solo caracteres válidos, sin dobles espacios'
+                    message: ruteTranslate(TypeErrorForm.PATTERN)
                 }
             }
         case 'description':
             return {
-                required: {
+                [TypeErrorForm.REQUIRED]: {
                     value: required,
-                    message: 'Descripcion requerida'
+                    message: ruteTranslate(TypeErrorForm.REQUIRED)
                 },
-                minLength: {
+                [TypeErrorForm.MIN_LENGTH]: {
                     value: 15,
-                    message: 'La descripcion deber ser mayor a 15 caracteres'
+                    message: ruteTranslate(TypeErrorForm.MIN_LENGTH)
                 },
-                maxLength: {
+                [TypeErrorForm.MAX_LENGTH]: {
                     value: 500,
-                    message: 'La descripcion deber ser menor a 500 caracteres'
+                    message: ruteTranslate(TypeErrorForm.MAX_LENGTH)
                 },
-                pattern: {
+                [TypeErrorForm.PATTERN]: {
                     value: REGEX_PATTERNS.description,
-                    message: 'Solo caracteres válidos, sin dobles espacios'
+                    message: ruteTranslate(TypeErrorForm.PATTERN)
                 }
             }
         case "priority":
             return {
-                required: {
+                [TypeErrorForm.REQUIRED]: {
                     value: required,
-                    message: 'Prioridad requerida'
+                    message: ruteTranslate(TypeErrorForm.REQUIRED)
                 }
             }
         case 'featured':
             return {
-                required: {
+                [TypeErrorForm.REQUIRED]: {
                     value: required,
-                    message: 'Selecciona una opcion'
+                    message: ruteTranslate(TypeErrorForm.REQUIRED)
                 }
             }
     }

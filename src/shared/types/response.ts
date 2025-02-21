@@ -10,16 +10,17 @@
     500 - Solicitud incumplida por errores en el servidor
 */
 
+import { RolUser } from "@/shared/enums/user/rol"
 import { PropsNote } from "@/context/types/note"
 import { PropsSession } from "@/context/types/session"
 import { PropsCategory } from "@/context/types/category"
 
 export type PropsResponse = {
-    status: PropsStatus
-    data?: PropsNote[] | PropsNote | PropsCategory[] | PropsSession[]
+    status: HttpStatusCode,
+    details?: RolUser | PropsNote[] | PropsNote | PropsCategory[] | PropsSession[]
     info?: { 
-        message: string 
+        message: string
     }
 }
 
-export type PropsStatus = 200 | 201 | 204 | 400 | 401 | 403 | 404 | 500;
+export type HttpStatusCode = 200 | 201 | 204 | 400 | 401 | 403 | 404 | 500;

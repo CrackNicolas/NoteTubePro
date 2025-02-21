@@ -5,19 +5,24 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Component } from "@/frontend/types/component";
-import { httpRequest } from "@/backend/logic/requests";
+import { httpRequest } from "@/shared/logic/requests";
 
 import IContext from "@/context/interfaces/context";
 import ILayouts from "@/frontend/interfaces/layouts";
 
 import useTheme from "@/context/hooks/theme";
 import useCurrentPath from "@/frontend/hooks/path";
+import useOnlineStatusRedirect from "@/frontend/hooks/internet";
 
 import { PropsNote } from "@/context/types/note";
 import { PropsTheme, ThemeName } from "@/frontend/types/theme";
 import { PropsSession, PropsUser } from "@/context/types/session";
 
+import { RolUser } from "@/shared/enums/user/rol";
+import { StatusUser } from "@/shared/enums/user/status";
+import { APP_ROUTES } from "@/frontend/constant/app_rutes";
 import { timeElapsed } from "@/frontend/logic/format_time";
+import { ValueBoolean } from "@/frontend/enums/boolean";
 import { ComponentUserButton } from "@/frontend/components/services/clerk";
 
 import TemplateContext from "@/context/template";
@@ -32,51 +37,64 @@ export default function Provider({ children }: ILayouts): Component {
     const router = useRouter();
 
     useTheme({ setTheme });
+    useOnlineStatusRedirect();
 
-    const sectionCurrent: string = useCurrentPath();
+    const sectionCurrent: string = useCurrentPath(true);
 
     const loadUser = useCallback(async (): Promise<void> => {
         const { isSignedIn, user, isLoaded } = dataUser;
 
+        if (!isLoaded) return;
+
         if (isLoaded && !isSignedIn && user == null) {
-            router.push("/");
+            await httpRequest({ type: 'PUT', url: "/api/private/sessions", body: { id: session.id, status: false } });
+            setSession({});
+            router.push(APP_ROUTES.init);
         }
 
         if (isSignedIn && user.fullName) {
-            const dataSession = (await user.getSessions())[0];
-
             const instanceUser: PropsUser = {
                 name: user.fullName,
                 email: user.emailAddresses.toString(),
                 image: user.imageUrl,
                 lastSignInAt: user.lastSignInAt,
-                rol: 'member'
+                rol: RolUser.MEMBER
             }
 
-            const { data } = await httpRequest({ type: 'GET', url: `/api/role/${user.id}` });
-            instanceUser.rol = data.data;
+            let promises: any = [];
+
+            promises.push(httpRequest({ type: 'GET', url: `/api/role/${user.id}` })); //get rol
+            promises.push(user.getSessions()); // session[0]
+            promises.push(httpRequest({ type: 'GET', url: `/api/categorys` })); //Cargar categorias
+
+            const resolvedPromises = await Promise.all(promises);
+
+            instanceUser.rol = resolvedPromises[0].data.details;
 
             const instanceSession: PropsSession = {
                 id: user.id,
-                status: (dataSession.status === 'active'),
-                lastTime: timeElapsed(dataSession.lastActiveAt) + ' ' + dataSession.lastActiveAt.toString().split(' ')[4] + 'hs',
-                expiret: dataSession.expireAt.toISOString(),
+                status: (resolvedPromises[1][0].status === StatusUser.ACTIVE),
+                lastTime: timeElapsed(resolvedPromises[1][0].lastActiveAt) + ' ' + resolvedPromises[1][0].lastActiveAt.toString().split(' ')[4] + 'hs',
+                expiret: resolvedPromises[1][0].expireAt.toISOString(),
                 origin: {
-                    ipAdress: (dataSession.latestActivity.ipAddress) ?? '',
-                    city: (dataSession.latestActivity.city) ?? ''
+                    ipAdress: (resolvedPromises[1][0].latestActivity.ipAddress) ?? '',
+                    city: (resolvedPromises[1][0].latestActivity.city) ?? ''
                 },
                 user: instanceUser
             }
-
-            await httpRequest({ type: 'GET', url: `/api/categorys` });
-            await httpRequest({ type: 'POST', url: "/api/private/sessions", body: instanceSession });
-
             setSession(instanceSession);
-        } else {
-            await httpRequest({ type: 'PUT', url: "/api/private/sessions", body: { id: session.id, status: false } });
-            setSession({});
+            await httpRequest({ type: 'POST', url: "/api/private/sessions", body: instanceSession });
         }
     }, [dataUser.user, session.id])
+
+    useEffect(() => {
+        if (sectionCurrent !== APP_ROUTES.notes.init) {
+            localStorage.setItem('last_page', ValueBoolean.NOT);
+        }
+        if (sectionCurrent !== APP_ROUTES.notes.init) {
+            setNote(undefined);
+        }
+    }, [sectionCurrent]);
 
     useEffect(() => {
         loadUser();
@@ -85,7 +103,6 @@ export default function Provider({ children }: ILayouts): Component {
     const contextValue: IContext = useMemo(() => ({
         opacity,
         setOpacity,
-        sectionCurrent,
         session: {
             value: session,
             isSignedIn: dataUser.isSignedIn
@@ -95,7 +112,7 @@ export default function Provider({ children }: ILayouts): Component {
         setTheme,
         note,
         setNote
-    }), [sectionCurrent, session, theme, note, opacity]);
+    }), [session, theme, note, opacity]);
 
     return (
         <TemplateContext value={contextValue}>

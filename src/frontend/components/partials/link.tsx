@@ -14,7 +14,7 @@ export default function ComponentLink(props: ILink): Component {
     const { url, title, descriptionClass, children, onClick = () => { }, onMouseOver = () => { }, onMouseLeave = () => { } } = props;
 
     return (
-        <Link href={url} onClick={onClick} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} title={title} rel="noopener noreferrer" className={descriptionClass}>
+        <Link href={url} onClick={onClick} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} title={title} rel="noopener noreferrer" className={`outline-none ${descriptionClass}`}>
             {children}
         </Link>
     )

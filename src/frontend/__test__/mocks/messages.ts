@@ -1,7 +1,7 @@
-import { PropsStatus } from "@/context/types/response"
+import { HttpStatusCode } from "@/shared/types/response"
 
 type Props = {
-    status: PropsStatus,
+    status: HttpStatusCode,
     text: string,
     color: string
 }

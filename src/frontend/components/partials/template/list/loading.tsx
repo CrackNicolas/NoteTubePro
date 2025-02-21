@@ -2,6 +2,7 @@ import { Fragment } from "react"
 
 import IElement from "@/frontend/interfaces/elements/element";
 import ILayouts from "@/frontend/interfaces/layouts";
+import useAppTranslation from "@/shared/hooks/translation";
 
 import { Component } from "@/frontend/types/component";
 
@@ -10,7 +11,9 @@ interface ITemplateLoading extends Partial<Pick<IElement, 'title' | 'description
 }
 
 export default function ComponentTemplateLoading(props: ITemplateLoading): Component {
-    const { children, count, descriptionClass = "", title = 'Cargando...' } = props;
+    const {translate} = useAppTranslation();
+
+    const { children, count, descriptionClass = "", title = `${translate('loading.messages.default')}...` } = props;
 
     return (
         <Fragment>

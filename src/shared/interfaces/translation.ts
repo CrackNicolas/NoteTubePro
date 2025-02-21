@@ -1,5 +1,7 @@
+import { Languages } from "@/shared/enums/languages";
+
 export default interface ITranslation {
-    language: string,
+    language: Languages,
     translate: (chain: string) => string,
-    update_language: (language: string) => void
+    update_language: (language: Languages) => void
 }

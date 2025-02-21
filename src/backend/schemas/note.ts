@@ -1,6 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
 import { PropsNote } from "@/backend/types/note";
+import { ValuePriority } from "@/shared/enums/note/priority";
 
 const schemaNotes = new Schema<PropsNote>({
     title: {
@@ -28,7 +29,7 @@ const schemaNotes = new Schema<PropsNote>({
     priority: {
         type: String,
         require: [true, 'Required priority'],
-        enum: ['Alta', 'Media', 'Baja']
+        enum: [ValuePriority.High, ValuePriority.Medium, ValuePriority.Low]
     },
     featured: {
         type: Boolean,
