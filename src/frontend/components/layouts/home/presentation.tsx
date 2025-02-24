@@ -28,9 +28,7 @@ export default function ComponentPresentationHeader(props: IPresentationHeader):
                     {subtitle}
                 </p>
             </div>
-            {
-                button && <ComponentButtonMainHome url={APP_ROUTES.dashboard.main} title={translate('home.button')} />
-            }
+            {button && <ComponentButtonMainHome url={APP_ROUTES.dashboard.main} title={translate('home.button')} />}
         </Fragment>
     )
 }

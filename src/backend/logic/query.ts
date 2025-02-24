@@ -47,6 +47,6 @@ export function query(userId: string, segment: string): object {
         ...(criteria?.category?.title && { 'category.title': criteria?.category?.title }),
         ...(criteria?.priority && { priority: criteria?.priority }),
         ...(criteria?.dates && { createdAt: date }),
-        ...(criteria?.featured && { featured: criteria?.featured })
+        ...((criteria?.featured != undefined) && { featured: criteria?.featured })
     }
 }

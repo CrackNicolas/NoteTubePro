@@ -14,6 +14,7 @@ describe('Componente <Search/> principal', () => {
         const setSelectPriority = jest.fn();
         const { getByTitle } = render(
             <ComponentSelectStatic
+            ruteTranslate=''
                 title="Prioridad"
                 select='Prioridad'
                 setSelect={setSelectPriority}

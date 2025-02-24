@@ -146,6 +146,10 @@ export default function ComponentContainerForm(props: IContainerForm): Component
     }
 
     useEffect(() => {
+        window.scroll(0, 0);
+    }, []);
+
+    useEffect(() => {
         setMessageImage(prev => ({ ...prev, value: translate('notes.form.items.image.title.init') }));
     }, [translate('notes.form.items.image.title.init')]);
 
@@ -156,7 +160,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
         setValue('priority', noteSelected?.priority);
         setValue('featured', noteSelected?.featured ? ValueBoolean.YEAH : ValueBoolean.NOT);
         setValue('category', noteSelected?.category);
-        
+
         if (noteSelected?.file?.id) {
             setViewFile(noteSelected?.file?.url)
             setMessageImage({ paint: true, value: translate('notes.form.items.image.title.exito') });

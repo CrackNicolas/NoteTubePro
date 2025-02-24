@@ -36,7 +36,7 @@ export default function ComponentNavTop(props: IContext): Component {
     const withoutLoggingIN: boolean = (path == APP_ROUTES.init && !session.value.user);
 
     return (
-        <nav className="fixed w-full dark:bg-dark-primary bg-primary top-0 mt-[-7px] z-40">
+        <nav className="fixed w-full dark:bg-dark-primary bg-primary top-0 mt-[-7px] z-50">
             <article className="mx-auto max-w-7xl pl-3 pr-2 2xl:pl-10 sm:pl-[60px] sm:pr-10">
                 <div className="relative flex gap-x-3 h-16 items-center justify-between">
                     <div className="flex items-center justify-center sm:items-stretch sm:justify-start">

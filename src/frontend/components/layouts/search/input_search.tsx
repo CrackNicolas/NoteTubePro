@@ -1,20 +1,20 @@
 import { useState } from "react";
 
 import { Component } from "@/frontend/types/component";
+import { validateRegex } from "@/frontend/constant/regex";
 
 import ISetValue from "@/frontend/interfaces/elements/form/value";
 import useAppTranslation from "@/shared/hooks/translation";
 
-import { validateRegex } from "@/frontend/constant/regex";
-
 import ComponentIcon from "@/frontend/components/partials/icon";
 
 interface IInputSearch extends Required<ISetValue> {
-    design?: boolean
+    design?: boolean,
+    value?: string
 }
 
 export default function ComponentInputSearch(props: IInputSearch): Component {
-    const { setValue, design = false } = props;
+    const { setValue, value = '', design = false } = props;
 
     const { translate } = useAppTranslation();
 
@@ -47,8 +47,9 @@ export default function ComponentInputSearch(props: IInputSearch): Component {
             <input
                 type="text"
                 id="search"
+                value={value}
                 placeholder={`${translate('search.nav.input_search')}...`}
-                onChange={(e) => validation(e.target.value)}
+                onChange={(event) => validation(event.target.value)}
                 className={`${design ? 'border-l-[0.1px] rounded-l-md' : 'sm:w-auto border-l-none'} w-full dark:bg-dark-sixth bg-sixth border-y-[0.1px] border-r-[0.1px] ${error ? 'dark:text-dark-error text-error dark:border-dark-error border-error' : 'dark:text-dark-fifth text-fifth dark:border-dark-secondary border-secondary'} border-opacity-40 rounded-r-md outline-none px-2 py-1 dark:placeholder:opacity-100 placeholder:opacity-60 placeholdel:text-sm`}
             />
         </div>

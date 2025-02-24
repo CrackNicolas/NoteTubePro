@@ -19,12 +19,12 @@ export default function ComponentMainHome(): Component {
             <ComponentItemMainHome
                 icon={<FaRocket className="text-secondary dark:text-seventh text-opacity-60 text-4xl sm:text-5xl pb-2 md:mb-4" />}
                 title={translate('home.sections.main.article_2.title')}
-                subtitle={translate('home.sections.main.article_1.subtitle')}
+                subtitle={translate('home.sections.main.article_2.subtitle')}
             />
             <ComponentItemMainHome
                 icon={<FaCogs className="text-secondary dark:text-seventh text-opacity-60 text-4xl sm:text-5xl pb-2 md:mb-4" />}
                 title={translate('home.sections.main.article_3.title')}
-                subtitle={translate('home.sections.main.article_1.subtitle')}
+                subtitle={translate('home.sections.main.article_3.subtitle')}
             />
         </ComponentMotion>
     )
