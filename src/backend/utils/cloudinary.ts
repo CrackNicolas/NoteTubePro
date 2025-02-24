@@ -11,10 +11,7 @@ type PropsFile = {
     url?: string
 }
 
-export async function fileTransformer(file: File): Promise<PropsFile> {
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
+export async function fileTransformer(buffer: Buffer): Promise<PropsFile> {
     const response: UploadApiResponse | undefined = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream({}, (err, result) => {
             if (err) reject(err);
@@ -27,10 +24,7 @@ export async function fileTransformer(file: File): Promise<PropsFile> {
         url: response?.secure_url
     }
 }
-export async function fileEdit(id: string, file: File): Promise<PropsFile> {
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
+export async function fileEdit(id: string, buffer: Buffer): Promise<PropsFile> {
     const response: UploadApiResponse | undefined = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream({ public_id: id, overwrite: true }, (err, result) => {
             if (err) reject(err);

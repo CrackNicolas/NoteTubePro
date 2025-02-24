@@ -179,7 +179,7 @@ export default function ComponentSearch(): Component {
     }, [title, selectCategory, selectPriority, selectFeatured, selectDate, listenToChanges]);
 
     return (
-        <article className={`${opacity && 'opacity-50'} relative min-h-screen 2xl:px-0 sm:pl-5 flex flex-col gap-5 mt-[30px] pt-6`}>
+        <article className={`${opacity && 'opacity-50'} relative min-h-screen 2xl:px-0 sm:pl-5 flex flex-col gap-5 pt-[54px]`}>
             <article className="fixed max-w-7xl w-full mt-[3px] z-40">
                 <article className={`${viewFilter && 'sz:w-[calc(100%-80px)] md:w-[calc(100%-275px)]'} 2xl:w-[calc(100%-80px)] sm:w-[calc(100%-100px)] w-[calc(100%-25px)] pb-3 z-50 flex gap-y-6 gap-x-3 justify-between items-center dark:bg-dark-primary bg-primary transition-width`}>
                     {

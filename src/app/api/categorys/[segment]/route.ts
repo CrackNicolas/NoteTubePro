@@ -11,22 +11,28 @@ export async function GET(req: NextRequest, { params: { segment } }: { params: {
     return handleApiRequest({
         cookies: req.cookies,
         processRequest: async (userId: string): Promise<PropsResponse> => {
-            const userCategorys = await Category.find({ "use.userId": userId });
+            const userCategorys = await Category.find({
+                "use": {
+                    $elemMatch: {
+                        "userId": userId,
+                        "value": segment
+                    }
+                }
+            }).select({
+                _id: 0,
+                title: 1,
+                "use.value": 1,
+                icon: 1
+            });
 
-            const categorys = userCategorys.filter(category =>
-                category.use.some((prev: { userId: string, value: boolean }) => prev.userId === userId && prev.value == (segment ? true : false))
-            )
-
-            let filterCategorys: PropsCategory[] = [];
-
-            categorys.map(category => {
-                filterCategorys.push({
+            const filterCategorys: PropsCategory[] = userCategorys
+                .map(category => ({
                     title: category.title,
-                    use: category.use.find((prev: { value: true, userId: string }) => prev.userId == userId).value,
+                    use: category.use[0].value,
                     icon: category.icon
                 })
-            })
-
+            )
+            
             return { status: 200, details: filterCategorys };
         }
     })

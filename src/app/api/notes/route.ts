@@ -32,6 +32,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         cookies: req.cookies,
         processRequest: async (userId: string): Promise<PropsResponse> => {
             const data = await req.formData();
+
             const categoryPrev = data.get('category');
             const category: PropsCategory = categoryPrev && typeof categoryPrev === 'string' ? JSON.parse(categoryPrev) : null;
 
@@ -50,8 +51,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             const file = data.get('file') as File;
 
             if (file) {
-                const fileBuffer = Buffer.from(await file.arrayBuffer()) as any;
-                const type = await fileTypeFromBuffer(fileBuffer);
+                const fileBuffer: Buffer = Buffer.from(await file.arrayBuffer());  // Buffer es compatible con Uint8Array
+                const type = await fileTypeFromBuffer(fileBuffer as any);
 
                 if (!type || !type.mime.startsWith('image/')) return { status: 400, info: { message: MessagesNote.BAD_IMAGE } };
 
@@ -65,7 +66,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                     }
                 }
 
-                const { id, url } = await fileTransformer(file);
+                const { id, url } = await fileTransformer(fileBuffer);
                 if (!url) return { status: 404, info: { message: MessagesNote.FILE_NOT_FOUND } };
 
                 noteData.file = { id, name: file.name, url };
@@ -109,8 +110,8 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
             switch (conditionFile) {
                 case ConditionFile.MODIFY:
                     const file = data.get('file') as File;
-                    const fileBuffer = Buffer.from(await file.arrayBuffer()) as any;
-                    const type = await fileTypeFromBuffer(fileBuffer);
+                    const fileBuffer: Buffer = Buffer.from(await file.arrayBuffer());
+                    const type = await fileTypeFromBuffer(fileBuffer as any);
 
                     if (!type || !type.mime.startsWith('image/')) return { status: 400, info: { message: MessagesNote.BAD_IMAGE } };
 
@@ -125,7 +126,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
                         }
                     }
 
-                    const { id, url } = await fileEdit(existsNote.file.id, file);
+                    const { id, url } = await fileEdit(existsNote.file.id, fileBuffer);
                     if (!url) return { status: 404, info: { message: MessagesNote.NOT_FOUND } };
                     existsNote.file = { id, name: file.name, url };
                     break;

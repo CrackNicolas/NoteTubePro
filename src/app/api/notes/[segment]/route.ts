@@ -25,7 +25,7 @@ export async function GET(req: NextRequest, { params: { segment } }: { params: {
 export async function DELETE(req: NextRequest, { params: { segment } }: { params: { segment: string } }): Promise<NextResponse> {
     return handleApiRequest({
         cookies: req.cookies,
-        processRequest: async (userId: string): Promise<PropsResponse> => {
+        processRequest: async (): Promise<PropsResponse> => {
             const notes = JSON.parse(segment);
 
             const resultMongodb = await Notes.deleteMany(
