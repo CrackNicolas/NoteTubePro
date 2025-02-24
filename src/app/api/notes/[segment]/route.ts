@@ -15,7 +15,10 @@ export async function GET(req: NextRequest, { params: { segment } }: { params: {
     return handleApiRequest({
         cookies: req.cookies,
         processRequest: async (userId: string): Promise<PropsResponse> => {
-            const notes: PropsNote[] = await Notes.find(query(userId, segment));
+            const notes: PropsNote[] = await Notes.find(query(userId, segment)).lean().select({
+                "updatedAt": 0,
+                "__v": 0
+            });
 
             return { status: 200, details: notes }
         }

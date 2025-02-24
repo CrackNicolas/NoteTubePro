@@ -12,10 +12,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return handleApiRequest({
         cookies: req.cookies,
         processRequest: async (userId: string): Promise<PropsResponse> => {
-            const count: number = await Category.countDocuments();
+            const categoryExists = await Category.exists({ "use.userId": userId });
 
-            if (count === 0) {
-                await Category.create([
+            if (!categoryExists) {
+                await Category.insertMany([  //insertMany es mas rrapido que usar create debido a que insertMany hace una sola consolta por lote
                     { title: 'Proyecto', use: [{ value: true, userId }], icon: 'proyects' },
                     { title: 'Trabajo', use: [{ value: true, userId }], icon: 'briefcase' },
                     { title: 'Inversion', use: [{ value: true, userId }], icon: 'investment' },
@@ -26,28 +26,30 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     { title: 'Peliculas', use: [{ value: true, userId }], icon: 'film' },
                     { title: 'Musicas', use: [{ value: true, userId }], icon: 'music' },
                     { title: 'Otros', use: [{ value: true, userId }], icon: 'others' }
-                ])
+                ]);
             }
 
-            const userCategory = await Category.findOne({ "use.userId": userId });
+            await Category.updateMany(
+                { "use.userId": { $ne: userId } },
+                { $addToSet: { use: { value: true, userId } } }
+            );
 
-            if (!userCategory) await Category.updateMany({}, { $push: { use: { value: true, userId } } });
+            const userCategorys = await Category.find({ "use.userId": userId }).select({
+                _id: 0,
+                title: 1,
+                "use.$": 1,  // Usamos `$` para traer solo el elemento dentro de `use` que corresponde al userId
+                icon: 1
+            });
 
-            const categorys = await Category.find({ "use.userId": userId });
-
-            let filterCategorys: PropsCategory[] = [];
-
-            categorys.map(category => {
-                filterCategorys.push({
-                    title: category.title,
-                    use: category.use.find((prev: { value: true, userId: string }) => prev.userId == userId).value,
-                    icon: category.icon
-                })
-            })
+            const filterCategorys: PropsCategory[] = userCategorys.map(category => ({
+                title: category.title,
+                use: category.use[0].value,
+                icon: category.icon
+            }));
 
             return { status: 200, details: filterCategorys };
         }
-    });
+    })
 }
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
@@ -57,23 +59,24 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
             const { title, use } = await req.json();
 
             if (!use) {
-                const userCategorys = await Category.find({ "use.userId": userId });
+                const activeCategoriesCount = await Category.countDocuments({
+                    "use": {
+                        $elemMatch: {
+                            "userId": userId,
+                            "value": true
+                        }
+                    }
+                });
 
-                const count: number = userCategorys.filter(category =>
-                    category.use.some((prev: { userId: string, value: boolean }) => prev.userId === userId && prev.value === true)
-                ).length;
-
-                if (count === 2) return { status: 200, info: { message: MessageCategory.DENIED } };
+                if (activeCategoriesCount === 2) return { status: 200, info: { message: MessageCategory.DENIED } };
             }
 
-            const existsCategory = await Category.findOne({ title });
+            const updateCategory = await Category.updateOne(
+                { title, "use.userId": userId },
+                { $set: { "use.$.value": use } }
+            )
 
-            if (!existsCategory) return { status: 404, info: { message: MessageCategory.NOT_FOUND } };
-
-            const category = existsCategory.use.find((prev: { userId: string }) => prev.userId === userId);
-            category.value = use;
-
-            await existsCategory.save();
+            if (updateCategory.modifiedCount === 0) return { status: 404, info: { message: MessageCategory.NOT_FOUND } };
 
             return { status: 200, info: { message: (use) ? MessageCategory.SUCCESS_USE : MessageCategory.SUCCESS_USE_NOT } };
         }

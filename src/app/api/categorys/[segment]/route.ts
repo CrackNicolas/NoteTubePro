@@ -21,18 +21,16 @@ export async function GET(req: NextRequest, { params: { segment } }: { params: {
             }).select({
                 _id: 0,
                 title: 1,
-                "use.value": 1,
+                "use.$": 1,
                 icon: 1
             });
 
-            const filterCategorys: PropsCategory[] = userCategorys
-                .map(category => ({
-                    title: category.title,
-                    use: category.use[0].value,
-                    icon: category.icon
-                })
-            )
-            
+            const filterCategorys: PropsCategory[] = userCategorys.map(category => ({
+                title: category.title,
+                use: category.use[0].value,
+                icon: category.icon
+            }))
+
             return { status: 200, details: filterCategorys };
         }
     })

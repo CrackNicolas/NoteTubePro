@@ -13,69 +13,73 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         processRequest: async (userId: string): Promise<PropsResponse> => {
             if (userId !== process.env.ROL_ADMIN_USER_ID) return { status: 403 };
 
-            const sessionsExpiret = await Session.find({ expiret: { $lt: new Date().toISOString() }, status: true });
+            const [updateSessionsExpiret, sessions] = await Promise.all([
+                Session.updateMany(
+                    { expiret: { $lt: new Date().toISOString() }, status: true },
+                    { $set: { status: false } }
+                ),
+                Session.find().lean().select({
+                    "_id": 0,
+                    "updatedAt": 0,
+                    "__v": 0
+                })
+            ]);
 
-            for (let session of sessionsExpiret) {
-                session.status = false;
-                await session.save();
-            }
-
-            const sessions: PropsSession[] = await Session.find();
-
-            return { status: 200, details: sessions };
+            return { status: 200, details: sessions as PropsSession[] };
         }
     })
 }
+
 export async function POST(req: NextRequest): Promise<NextResponse> {
     return handleApiRequest({
         cookies: req.cookies,
         processRequest: async (): Promise<PropsResponse> => {
             const { id, status, lastTime, expiret, origin, user } = await req.json();
 
-            const existsSession = await Session.findOne({ id });
+            const sessionData: PropsSession = {
+                status,
+                lastTime,
+                expiret,
+                origin,
+                user
+            };
+            
+            const session = await Session.findOneAndUpdate(
+                { id }, 
+                { $set: sessionData },
+                { new: true, upsert: true }  // Si no existe, lo crea; si existe, lo actualiza
+            );
 
-            if (existsSession) {
-                existsSession.status = status;
-                existsSession.lastTime = lastTime;
-                existsSession.origin = origin;
-                existsSession.expiret = expiret;
-                await existsSession.save();
-
-                return { status: 400, info: { message: "La session ya está registrada" } };
-            }
-
-            const newSession = new Session({
-                id, status, lastTime, expiret, origin,
-                user: {
-                    name: user.name,
-                    email: user.email,
-                    image: user.image,
-                    rol: user.rol
+            if (session) {
+                if (session.isNew) {
+                    return { status: 201, info: { message: 'Session registrada' } };
                 }
-            });
-
-            await newSession.save();
+                return { status: 200, info: { message: 'Sesión actualizada' } };
+            }
 
             return { status: 201, info: { message: 'Session registrada' } };
         }
     })
 }
+
 export async function PUT(req: NextRequest): Promise<NextResponse> {
     return handleApiRequest({
         cookies: req.cookies,
+        useCredentialsClerk: false,
         processRequest: async (): Promise<PropsResponse> => {
             const { id, status } = await req.json();
 
-            const existsSession = await Session.findOne({ id });
+            const session = await Session.findOneAndUpdate(
+                { id },
+                { $set: { status } },
+                { new: true }
+            );
 
-            if (!existsSession) {
-                return { status: 400, info: { message: "La sesion no existe" } };
+            if (!session) {
+                return { status: 404, info: { message: "La sesión no existe" } };  // Mejor usar 404
             }
 
-            existsSession.status = status;
-            await existsSession.save();
-
-            return { status: 201, info: { message: 'Session actualizada' } };
+            return { status: 200, info: { message: 'Sesión actualizada' } }; 
         }
     })
 }

@@ -61,24 +61,22 @@ export default function Provider({ children }: ILayouts): Component {
                 rol: RolUser.MEMBER
             }
 
-            let promises: any = [];
+            const [rol, session, categorys] = await Promise.all([
+                httpRequest({ type: 'GET', url: `/api/role/${user.id}` }), //get rol
+                user.getSessions(), // session[0]
+                httpRequest({ type: 'GET', url: `/api/categorys` }) //Cargar categorias
+            ]);
 
-            promises.push(httpRequest({ type: 'GET', url: `/api/role/${user.id}` })); //get rol
-            promises.push(user.getSessions()); // session[0]
-            promises.push(httpRequest({ type: 'GET', url: `/api/categorys` })); //Cargar categorias
-
-            const resolvedPromises = await Promise.all(promises);
-
-            instanceUser.rol = resolvedPromises[0].data.details;
+            instanceUser.rol = rol.data.details;
 
             const instanceSession: PropsSession = {
                 id: user.id,
-                status: (resolvedPromises[1][0].status === StatusUser.ACTIVE),
-                lastTime: timeElapsed(resolvedPromises[1][0].lastActiveAt) + ' ' + resolvedPromises[1][0].lastActiveAt.toString().split(' ')[4] + 'hs',
-                expiret: resolvedPromises[1][0].expireAt.toISOString(),
+                status: (session[0].status === StatusUser.ACTIVE),
+                lastTime: timeElapsed(session[0].lastActiveAt) + ' ' + session[0].lastActiveAt.toString().split(' ')[4] + 'hs',
+                expiret: session[0].expireAt.toISOString(),
                 origin: {
-                    ipAdress: (resolvedPromises[1][0].latestActivity.ipAddress) ?? '',
-                    city: (resolvedPromises[1][0].latestActivity.city) ?? ''
+                    ipAdress: (session[0].latestActivity.ipAddress) ?? '',
+                    city: (session[0].latestActivity.city) ?? ''
                 },
                 user: instanceUser
             }

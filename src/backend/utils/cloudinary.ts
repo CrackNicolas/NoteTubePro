@@ -24,6 +24,7 @@ export async function fileTransformer(buffer: Buffer): Promise<PropsFile> {
         url: response?.secure_url
     }
 }
+
 export async function fileEdit(id: string, buffer: Buffer): Promise<PropsFile> {
     const response: UploadApiResponse | undefined = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream({ public_id: id, overwrite: true }, (err, result) => {
@@ -37,6 +38,7 @@ export async function fileEdit(id: string, buffer: Buffer): Promise<PropsFile> {
         url: response?.secure_url
     }
 }
+
 export async function fileDelete(filesId: string[]): Promise<UploadApiResponse[] | undefined> {
     if (filesId.length === 0) return;
 

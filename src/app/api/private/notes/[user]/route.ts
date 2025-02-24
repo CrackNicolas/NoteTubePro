@@ -13,7 +13,10 @@ export async function GET(req: NextRequest, { params: { user } }: { params: { us
         processRequest: async (userId: string): Promise<PropsResponse> => {
             if (userId !== process.env.ROL_ADMIN_USER_ID) return { status: 403 };
 
-            const notes: PropsNote[] = await Notes.find({ userId: user });
+            const notes: PropsNote[] = await Notes.find({ userId: user }).lean().select({
+                "updatedAt": 0,
+                "__v": 0
+            });
 
             return { status: 200, details: notes };
         }

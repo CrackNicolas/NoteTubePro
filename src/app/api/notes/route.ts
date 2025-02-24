@@ -21,12 +21,16 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return handleApiRequest({
         cookies: req.cookies,
         processRequest: async (userId: string): Promise<PropsResponse> => {
-            const search: PropsNote[] = await Notes.find({ userId });
+            const search: PropsNote[] = await Notes.find({ userId }).lean().select({
+                "updatedAt": 0,
+                "__v": 0
+            });
 
             return { status: 200, details: search }
         }
     })
 }
+
 export async function POST(req: NextRequest): Promise<NextResponse> {
     return handleApiRequest({
         cookies: req.cookies,

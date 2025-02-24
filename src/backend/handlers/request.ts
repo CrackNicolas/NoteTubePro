@@ -12,12 +12,17 @@ import { MessagesNote } from "@/shared/enums/messages/note";
 interface IApiRequest {
     cookies: RequestCookies,
     useConnectDb?: boolean,
+    useCredentialsClerk?: boolean,
     processRequest: (userId: string) => Promise<PropsResponse>
 }
 
-export async function handleApiRequest({ cookies, processRequest, useConnectDb = true }: IApiRequest): Promise<NextResponse> {
-    const userId = autentication(cookies);
-    if (!userId) return sendApiResponse({ status: 401 });
+export async function handleApiRequest({ cookies, processRequest, useCredentialsClerk = true, useConnectDb = true }: IApiRequest): Promise<NextResponse> {
+    let userId;
+
+    if (useCredentialsClerk) {
+        userId = autentication(cookies);
+        if (!userId) return sendApiResponse({ status: 401 });
+    }
 
     if (useConnectDb) {
         const connection: boolean = await conectDatabase();
@@ -25,7 +30,7 @@ export async function handleApiRequest({ cookies, processRequest, useConnectDb =
     }
 
     try {
-        const result = await processRequest(userId);
+        const result = await processRequest(userId ?? '');
         return sendApiResponse(result);
     } catch (error: any) {
         if (error.code === 11000 && error.keyPattern && error.keyValue) {
