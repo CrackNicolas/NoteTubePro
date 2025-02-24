@@ -27,7 +27,6 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: 'NoteTube - Tu aplicación de notas',
 		description: 'Organiza tus pensamientos y proyectos con NoteTube, una aplicación simple y eficiente.',
-		url: 'https://www.notetube.com',
 		siteName: 'NoteTube',
 		type: 'website'
 	}
