@@ -19,7 +19,7 @@ export default function ComponentList(props: IList): Component {
     const { loading, notes, descriptionClass = '', state, notesSelected, setNotesSelected } = props;
 
     return (
-        <article className={`${descriptionClass} pt-[3px] sm:pb-10 grid grid-cols-1 xl:grid-cols-2 place-items-center gap-4`}>
+        <article className={`${descriptionClass} pt-[3px] sm:pb-10 grid grid-cols-1 xl:grid-cols-2 place-items-center gap-3`}>
             {
                 (loading?.value) ?
                     <ComponentLoading count={12} />

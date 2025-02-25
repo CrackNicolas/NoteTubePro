@@ -32,7 +32,7 @@
     },
     "home": {
         "title": "Welcome",
-        "subtitle": "Designed to inspire, surprise and make your life easier.",
+        "subtitle": "A notes app designed to organize and simplify your life",
         "button": "Start now",
         "loading": {
             "message": "We are preparing everything for you!"
@@ -72,7 +72,7 @@
     },
     "dashboard": {
         "title": "Control Panel",
-        "subtitle": "Organize your world, stay on top of what matters most.",
+        "subtitle": "Manage your notes and keep track of what's important.",
         "button": "Go back",
         "details": {
             "default": "Try our feature"
@@ -142,7 +142,7 @@
                     "messages": {
                         "required": "Description required",
                         "minLength": "The description must be longer than 15 characters",
-                        "maxLength": "The description must be less than 500 characters.",
+                        "maxLength": "The description must be less than 700 characters.",
                         "pattern": "Only valid characters, no double spaces"
                     }
                 },

@@ -172,7 +172,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
     }, [noteSelected, reset, setCategorySelected, setValue])
 
     return (
-        <div className={`flex flex-col mt-[-23px] gap-y-4 w-full sm:w-[450px] mx-auto`}>
+        <div className={`flex flex-col mt-[-23px] gap-y-2 w-full sm:w-[500px] mb-10 sm:mb-0 mx-auto`}>
             <div className="relative flex justify-center items-center">
                 {(!noteSelected) && <ComponentButtonGoBack onClick={() => setCategorySelected(undefined)} descriptionClass="left-0 p-1" />}
                 <span title={translate('notes.form.title.details')} className="text-2xl text-gradient font-semibold text-center tracking-wider">
@@ -271,7 +271,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                                 ((!file || !noteSelected?.file?.id) && (!viewFile)) ?
                                     <ComponentIcon name="upload-file" size={27} descriptionClass="icon-home dark:text-dark-secondary text-secondary cursor-pointer" />
                                     :
-                                    <Image src={viewFile ?? ""} alt="" width={60} height={60} className="max-w-[70px] max-h-[70px] rounded-md" />
+                                    <Image src={viewFile ?? ""} alt="" width={80} height={80} className="max-w-[80px] max-h-[80px] rounded-md" />
                             }
                             <span className='line-clamp-1 dark:text-dark-secondary text-secondary text-md font-normal tracking-wide'>
                                 {

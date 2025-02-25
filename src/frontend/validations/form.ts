@@ -57,7 +57,7 @@ export const validation = (name: PropsInputName, required: boolean = true): Prop
                     message: ruteTranslate(TypeErrorForm.MIN_LENGTH)
                 },
                 [TypeErrorForm.MAX_LENGTH]: {
-                    value: 500,
+                    value: 700,
                     message: ruteTranslate(TypeErrorForm.MAX_LENGTH)
                 },
                 [TypeErrorForm.PATTERN]: {

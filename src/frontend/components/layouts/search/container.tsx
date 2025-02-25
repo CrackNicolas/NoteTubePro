@@ -248,7 +248,7 @@ export default function ComponentSearch(): Component {
                             </button>
                         </div>
                         <button onClick={() => restart()} title={translate('search.toggle.buttons.clean')} className="w-full mt-2 group bg-custom-gradient border-none px-3 rounded-md flex items-center justify-center py-[3px] gap-x-1 outline-none transition duration-500">
-                            <ComponentIcon name="load" size={16} descriptionClass="group-hover:animate-spin dark:text-tertiary text-primary cursor-pointer" />
+                            <ComponentIcon name="load" size={16} descriptionClass="group-hover:rotate-[360deg] dark:text-tertiary text-primary cursor-pointer" />
                             <span className="text-sm tracking-wider dark:text-tertiary text-primary duration-500">
                                 {translate('search.toggle.buttons.clean')}
                             </span>

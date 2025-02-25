@@ -46,9 +46,12 @@ body::-webkit-scrollbar-thumb,
 
 .dark body::-webkit-scrollbar-thumb,
 .scroll::-webkit-scrollbar-thumb,
-.scroll-select::-webkit-scrollbar-thumb,
-.scroll-text::-webkit-scrollbar-thumb {
+.scroll-select::-webkit-scrollbar-thumb{
   background: theme("colors.dark.primary");
+}
+
+.dark .scroll-text::-webkit-scrollbar-thumb {
+  background: theme("colors.seventh");
 }
 
 body::-webkit-scrollbar-thumb:hover,
@@ -120,6 +123,10 @@ textarea{
   resize: none;
 }
 
+.shaking {
+  animation: shake 5s infinite;
+}
+
 @keyframes animation_spinner {
   0% {
     transform: rotate(0deg);
@@ -136,4 +143,13 @@ textarea{
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(0px, 0px) rotate(-13deg); }
+  40% { transform: translate(0px, 185px) rotate(-10deg); }
+  60% { transform: translate(0px, 0px) rotate(-4deg); }
+  80% { transform: translate(-185px, 2px) rotate(-11deg); }
+  100% { transform: translate(0, 0); }
 }

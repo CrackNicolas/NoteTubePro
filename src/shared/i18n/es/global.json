@@ -32,7 +32,7 @@
     },
     "home": {
         "title": "Bienvenido",
-        "subtitle": "Diseñada para inspirar, sorprender y facilitar tu vida.",
+        "subtitle": "Una aplicación de notas diseñada para organizar y simplificar tu vida",
         "button": "Comienza ahora",
         "loading": {
             "message": "¡Estamos preparando todo para ti!"
@@ -72,7 +72,7 @@
     },
     "dashboard": {
         "title": "Panel de control",
-        "subtitle": "Organiza tu mundo, mantente al tanto de lo más importante.",
+        "subtitle": "Gestiona tus notas y no pierdas de vista lo importante.",
         "button": "Volver atras",
         "details": {
             "default": "Prueba nuestra funcion"
@@ -142,7 +142,7 @@
                     "messages": {
                         "required": "Descripcion requerida",
                         "minLength": "La descripcion deber ser mayor a 15 caracteres",
-                        "maxLength": "La descripcion deber ser menor a 500 caracteres",
+                        "maxLength": "La descripcion deber ser menor a 700 caracteres",
                         "pattern": "Solo caracteres válidos, sin dobles espacios"
                     }
                 },

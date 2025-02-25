@@ -12,9 +12,9 @@ export default function ComponentButtonMainHome(props: IButtonMain): Component {
     const { title, url } = props;
 
     return (
-        <ComponentLink url={url} title={title} descriptionClass="bg-custom-gradient group mt-6 flex items-center gap-x-2 rounded-md bg-secondary dark:bg-dark-secondary text-primary dark:text-dark-primary px-5 sm:px-6 py-2 sm:py-3 text-md sm:text-lg font-semibold shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-500">
+        <ComponentLink url={url} title={title} descriptionClass="bg-custom-gradient group mt-6 flex items-center gap-x-2 rounded-md bg-secondary dark:bg-dark-secondary px-5 sm:px-6 py-2 sm:py-3 shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-500">
             <ComponentIcon name="box" size={20} descriptionClass="text-primary dark:text-dark-primary group-hover:rotate-[360deg] transition-transform duration-700" />
-            <span>
+            <span className="text-primary dark:text-dark-primary text-md sm:text-lg font-semibold">
                 {title}
             </span>
         </ComponentLink>

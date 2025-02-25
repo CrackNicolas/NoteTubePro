@@ -37,7 +37,7 @@ const config: Config = {
 					fifth: '#1F2937',
 					sixth: '#FFFFFF',
 					error: 'red',
-				},
+				}
 			}
 		}
 	},
