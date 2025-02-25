@@ -283,10 +283,10 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                     </div>
                 </div>
                 <div className="flex gap-x-10">
-                    <button type="submit" title={translate('notes.form.buttons.create')} name={translate('notes.form.buttons.create')} className="relative flex w-full justify-center rounded-md hover:text-tertiary text-primary border-[0.1px] border-none px-3 py-1 text-md font-normal hover:font-semibold bg-custom-gradient tracking-wider outline-none">
+                    <button type="submit" title={translate('notes.form.buttons.create')} name={translate('notes.form.buttons.create')} className="relative flex w-full justify-center rounded-md text-tertiary border-[0.1px] border-none px-3 py-1 text-md font-normal hover:font-semibold bg-custom-gradient tracking-wider outline-none">
                         {translate('notes.form.buttons.create')}
                     </button>
-                    <button onClick={() => restart(true)} type="button" name={translate('notes.form.buttons.close')} title={translate('notes.form.buttons.close')} className="relative flex hover:text-tertiary text-primary w-full justify-center rounded-md bg-custom-gradient-red px-3 py-1 text-md font-normal hover:font-semibold tracking-wider outline-none">
+                    <button onClick={() => restart(true)} type="button" name={translate('notes.form.buttons.close')} title={translate('notes.form.buttons.close')} className="relative flex text-tertiary w-full justify-center rounded-md bg-custom-gradient-red px-3 py-1 text-md font-normal hover:font-semibold tracking-wider outline-none">
                         {translate('notes.form.buttons.close')}
                     </button>
                 </div>

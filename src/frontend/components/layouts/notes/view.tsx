@@ -25,11 +25,11 @@ export default function ComponentView(props: IView): Component {
                     {translateLastTime({ lastTime: timeElapsed(note.createdAt), translate })}
                 </span>
                 <div className="flex justify-between items-center w-full">
-                    <h3 className="text-start line-clamp-1 tracking-wide dark:text-dark-secondary text-secondary font-semibold text-lg" title={note.title} >
+                    <h3 className="text-start line-clamp-1 tracking-wide text-gradient font-semibold text-lg" title={note.title} >
                         {note.title}
                     </h3>
                     <span className="rounded-full" title={`${translate('categories.default')} ${translate(`categories.items.${note.category.icon}`)}`}>
-                        <ComponentIcon name={note.category.icon} size={20} descriptionClass="dark:text-dark-secondary text-secondary" />
+                        <ComponentIcon name={note.category.icon} size={20} descriptionClass="dark:text-seventh text-secondary" />
                     </span>
                 </div>
                 <p className="text-start text-sm dark:text-dark-secondary text-gray-500 w-full mb-7" title={note.description}>
@@ -38,9 +38,9 @@ export default function ComponentView(props: IView): Component {
                 <div className="flex justify-between items-center w-full">
                     {
                         (note.file) && (
-                            <a href={`/api/images/${note.file.url.split("/").pop()}`} target="_blank" title={translate('notes.form.note.view.image')} rel="noopener noreferrer" className="group cursor-pointer dark:hover:bg-dark-secondary hover:bg-secondary flex items-center outline-none gap-x-1.5 border-[0.1px] dark:border-dark-secondary border-secondary rounded-md px-1.5">
-                                <ComponentIcon name="upload-file-selected" size={13} descriptionClass="dark:text-dark-secondary text-secondary dark:group-hover:text-dark-primary group-hover:text-primary" />
-                                <span className="dark:text-dark-secondary text-secondary dark:group-hover:text-dark-primary group-hover:text-primary">
+                            <a href={`/api/images/${note.file.url.split("/").pop()}`} target="_blank" title={translate('notes.form.note.view.image')} rel="noopener noreferrer" className="group cursor-pointer bg-custom-gradient flex items-center outline-none gap-x-1.5 border-none rounded-md px-2 py-0.5">
+                                <ComponentIcon name="upload-file-selected" size={13} descriptionClass="group-hover:animate-bounce dark:text-tertiary text-primary group-hover:text-tertiary dark:group-hover:text-primary" />
+                                <span className="dark:text-tertiary text-primary font-semibold group-hover:text-tertiary dark:group-hover:text-primary transition duration-500">
                                     {translate('notes.form.note.view.image')}
                                 </span>
                             </a>
@@ -51,7 +51,7 @@ export default function ComponentView(props: IView): Component {
                             <ComponentIcon name="arrow" size={21} descriptionClass={`text-${(note.priority === ValuePriority.High) ? 'red' : (note.priority === ValuePriority.Medium) ? 'yellow' : 'green'}-500 ${(note.priority !== ValuePriority.Low) && 'rotate-[-180deg]'}`} />
                         </span>
                         <span className="rounded-full" title={`${translate('notes.form.note.default')} ${(note.featured ? translate('notes.form.items.featured.details.text_1') : translate('notes.form.items.featured.details.text_2'))}`}>
-                            <ComponentIcon name={`star-${note.featured ? 'fill' : 'half'}`} size={19} descriptionClass="dark:text-dark-secondary text-secondary" />
+                            <ComponentIcon name={`star-${note.featured ? 'fill' : 'half'}`} size={19} descriptionClass="dark:text-seventh text-secondary" />
                         </span>
                     </div>
                 </div>

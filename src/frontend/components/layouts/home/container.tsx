@@ -4,6 +4,7 @@ import Confetti from 'react-confetti'
 import { useEffect, useState } from "react";
 
 import { Component } from "@/frontend/types/component";
+import { ValueBoolean } from '@/frontend/enums/boolean';
 
 import IContext from "@/context/interfaces/context";
 import useAppContext from "@/context/hooks/context";
@@ -25,8 +26,11 @@ export default function ComponentHome(): Component {
     const [confetti, setConfetti] = useState<boolean>(false);
 
     useEffect(() => {
-        if (session.isSignedIn && session.value.user && session.value.user?.lastSignInAt == null) {
+        const storedConfetti = localStorage.getItem("confetti") as ValueBoolean;
+
+        if (session.isSignedIn && session.value.user && !storedConfetti) {
             setConfetti(true);
+            localStorage.setItem("confetti", ValueBoolean.YEAH);
             const viewConfetti: NodeJS.Timeout = setTimeout(() => {
                 setConfetti(false);
             }, 9000);

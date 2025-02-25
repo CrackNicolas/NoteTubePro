@@ -221,7 +221,7 @@ export default function ComponentSearch(): Component {
                         {
                             !viewFilter && (
                                 <button ref={refButtonViewToggle} onClick={() => controllerViewFilter(!viewFilter)} type="button" title={translate('search.toggle.title')} className="outline-none">
-                                    <ComponentIcon name="filter" descriptionClass="cursor-pointer dark:hover:text-dark-secondary hover:text-secondary dark:text-dark-fifth text-fifth" size={24} viewBox="0 0 16 16" />
+                                    <ComponentIcon name="filter" descriptionClass="cursor-pointer dark:hover:text-seventh hover:text-secondary dark:text-primary text-fifth" size={24} viewBox="0 0 16 16" />
                                 </button>
                             )
                         }
@@ -247,9 +247,9 @@ export default function ComponentSearch(): Component {
                                 <ComponentIcon name="close" descriptionClass="cursor-pointer text-secondary text-opacity-60 dark:text-seventh" size={27} viewBox="0 0 16 16" />
                             </button>
                         </div>
-                        <button onClick={() => restart()} title={translate('search.toggle.buttons.clean')} className="w-full mt-2 group dark:border-dark-fifth border-fifth border-opacity-50 dark:hover:border-dark-secondary hover:border-secondary border-[0.1px] px-3 rounded-md flex items-center justify-center py-[3px] gap-x-1 outline-none transition duration-500">
-                            <ComponentIcon name="load" size={16} descriptionClass="dark:group-hover:text-dark-secondary group-hover:text-secondary group-hover:opacity-100 dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-70 cursor-pointer" />
-                            <span className="dark:group-hover:text-dark-secondary group-hover:text-secondary group-hover:opacity-100 text-sm tracking-wider dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-70 duration-500">
+                        <button onClick={() => restart()} title={translate('search.toggle.buttons.clean')} className="w-full mt-2 group bg-custom-gradient border-none px-3 rounded-md flex items-center justify-center py-[3px] gap-x-1 outline-none transition duration-500">
+                            <ComponentIcon name="load" size={16} descriptionClass="group-hover:animate-spin dark:text-tertiary text-primary cursor-pointer" />
+                            <span className="text-sm tracking-wider dark:text-tertiary text-primary duration-500">
                                 {translate('search.toggle.buttons.clean')}
                             </span>
                         </button>

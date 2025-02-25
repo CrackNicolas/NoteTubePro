@@ -17,9 +17,9 @@ export default function ComponentButtonCreate(props: IButtonCreate): Component {
     const { translate } = useAppTranslation();
 
     return (
-        <ComponentLink url={APP_ROUTES.notes.init} title={translate('search.nav.buttons.create')} descriptionClass={`group relative flex items-center justify-between gap-x-1 rounded-md text-primary px-1.5 bg-custom-gradient border-none py-[2px] text-md font-normal hover:font-semibold tracking-wider dark:hover:bg-dark-primary hover:bg-primary outline-none`}>
-            <ComponentIcon name='add' size={20} descriptionClass={`text-primary group-hover:text-tertiary cursor-pointer`} />
-            <span className={`${response && 'sm:flex hidden'} group-hover:text-tertiary w-full text-sm transition duration-500 font-semibold`}>
+        <ComponentLink url={APP_ROUTES.notes.init} title={translate('search.nav.buttons.create')} descriptionClass={`group relative flex items-center justify-between gap-x-1 rounded-md px-1.5 bg-custom-gradient border-none py-[2px] dark:hover:bg-dark-primary hover:bg-primary outline-none`}>
+            <ComponentIcon name='add' size={20} descriptionClass={`text-primary group-hover:text-tertiary cursor-pointer dark:text-tertiary dark:group-hover:text-primary`} />
+            <span className={`${response && 'sm:flex hidden'} group-hover:text-tertiary w-full text-sm transition duration-500 text-primary dark:text-tertiary dark:group-hover:text-primary text-md font-semibold tracking-wider`}>
                 {translate('search.nav.buttons.create')}
             </span>
         </ComponentLink>

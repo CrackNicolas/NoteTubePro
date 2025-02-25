@@ -23,7 +23,7 @@ interface INote extends Pick<INoteBase, 'note' | 'notesSelected' | 'setNotesSele
 
 export default function ComponentNote(props: INote): Component {
     const { note, paint = false, state, notesSelected, setNotesSelected } = props;
-    const { title, description, priority, createdAt, featured } = note;
+    const { title, description, createdAt, featured } = note;
 
     const { setNote }: IContext = useAppContext();
 
@@ -82,27 +82,24 @@ export default function ComponentNote(props: INote): Component {
             }
             <div className="col-span-8 flex flex-col">
                 <span className="flex">
-                    <span className="line-clamp-1 mr-1 text-md font-normal group-hover:font-semibold tracking-wide dark:text-dark-secondary text-secondary">
+                    {(featured) && <ComponentIcon name="star-fill" size={15} descriptionClass="mt-[4px] cursor-pointer dark:text-seventh text-secondary " />}
+                    {(!featured) && <ComponentIcon name="star-half" size={15} descriptionClass="mt-[4px] cursor-pointer dark:text-seventh text-secondary " />}
+                    <span className="line-clamp-1 ml-1.5 mr-1 text-gradient text-md font-normal group-hover:font-semibold tracking-wide dark:text-dark-secondary text-secondary">
                         {title}
                     </span>
-                    {(priority === translate('notes.form.items.priority.text_1')) && <ComponentIcon name="arrow" size={15} descriptionClass="sm:relative absolute sm:right-auto sm:mt-[3px] right-[22px] cursor-pointer text-red-500 rotate-[-180deg] " />}
-                    {(priority === translate('notes.form.items.priority.text_2')) && <ComponentIcon name="arrow" size={15} descriptionClass="sm:relative absolute sm:right-auto sm:mt-[3px] right-[22px] cursor-pointer text-yellow-500 rotate-[-180deg] " />}
-                    {(priority === translate('notes.form.items.priority.text_3')) && <ComponentIcon name="arrow" size={15} descriptionClass="sm:relative absolute sm:right-auto sm:mt-[3px] right-[22px] cursor-pointer text-green-500 " />}
-                    {(featured) && <ComponentIcon name="star-fill" size={15} descriptionClass="sm:relative absolute sm:right-auto sm:mt-[3px] right-[5px] cursor-pointer dark:text-dark-fifth text-fifth " />}
-                    {(!featured) && <ComponentIcon name="star-half" size={15} descriptionClass="sm:relative absolute sm:right-auto sm:mt-[3px] right-[5px] cursor-pointer dark:text-dark-fifth text-fifth " />}
                 </span>
-                <p className="line-clamp-1 text-sm dark:text-dark-tertiary dark:opacity-90 text-tertiary opacity-50">
+                <p className="line-clamp-1 text-sm dark:text-dark-tertiary dark:opacity-100 text-tertiary opacity-50">
                     {description}
                 </p>
-                <h6 title={translate('notes.form.note.time_elapsed')} className="sm:visible invisible absolute right-3 dark:text-dark-tertiary dark:opacity-90 text-tertiary text-[11px] opacity-50">
-                    {translateLastTime({lastTime: timeElapsed(createdAt), translate})}
+                <h6 title={translate('notes.form.note.time_elapsed')} className="sm:visible invisible absolute right-3 dark:text-dark-tertiary dark:opacity-100 text-tertiary text-[11px] opacity-50">
+                    {translateLastTime({ lastTime: timeElapsed(createdAt), translate })}
                 </h6>
             </div>
             <div className="col-span-1 flex flex-col items-end justify-end">
                 {
                     !state && (
                         <button onClick={(event) => redirect(event)} type="button" title={translate('notes.form.note.button')} className="outline-none border-none">
-                            <ComponentIcon name="update" size={18} descriptionClass="dark:text-dark-fifth text-fifth dark:hover:text-dark-secondary hover:text-secondary cursor-pointer" />
+                            <ComponentIcon name="update" size={18} descriptionClass="dark:text-dark-fifth text-fifth dark:text-seventh hover:text-secondary cursor-pointer" />
                         </button>
                     )
                 }

@@ -50,6 +50,7 @@ export default function Provider({ children }: ILayouts): Component {
             await httpRequest({ type: 'PUT', url: "/api/private/sessions", body: { id: session.id, status: false } });
             setSession({});
             router.push(APP_ROUTES.init);
+            localStorage.removeItem("confetti");
         }
 
         if (isSignedIn && user.fullName) {
