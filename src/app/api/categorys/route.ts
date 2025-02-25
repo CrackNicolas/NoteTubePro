@@ -12,10 +12,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return handleApiRequest({
         cookies: req.cookies,
         processRequest: async (userId: string): Promise<PropsResponse> => {
-            const categoryExists = await Category.exists({ "use.userId": userId });
+            const categoryExists = await Category.exists({});
 
             if (!categoryExists) {
-                await Category.insertMany([  //insertMany es mas rrapido que usar create debido a que insertMany hace una sola consolta por lote
+                await Category.insertMany([
                     { title: 'Proyecto', use: [{ value: true, userId }], icon: 'proyects' },
                     { title: 'Trabajo', use: [{ value: true, userId }], icon: 'briefcase' },
                     { title: 'Inversion', use: [{ value: true, userId }], icon: 'investment' },
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     { title: 'Peliculas', use: [{ value: true, userId }], icon: 'film' },
                     { title: 'Musicas', use: [{ value: true, userId }], icon: 'music' },
                     { title: 'Otros', use: [{ value: true, userId }], icon: 'others' }
-                ]);
+                ], { ordered: false });
             }
 
             await Category.updateMany(

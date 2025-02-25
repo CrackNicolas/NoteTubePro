@@ -139,7 +139,6 @@ export default function ComponentSearch(): Component {
             dates: (selectDate !== translate('search.toggle.selects.date.default')) ? selectDate : undefined,
             featured: (selectFeatured !== translate('search.toggle.selects.highlight')) ? (selectFeatured === 'SI') : undefined,
         }
-        console.log(criteria)
         setSearch(JSON.stringify(criteria));
     }, [title, selectCategory, selectPriority, selectDate, selectFeatured])
 
