@@ -9,7 +9,7 @@ export default function manifest(): Manifest {
         start_url: "/",
         name: "NoteTube",
         short_name: "NoteTube",
-        description: "Aplicacion para crear notas",
+        description: "Aplicación de notas para organizar y gestionar tu información de forma eficiente.",
         icons: [
             {
                 src: "/images/logo.png",

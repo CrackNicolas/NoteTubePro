@@ -1,9 +1,12 @@
+import dynamic from 'next/dynamic'
+
 import { Roboto } from 'next/font/google'
 import { Metadata } from 'next/types'
 
 import Provider from '@/context/provider'
 import ClientOnly from '@/client/only'
-import ComponentTemplateClerkProvider from '@/frontend/components/services/provider'
+
+const ComponentTemplateClerkProvider = dynamic(() => import('@/frontend/components/services/provider'), { ssr: false });
 
 import ILayouts from '@/frontend/interfaces/layouts'
 
@@ -15,6 +18,7 @@ import './globals.css'
 const roboto = Roboto({
 	weight: '400',
 	subsets: ['latin'],
+	display: 'swap' //Evita que la fuente bloqueé el renderizado inicial
 })
 
 export const metadata: Metadata = {
