@@ -25,7 +25,7 @@ export default function ComponentTemplateClerkProvider({ children }: ILayouts): 
     }
 
     return (
-        <ClerkProvider localization={localization}>
+        <ClerkProvider localization={localization} dynamic>
             <Suspense fallback={<ComponentLoad />} >
                 {children}
             </Suspense>
