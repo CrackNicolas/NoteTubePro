@@ -58,7 +58,7 @@ export default function ComponentNavTop(props: IContext): Component {
                             withoutLoggingIN ?
                                 <ComponentLink url={APP_ROUTES.signIn} title={translate('menu.top.buttons.login')} descriptionClass="group dark:bg-custom-gradient dark:border-transparent border dark:border-dark-tertiary border-tertiary hover:border-secondary border-[0.1px] pl-2 pr-2.5 rounded-md flex py-[3px] flex items-center gap-x-1 outline-none transition duration-500">
                                     <ComponentIcon name="user" size={17} descriptionClass="dark:text-primary dark:group-hover:text-tertiary group-hover:text-secondary dark:text-dark-tertiary text-tertiary cursor-pointer" />
-                                    <span className="dark:text-primary dark:group-hover:text-tertiary  group-hover:text-secondary text-sm dark:font-semibold tracking-wider text-tertiary duration-500">
+                                    <span className="whitespace-nowrap dark:text-primary dark:group-hover:text-tertiary  group-hover:text-secondary text-sm dark:font-semibold tracking-wider text-tertiary duration-500">
                                         {translate('menu.top.buttons.login')}
                                     </span>
                                 </ComponentLink>
