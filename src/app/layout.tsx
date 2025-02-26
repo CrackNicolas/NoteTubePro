@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic'
+import Head from 'next/head';
 
 import { Roboto } from 'next/font/google'
 import { Metadata } from 'next/types'
@@ -10,7 +11,6 @@ const ComponentTemplateClerkProvider = dynamic(() => import('@/frontend/componen
 import ILayouts from '@/frontend/interfaces/layouts'
 
 import { Component } from '@/frontend/types/component'
-import { Languages } from '@/shared/enums/languages'
 
 import './globals.css'
 
@@ -37,10 +37,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: ILayouts): Component {
 	return (
-		<html lang={Languages.SPANISH} >
-			<head>
+		<html>
+			<Head>
 				<meta name="theme-color" content="#00ffff" />
-			</head>
+			</Head>
 			<body className={roboto.className}>
 				<ClientOnly>
 					<ComponentTemplateClerkProvider>
