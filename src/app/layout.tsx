@@ -3,9 +3,8 @@ import dynamic from 'next/dynamic'
 import { Roboto } from 'next/font/google'
 import { Metadata } from 'next/types'
 
-import Provider from '@/context/provider'
-import ClientOnly from '@/client/only'
-
+const Provider = dynamic(() => import('@/context/provider'), { ssr: false });
+const ClientOnly = dynamic(() => import('@/client/only'), { ssr: false });
 const ComponentTemplateClerkProvider = dynamic(() => import('@/frontend/components/services/provider'), { ssr: false });
 
 import ILayouts from '@/frontend/interfaces/layouts'
