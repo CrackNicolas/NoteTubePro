@@ -9,11 +9,22 @@ const config: Config = {
 	darkMode: 'class',
 	theme: {
 		extend: {
+			keyframes: {
+				loader_animate: {
+					"0%": { transform: "scale(1) rotate(360deg)" },
+					"50%": { transform: "scale(0.7) rotate(-360deg)" },
+					"100%": { transform: "scale(1) rotate(360deg)" },
+				},
+			},
+			animation: {
+				loader: "loader_animate 3s infinite linear",
+			},
 			screens: {
 				sz: '1400px'
 			},
 			boxShadow: {
-				'sm': '0 0 7px 0px'
+				'sm': '0 0 7px 0px',
+				'glow-blue': '0 0 25px 12px rgba(0, 123, 255, 0.7)'
 			},
 			backgroundImage: {
 				'custom-gradient': 'linear-gradient(to right, #3B82F6, #10B981)',
