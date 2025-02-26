@@ -151,8 +151,8 @@ export default function ComponentContainerForm(props: IContainerForm): Component
 
         if (noteSelected?.file?.id) {
             setViewFile(noteSelected?.file?.url)
-            setMessageImage({ paint: true, value: translate('notes.form.items.image.title.exito') });
         }
+        setMessageImage({ paint: true, value: (noteSelected?.file?.id || file) ? translate('notes.form.items.image.title.exito') : translate('notes.form.items.image.title.init') });
 
         if (noteSelected?.category) {
             setCategorySelected(noteSelected.category);
@@ -160,8 +160,8 @@ export default function ComponentContainerForm(props: IContainerForm): Component
     }
 
     useEffect(() => window.scroll(0, 0), []);
-    useEffect(() => reload(), [translate('notes.form.items.image.title.init')]);
-    useEffect(() => reload(), [noteSelected, reset, setCategorySelected, setValue])
+    useEffect(() => reload(), [translate('notes.form.items.image.title')]);
+    useEffect(() => reload(), [noteSelected, reset, setCategorySelected, setValue]);
 
     return (
         <div className={`flex flex-col mt-[-23px] gap-y-2 w-full sm:w-[500px] mb-10 sm:mb-0 mx-auto`}>
