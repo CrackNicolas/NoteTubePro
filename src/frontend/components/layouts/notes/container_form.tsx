@@ -123,11 +123,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                 form.set('conditionFile', JSON.stringify(ConditionFile.MODIFY));
             }
             if (noteSelected?.file?.id && !file) {
-                if (confirmationDeleteFile) {
-                    form.set('conditionFile', JSON.stringify(ConditionFile.DELETE));
-                } else {
-                    form.set('conditionFile', JSON.stringify(ConditionFile.NOT_EDIT));
-                }
+                form.set('conditionFile', JSON.stringify(confirmationDeleteFile ? ConditionFile.DELETE : ConditionFile.NOT_EDIT));
             }
 
             form.set('_id', noteSelected._id as string);
@@ -145,15 +141,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
         }
     }
 
-    useEffect(() => {
-        window.scroll(0, 0);
-    }, []);
-
-    useEffect(() => {
-        setMessageImage(prev => ({ ...prev, value: translate('notes.form.items.image.title.init') }));
-    }, [translate('notes.form.items.image.title.init')]);
-
-    useEffect(() => {
+    const reload = (): void => {
         reset();
         setValue('title', noteSelected?.title);
         setValue('description', noteSelected?.description);
@@ -169,7 +157,11 @@ export default function ComponentContainerForm(props: IContainerForm): Component
         if (noteSelected?.category) {
             setCategorySelected(noteSelected.category);
         }
-    }, [noteSelected, reset, setCategorySelected, setValue])
+    }
+
+    useEffect(() => window.scroll(0, 0), []);
+    useEffect(() => reload(), [translate('notes.form.items.image.title.init')]);
+    useEffect(() => reload(), [noteSelected, reset, setCategorySelected, setValue])
 
     return (
         <div className={`flex flex-col mt-[-23px] gap-y-2 w-full sm:w-[500px] mb-10 sm:mb-0 mx-auto`}>
