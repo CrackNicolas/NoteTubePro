@@ -18,11 +18,11 @@
         },
         "top": {
             "user": "User",
-            "buttons":{
-                "login":  "Login",
+            "buttons": {
+                "login": "Login",
                 "translate": {
                     "title": "Translator",
-                    "options":{
+                    "options": {
                         "spanish": "Spanish ",
                         "english": "English"
                     }
@@ -241,6 +241,15 @@
                 "close": "Close menu"
             },
             "selects": {
+                "order": {
+                    "default": "Sort by",
+                    "options": {
+                        "a-z": "A-Z",
+                        "z-a": "Z-A",
+                        "más recientes": "Most recent",
+                        "más antigua": "Oldest"
+                    }
+                },
                 "date": {
                     "default": "Date",
                     "options": {

@@ -22,7 +22,7 @@
                 "login": "Iniciar sesion",
                 "translate": {
                     "title": "Traductor",
-                    "options":{
+                    "options": {
                         "spanish": "Español",
                         "english": "Ingles"
                     }
@@ -241,6 +241,15 @@
                 "close": "Cerrar menu"
             },
             "selects": {
+                "order": {
+                    "default": "Ordenar por",
+                    "options": {
+                        "a-z": "A-Z",
+                        "z-a": "Z-A",
+                        "más recientes": "Más recientes",
+                        "más antigua": "Más antigua"
+                    }
+                },
                 "date": {
                     "default": "Fecha",
                     "options": {

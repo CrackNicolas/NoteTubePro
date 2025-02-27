@@ -88,7 +88,7 @@ export default function ComponentSelect(props: ISelect): Component {
     }, [selectCategory.title, setValue]);
 
     return (
-        <div ref={refSelect} className='relative flex w-full'>
+        <div ref={refSelect} className='relative flex flex-col w-full'>
             {
                 (categorys.length === 0) ?
                     <div title={translate('loading.messages.categories')} className={`flex justify-between items-center w-full py-1 px-2 ${style.border} border-[0.1px] border-opacity-50 rounded-md`}>
@@ -105,7 +105,7 @@ export default function ComponentSelect(props: ISelect): Component {
                             </span>
                             <ComponentIcon name={openCategory ? 'caret-up' : 'caret-down'} size={20} descriptionClass={`${optionSelected && 'dark:text-tertiary text-tertiary'} ${!error ? style.text : 'dark:text-dark-error text-error'} cursor-pointer`} />
                         </div>
-                        <ul ref={list} title={translate('categories.list')} className={`${(!openCategory) && 'hidden'} absolute z-10 mt-[32px] w-full ${(categorys.length >= 4) && `h-[${categorys.length * 37}px]`} dark:bg-dark-primary bg-primary border-[0.1px] ${!error ? `${style.border} scroll-select` : 'dark:border-dark-error border-error scroll-select-error'} rounded-b-md border-opacity-50 overflow-hidden`}>
+                        <ul ref={list} title={translate('categories.list')} className={`${(!openCategory) ? 'max-h-0 ':'max-h-64 border-[0.1px]' } overflow-hidden transition-all ease-in-out duration-300 mt-[-1px] z-10 w-full dark:bg-dark-primary bg-primary ${!error ? `${style.border} scroll-select` : 'dark:border-dark-error border-error scroll-select-error'} rounded-b-md border-opacity-50 overflow-hidden`}>
                             {
                                 categorys.filter((category: PropsCategory) => category.title != selectCategory.title).map((category: PropsCategory) => {
                                     return (

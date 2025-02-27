@@ -84,7 +84,7 @@ export default function ComponentNote(props: INote): Component {
                 <span className="flex">
                     {(featured) && <ComponentIcon name="star-fill" size={15} descriptionClass="mt-[4px] cursor-pointer dark:text-seventh text-secondary " />}
                     {(!featured) && <ComponentIcon name="star-half" size={15} descriptionClass="mt-[4px] cursor-pointer dark:text-seventh text-secondary " />}
-                    <span className="line-clamp-1 ml-1.5 mr-1 text-gradient text-md font-normal group-hover:font-semibold tracking-wide dark:text-dark-secondary text-secondary">
+                    <span className="line-clamp-1 ml-1.5 sm:w-[calc(100%-150px)] text-gradient text-md font-normal group-hover:font-semibold tracking-wide dark:text-dark-secondary text-secondary">
                         {title}
                     </span>
                 </span>

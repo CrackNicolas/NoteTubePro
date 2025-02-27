@@ -10,7 +10,8 @@ import useMouseDown from "@/frontend/hooks/mousedown";
 import { PropsResponse } from "@/shared/types/response";
 import { PropsCategory } from "@/context/types/category";
 import { PropsDeleteNote, PropsNote } from "@/context/types/note";
-import { PropsLoadingNotes, PropsParamsSearch } from "@/frontend/types/props";
+import { PropsLoadingNotes } from "@/frontend/types/props";
+import { PropsParamsSearch } from "@/shared/types/search"
 
 import IContext from "@/context/interfaces/context";
 import useAppContext from "@/context/hooks/context";
@@ -19,6 +20,7 @@ import useAppTranslation from "@/shared/hooks/translation";
 import { httpRequest } from "@/shared/logic/requests";
 
 import { ValueDate } from "@/shared/enums/note/date";
+import { ValueOrder } from "@/shared/enums/note/order";
 import { ValueBoolean } from "@/frontend/enums/boolean";
 import { ValuePriority } from "@/shared/enums/note/priority";
 import { StatusSearchNote } from "@/frontend/enums/note/search/search";
@@ -54,6 +56,7 @@ export default function ComponentSearch(): Component {
     const [listNotes, setListNotes] = useState<PropsNote[]>([]);
     const [selectDate, setSelectDate] = useState<string | undefined>(translate('search.toggle.selects.date.default'));
     const [viewFilter, setViewFilter] = useState<boolean>(false);
+    const [selectOrder, setSelectOrder] = useState<string | undefined>(translate('search.toggle.selects.order.default'));
     const [stateSelect, setStateSelect] = useState<boolean>(false);
     const [loadingNotes, setLoadingNotes] = useState<PropsLoadingNotes>();
     const [notesSelected, setNotesSelected] = useState<PropsDeleteNote[]>([]);
@@ -78,6 +81,7 @@ export default function ComponentSearch(): Component {
     useMouseDown({ action: handleClickOutside });
 
     const restart = (): void => {
+        setSelectOrder(translate('search.toggle.selects.order.default'));
         setSelectCategory({ title: translate('search.toggle.selects.category') });
         setSelectPriority(translate('search.toggle.selects.priority'));
         setSelectFeatured(translate('search.toggle.selects.highlight'));
@@ -133,6 +137,7 @@ export default function ComponentSearch(): Component {
 
     const listenToChanges = useCallback(async (): Promise<void> => {
         const criteria: PropsParamsSearch = {
+            order: (selectOrder !== translate('search.toggle.selects.order.default')) ? selectOrder : undefined,
             title: (title !== '') ? title : undefined,
             category: (selectCategory.title !== translate('search.toggle.selects.category')) ? selectCategory : undefined,
             priority: (selectPriority !== translate('search.toggle.selects.priority')) ? selectPriority : undefined,
@@ -140,7 +145,7 @@ export default function ComponentSearch(): Component {
             featured: (selectFeatured !== translate('search.toggle.selects.highlight')) ? (selectFeatured === 'SI') : undefined,
         }
         setSearch(JSON.stringify(criteria));
-    }, [title, selectCategory, selectPriority, selectDate, selectFeatured])
+    }, [selectOrder, title, selectCategory, selectPriority, selectDate, selectFeatured])
 
     const deleteNotes = async (): Promise<void> => {
         setLoadingMessage(true);
@@ -237,7 +242,7 @@ export default function ComponentSearch(): Component {
                     setNotesSelected={setNotesSelected}
                     descriptionClass={`transition-width ${viewFilter ? 'w-full sz:w-full md:w-[calc(100%-175px)]' : 'w-full'}`}
                 />
-                <div ref={refNavToggle} className={`fixed min-h-screen top-0 flex flex-col justify-between toggle-search ${viewFilter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-dark-primary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2`}>
+                <div ref={refNavToggle} className={`fixed top-0 flex min-h-screen flex-col justify-between toggle-search ${viewFilter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-dark-primary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2`}>
                     <div className="flex flex-col">
                         <div className="flex justify-between items-center pb-1 border-b-[3px] rounded-md border-opacity-50 dark:border-seventh border-secondary w-full">
                             <h4 className="text-gradient tracking-wider font-semibold">
@@ -256,6 +261,19 @@ export default function ComponentSearch(): Component {
                         <div className="relative flex flex-col gap-y-3 py-3 w-full">
                             {stateSelect && <ComponentInputSearch value={watch('title')} setValue={setValue} design={stateSelect} />}
                             <ComponentSelectStatic
+                                ruteTranslate="search.toggle.selects.order"
+                                title={translate('search.toggle.selects.order.default')}
+                                select={selectOrder}
+                                setSelect={setSelectOrder}
+                                items={[
+                                    { value: ValueOrder.UPWARD, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } },
+                                    { value: ValueOrder.DESCENDING, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } },
+                                    { value: ValueOrder.MOST_RECENT, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } },
+                                    { value: ValueOrder.LEAST_RECENT, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } }
+                                ]}
+                                style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
+                            />
+                            <ComponentSelectStatic
                                 ruteTranslate="search.toggle.selects.date"
                                 title={translate('search.toggle.selects.date.default')}
                                 select={selectDate}
@@ -267,6 +285,12 @@ export default function ComponentSearch(): Component {
                                     { value: ValueDate.AGO_1_MONTH, icon: { name: 'date', class: 'dark:text-dark-fifth text-fifth' } }
                                 ]}
                                 style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
+                            />
+                            <ComponentSelectDynamic
+                                selectCategory={selectCategory}
+                                setSelectCategory={setSelectCategory}
+                                register={register}
+                                style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth' }}
                             />
                             <ComponentSelectStatic
                                 ruteTranslate="notes.form.items.priority"
@@ -290,12 +314,6 @@ export default function ComponentSearch(): Component {
                                     { value: ValueBoolean.NOT, icon: { name: 'star-half', class: 'dark:text-dark-fifth text-fifth' } }
                                 ]}
                                 style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
-                            />
-                            <ComponentSelectDynamic
-                                selectCategory={selectCategory}
-                                setSelectCategory={setSelectCategory}
-                                register={register}
-                                style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth' }}
                             />
                         </div>
                     </div>

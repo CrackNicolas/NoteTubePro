@@ -1,9 +1,8 @@
 import { ValueDate } from "@/shared/enums/note/date";
+import { PropsParamsSearch } from "@/shared/types/search";
 
-export function query(userId: string, segment: string): object {
-    if (!segment) return { userId: userId };
-
-    const criteria = JSON.parse(segment);
+export function query(userId: string, criteria: PropsParamsSearch): object {
+    if (!criteria) return { userId: userId };
 
     let date: { $gte?: string, $lt?: string } | undefined = {};
 

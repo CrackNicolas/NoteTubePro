@@ -1,7 +1,3 @@
-export type PropsParamsSearch = {
-    [key: string]: any
-}
-
 export type PropsItemsSelect = {
     value: string,
     icon: {
