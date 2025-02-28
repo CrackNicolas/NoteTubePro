@@ -42,7 +42,7 @@ export default function ComponentHome(): Component {
 
     return (
         <ComponentMotion type="article" descriptionClass={`${opacity && "opacity-40"} overflow-x-hidden flex flex-col min-h-screen justify-between relative w-full px-1 sm:px-6 lg:px-8 pb-16 sm:pb-5`} >
-            {confetti && <Confetti width={1100} height={1100} className="w-full h-full" numberOfPieces={600} />}
+            {confetti && <Confetti className="w-full h-full" />}
             <ComponentHeaderHome title={`${translate('home.title')}, ${session.value.user.name.split(' ')[0]}!`} subtitle={translate('home.subtitle')} />
             <ComponentMainHome />
             <ComponentTestimoniesHome />

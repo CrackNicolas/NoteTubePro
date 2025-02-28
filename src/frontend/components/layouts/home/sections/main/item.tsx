@@ -11,9 +11,9 @@ export default function ComponentItemMainHome(props: IItemMainHome): Component {
     const { icon, title, subtitle } = props;
 
     return (
-        <ComponentMotion type="div" descriptionClass="flex flex-col items-center p-3 md:p-5 rounded-lg bg-gradient-to-r from-primary dark:from-dark-primary from-95% to-secondary dark:to-dark-secondary to-2% shadow-sm shadow-secondary dark:shadow-dark-secondary">
+        <ComponentMotion type="div" descriptionClass="flex flex-col items-center py-3 pl-3 pr-6 md:py-5 md:pl-5 md:pr-8 rounded-lg bg-gradient-to-r from-primary dark:from-dark-primary from-95% to-secondary dark:to-dark-secondary to-2% shadow-sm shadow-secondary dark:shadow-dark-secondary">
             {icon}
-            <h3 className="text-lg sm:text-xl font-semibold md:mb-2 text-gradient">
+            <h3 className="text-lg text-center sm:text-xl font-semibold md:mb-2 text-gradient">
                 {title}
             </h3>
             <p className="text-center opacity-70 text-tertiary dark:text-dark-tertiary">

@@ -58,7 +58,7 @@ export default function ComponentSearch(): Component {
     const [viewFilter, setViewFilter] = useState<boolean>(false);
     const [selectOrder, setSelectOrder] = useState<string | undefined>(translate('search.toggle.selects.order.default'));
     const [stateSelect, setStateSelect] = useState<boolean>(false);
-    const [loadingNotes, setLoadingNotes] = useState<PropsLoadingNotes>();
+    const [loadingNotes, setLoadingNotes] = useState<PropsLoadingNotes>({ value: false, icon: '', description: '', button: false });
     const [notesSelected, setNotesSelected] = useState<PropsDeleteNote[]>([]);
     const [loadingMessage, setLoadingMessage] = useState<boolean>(false);
     const [selectCategory, setSelectCategory] = useState<PropsCategory>({ title: translate('search.toggle.selects.category') });
@@ -81,6 +81,10 @@ export default function ComponentSearch(): Component {
     useMouseDown({ action: handleClickOutside });
 
     const restart = (): void => {
+        setLoadingNotes(prev => ({
+            ...(prev || { value: false, icon: '', description: '', button: false }),
+            description: translate('search.messages.text_1')
+        }));
         setSelectOrder(translate('search.toggle.selects.order.default'));
         setSelectCategory({ title: translate('search.toggle.selects.category') });
         setSelectPriority(translate('search.toggle.selects.priority'));

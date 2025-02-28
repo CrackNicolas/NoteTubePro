@@ -96,7 +96,7 @@
             },
             "category_management": {
                 "title": "Category Management",
-                "description": "Create, edit, delete and view categories with ease."
+                "description": "Easily enable and disable note categories based on your preference."
             }
         }
     },

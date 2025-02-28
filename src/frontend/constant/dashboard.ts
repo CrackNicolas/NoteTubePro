@@ -14,15 +14,15 @@ export const ItemsMain: PropsItemsDashboard[] = [
         nameTranslate: "create_note"
     },
     {
+        url: APP_ROUTES.notes.search,
+        icon: "list",
+        nameTranslate: "list_notes"
+    },
+    {
         url: APP_ROUTES.dashboard.config,
         icon: "setting",
         nameTranslate: "note_settings"
     },
-    {
-        url: APP_ROUTES.notes.search,
-        icon: "list",
-        nameTranslate: "list_notes"
-    }
 ]
 export const ItemsConfig: PropsItemsDashboard[] = [
     {

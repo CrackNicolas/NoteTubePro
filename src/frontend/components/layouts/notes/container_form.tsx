@@ -164,7 +164,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
     useEffect(() => reload(), [noteSelected, reset, setCategorySelected, setValue]);
 
     return (
-        <div className={`flex flex-col mt-[-23px] gap-y-2 w-full sm:w-[500px] mb-10 sm:mb-0 mx-auto`}>
+        <div className={`flex flex-col mt-[-23px] gap-y-2 w-full sm:w-[470px] mb-10 sm:mb-0 mx-auto`}>
             <div className="relative flex justify-center items-center">
                 {(!noteSelected) && <ComponentButtonGoBack onClick={() => setCategorySelected(undefined)} descriptionClass="left-0 p-1" />}
                 <span title={translate('notes.form.title.details')} className="text-2xl text-gradient font-semibold text-center tracking-wider">
