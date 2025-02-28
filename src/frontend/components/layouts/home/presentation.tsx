@@ -20,11 +20,11 @@ export default function ComponentPresentationHeader(props: IPresentationHeader):
     return (
         <Fragment>
             <ComponentIcon testid="icon-home" name="logo-fill" size={70} descriptionClass="text-secondary text-opacity-60 dark:text-seventh" />
-            <div className="flex flex-col sm:gap-y-2">
-                <h1 className="text-gradient text-center font-bold tracking-wider dark:text-dark-tertiary text-tertiary text-2xl sm:text-6xl">
+            <div className="flex flex-col items-center gap-y-1 sm:gap-y-2">
+                <h1 className="text-gradient text-center font-bold tracking-wider dark:text-dark-tertiary text-tertiary text-2xl sm:text-5xl">
                     {title}
                 </h1>
-                <p className="text-center text-md sm:text-lg leading-6 dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-80 tracking-wider">
+                <p className="text-center text-md sm:text-lg leading-6 dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-80 tracking-wider max-w-lg">
                     {subtitle}
                 </p>
             </div>
