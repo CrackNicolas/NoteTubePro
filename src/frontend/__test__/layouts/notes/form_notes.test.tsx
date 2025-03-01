@@ -284,7 +284,7 @@ describe('Componente <Form/> principal', () => {
                         placeholder="Escriba la descripcion..."
                         register={register}
                         error={validation.name}
-                        descriptionClass="border-opacity-50 bg-primary w-full rounded-md border-[0.1px] min-h-[80px] scroll py-1.5 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
+                        descriptionClass="border-opacity-50 bg-primary w-full rounded-md border-[0.1px] min-h-[80px] py-1.5 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
                     />)
                     const inputDescription = getByPlaceholderText('Escriba la descripcion...');
                     expect(inputDescription).toHaveClass('border-error text-error placeholder:text-error');

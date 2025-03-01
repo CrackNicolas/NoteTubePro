@@ -56,13 +56,13 @@ export default function ComponentSelect(props: ISelect): Component {
 
     return (
         <div ref={refSelect} className='relative flex flex-col w-full'>
-            <div title={title} onClick={() => setOpen(!open)} className={`flex justify-between items-center dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] ${open && 'rounded-b-none'} ${optionSelected && 'bg-custom-gradient border-primary text-tertiary'} ${style.border} border-opacity-50 py-1 px-2 cursor-pointer`}>
+            <div title={title} onClick={() => setOpen(!open)} className={`flex justify-between items-center dark:bg-tertiary bg-primary w-full rounded-md border-[0.1px] ${open && 'rounded-b-none'} ${optionSelected && 'bg-custom-gradient border-primary text-tertiary'} ${style.border} border-opacity-50 py-1 px-2 cursor-pointer`}>
                 <span className={`${optionSelected && 'dark:text-tertiary text-tertiary'} ${style.text} text-md`}>
                     {translateValue(select)}
                 </span>
                 <ComponentIcon name={open ? 'caret-up' : 'caret-down'} size={20} descriptionClass={`${optionSelected && 'dark:text-tertiary text-tertiary'} ${style?.text} cursor-pointer`} />
             </div>
-            <ul ref={list} className={`${(!open)? 'max-h-0 ':'max-h-64 border-[0.1px]'} overflow-hidden transition-all ease-in-out duration-300 mt-[-1px] flex flex-col z-10 w-full dark:bg-dark-primary bg-primary ${style.border} rounded-b-md border-opacity-50`}>
+            <ul ref={list} className={`${(!open)? 'max-h-0 ':'max-h-64 border-[0.1px]'} overflow-hidden transition-all ease-in-out duration-300 mt-[-1px] flex flex-col z-10 w-full dark:bg-tertiary bg-primary ${style.border} rounded-b-md border-opacity-50`}>
                 {
                     select != title && (
                         <li onClick={() => selectedItem(title)} className="group flex justify-between dark:hover:bg-dark-secondary hover:bg-secondary items-center px-2 py-1 cursor-pointer hover:font-semibold">

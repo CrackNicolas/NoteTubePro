@@ -189,7 +189,7 @@ export default function ComponentSearch(): Component {
     return (
         <article className={`${opacity && 'opacity-50'} relative min-h-screen 2xl:px-0 sm:pl-5 flex flex-col gap-5 pt-[54px]`}>
             <article className="fixed max-w-7xl w-full mt-[3px] z-40">
-                <article className={`${viewFilter && 'sz:w-[calc(100%-80px)] md:w-[calc(100%-275px)]'} 2xl:w-[calc(100%-80px)] sm:w-[calc(100%-100px)] w-[calc(100%-25px)] pb-3 z-50 flex gap-y-6 gap-x-3 justify-between items-center dark:bg-dark-primary bg-primary transition-width`}>
+                <article className={`${viewFilter && 'sz:w-[calc(100%-80px)] md:w-[calc(100%-275px)]'} 2xl:w-[calc(100%-80px)] sm:w-[calc(100%-100px)] w-[calc(100%-25px)] pb-3 z-50 flex gap-y-6 gap-x-3 justify-between items-center dark:bg-tertiary bg-primary transition-width`}>
                     {
                         stateSelect ?
                             <div className="flex gap-x-3">
@@ -246,7 +246,7 @@ export default function ComponentSearch(): Component {
                     setNotesSelected={setNotesSelected}
                     descriptionClass={`transition-width ${viewFilter ? 'w-full sz:w-full md:w-[calc(100%-175px)]' : 'w-full'}`}
                 />
-                <div ref={refNavToggle} className={`fixed top-0 flex min-h-screen flex-col justify-between toggle-search ${viewFilter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-dark-primary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2`}>
+                <div ref={refNavToggle} className={`fixed top-0 flex min-h-screen flex-col justify-between toggle-search ${viewFilter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-tertiary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2`}>
                     <div className="flex flex-col">
                         <div className="flex justify-between items-center pb-1 border-b-[3px] rounded-md border-opacity-50 dark:border-seventh border-secondary w-full">
                             <h4 className="text-gradient tracking-wider font-semibold">

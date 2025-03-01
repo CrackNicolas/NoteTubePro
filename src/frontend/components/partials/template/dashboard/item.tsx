@@ -33,7 +33,7 @@ export default function ComponentItem({ props }: IItem): Component {
 	}, [url, translate('dashboard.details.default')])
 
 	return (
-		<ComponentLink url={url} onClick={() => view()} title={translate(`dashboard.sections.${nameTranslate}.title`)} descriptionClass="group flex w-full flex-col items-start justify-between dark:bg-dark-sixth bg-sixth sm:px-4 px-3 py-3 cursor-pointer dark:shadow-xl rounded-md hover:shadow-sm hover:shadow-secondary transition duration-700" onMouseOver={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
+		<ComponentLink url={url} onClick={() => view()} title={translate(`dashboard.sections.${nameTranslate}.title`)} descriptionClass="group flex w-full flex-col items-start justify-between dark:bg-dark-sixth bg-sixth sm:px-4 px-3 py-3 cursor-pointer dark:shadow-xl dark:border-[1px] dark:border-room dark:border-opacity-10 rounded-md hover:shadow-sm hover:shadow-secondary transition duration-700" onMouseOver={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
 			<div className="flex items-center justify-between w-full gap-x-4 text-xs pr-1">
 				<h6 className="dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-50 hover:opacity-100 transition duration-700">
 					{translateLastTime({lastTime: lastTime.replace('Creada', 'Ultima vez'), translate})}

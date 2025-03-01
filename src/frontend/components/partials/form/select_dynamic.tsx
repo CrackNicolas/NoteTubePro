@@ -99,13 +99,13 @@ export default function ComponentSelect(props: ISelect): Component {
                     </div>
                     :
                     <Fragment>
-                        <div title={translate('categories.default')} onClick={() => setOpenCategory(!openCategory)} {...register('category')} className={`flex justify-between items-center dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] ${openCategory && 'rounded-b-none'} ${optionSelected && 'bg-custom-gradient text-tertiary border-primary'} ${!error ? style.border : 'dark:border-dark-error border-error'} dark:border-opacity-100 border-opacity-50 py-1 px-2 cursor-pointer`}>
+                        <div title={translate('categories.default')} onClick={() => setOpenCategory(!openCategory)} {...register('category')} className={`flex justify-between items-center dark:bg-tertiary bg-primary w-full rounded-md border-[0.1px] ${openCategory && 'rounded-b-none'} ${optionSelected && 'bg-custom-gradient text-tertiary border-primary'} ${!error ? style.border : 'dark:border-dark-error border-error'} dark:border-opacity-100 border-opacity-50 py-1 px-2 cursor-pointer`}>
                             <span title={translate('categories.select')} className={`${optionSelected && 'dark:text-tertiary text-tertiary'} ${!error ? style.text : 'dark:text-dark-error text-error'} text-md transition duration-500`}>
                                 {translateName(selectCategory)}
                             </span>
                             <ComponentIcon name={openCategory ? 'caret-up' : 'caret-down'} size={20} descriptionClass={`${optionSelected && 'dark:text-tertiary text-tertiary'} ${!error ? style.text : 'dark:text-dark-error text-error'} cursor-pointer`} />
                         </div>
-                        <ul ref={list} title={translate('categories.list')} className={`${(!openCategory) ? 'max-h-0 ':'max-h-64 border-[0.1px]' } overflow-hidden transition-all ease-in-out duration-300 mt-[-1px] z-10 w-full dark:bg-dark-primary bg-primary ${!error ? `${style.border} scroll-select` : 'dark:border-dark-error border-error scroll-select-error'} rounded-b-md border-opacity-50 overflow-hidden`}>
+                        <ul ref={list} title={translate('categories.list')} className={`${(!openCategory) ? 'max-h-0 ':'max-h-64 border-[0.1px]' } overflow-hidden transition-all ease-in-out duration-300 mt-[-1px] z-10 w-full dark:bg-tertiary bg-primary ${!error ? `${style.border}` : 'dark:border-dark-error border-error'} rounded-b-md border-opacity-50 overflow-hidden`}>
                             {
                                 categorys.filter((category: PropsCategory) => category.title != selectCategory.title).map((category: PropsCategory) => {
                                     return (

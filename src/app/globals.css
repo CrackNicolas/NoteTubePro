@@ -11,67 +11,34 @@ html,
 body {
   width: 100%;
   user-select: none;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
   background: theme("colors.primary");
 }
 
-.dark html,
-.dark body {
-  background: theme("colors.dark.primary"); /* Cambia esto por el color que desees para el tema oscuro */
-}
-
-body::-webkit-scrollbar,
-.scroll::-webkit-scrollbar,
-.scroll-select::-webkit-scrollbar,
-.scroll-select-error::-webkit-scrollbar,
-.scroll-text::-webkit-scrollbar {
+.dark body::-webkit-scrollbar {
   width: 6px;
+  background: theme("colors.tertiary");
 }
 
 @media (max-width: 400px) {
-  body::-webkit-scrollbar,
-  .scroll::-webkit-scrollbar,
-  .scroll-select::-webkit-scrollbar,
-  .scroll-select-error::-webkit-scrollbar,
-  .scroll-text::-webkit-scrollbar {
+  body::-webkit-scrollbar {
     width: 0px;
   }
 }
 
-body::-webkit-scrollbar-thumb,
-.scroll::-webkit-scrollbar-thumb,
-.scroll-select::-webkit-scrollbar-thumb,
-.scroll-text::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
   background: theme("colors.secondary");
 }
 
-.dark body::-webkit-scrollbar-thumb,
-.scroll::-webkit-scrollbar-thumb,
-.scroll-select::-webkit-scrollbar-thumb{
-  background: theme("colors.dark.primary");
-}
-
-.dark .scroll-text::-webkit-scrollbar-thumb {
+.dark body::-webkit-scrollbar-thumb {
   background: theme("colors.seventh");
 }
 
-body::-webkit-scrollbar-thumb:hover,
-.scroll::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb:hover {
   border-radius: 10px;
-}
-
-.scroll-select-error::-webkit-scrollbar-thumb {
-  background: theme("colors.error");
-  border-end-end-radius: 10px;
-}
-
-.scroll-select::-webkit-scrollbar-thumb {
-  border-end-end-radius: 10px;
-}
-
-.scroll-text::-webkit-scrollbar-thumb {
-  cursor: pointer;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 15px;
 }
 
 .icon-transition {
@@ -105,21 +72,14 @@ polygon {
   transition: width 0.5s ease-in-out;
 }
 
-.spinner-load {
-  border: 2.3px solid theme("colors.primary");
-  border-left-color: theme("colors.secondary");
-  box-shadow: 0 0 10px 2px theme("colors.secondary");
-  animation: animation_spinner 1s linear infinite;
-}
-
 .spinner-load-category {
   border: 5.3px solid theme("colors.primary");
   border-left-color: theme("colors.fifth");
   box-shadow: 0 0 8px 2px theme("colors.fifth");
-  animation: animation_spinner 1s linear infinite;
+  animation: animationSpinner 1s linear infinite;
 }
 
-textarea{
+textarea {
   resize: none;
 }
 
@@ -127,7 +87,7 @@ textarea{
   animation: shake 5s infinite;
 }
 
-@keyframes animation_spinner {
+@keyframes animationSpinner {
   0% {
     transform: rotate(0deg);
   }
@@ -146,10 +106,42 @@ textarea{
 }
 
 @keyframes shake {
-  0% { transform: translate(0, 0); }
-  20% { transform: translate(0px, 0px) rotate(-13deg); }
-  40% { transform: translate(0px, 185px) rotate(-10deg); }
-  60% { transform: translate(0px, 0px) rotate(-4deg); }
-  80% { transform: translate(-185px, 2px) rotate(-11deg); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(0px, 0px) rotate(-13deg);
+  }
+  40% {
+    transform: translate(0px, 185px) rotate(-10deg);
+  }
+  60% {
+    transform: translate(0px, 0px) rotate(-4deg);
+  }
+  80% {
+    transform: translate(-185px, 2px) rotate(-11deg);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes moveParticles {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(20px) translateY(-20px);
+  }
+  100% {
+    transform: translateX(-20px) translateY(20px);
+  }
+}
+
+.animated-bg {
+  background: radial-gradient(circle,theme("colors.primary") 10%,theme("colors.primary") 90%);
+}
+
+.particle {
+  animation: moveParticles 10s infinite alternate ease-in-out;
 }

@@ -13,7 +13,7 @@ export default function ComponentItemTestimoniesHome(props: IItemTestimoniesHome
     const { title, subtitle, url } = props;
 
     return (
-        <ComponentMotion type="div" descriptionClass="group relative pt-3 sm:pt-4 pb-0 px-3 bg-sixth dark:bg-dark-primary rounded-xl shadow-2xl cursor-pointer">
+        <ComponentMotion type="div" descriptionClass="group relative pt-3 sm:pt-4 pb-0 px-3 bg-sixth dark:bg-tertiary rounded-xl shadow-xl dark:border-[1px] dark:border-opacity-10 cursor-pointer">
             <div className="relative flex items-center gap-x-4 mb-6">
                 <Image src={url} alt={title} width={20} height={20} className="rounded-full w-12 h-12 object-cover sm:border-1 border-white shadow-lg" />
                 <div className="flex flex-col items-start">

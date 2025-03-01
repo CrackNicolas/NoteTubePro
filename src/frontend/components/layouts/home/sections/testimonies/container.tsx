@@ -9,7 +9,7 @@ export default function ComponentTestimoniesHome(): Component {
     const { translate } = useAppTranslation();
 
     return (
-        <ComponentMotion type="section" descriptionClass="mt-16  flex flex-col bg-primary dark:bg-dark-primary items-center bg-primary py-16">
+        <ComponentMotion type="section" descriptionClass="mt-16  flex flex-col items-center dark:bg-tertiary bg-primary py-16">
             <h2 className="text-2xl sm:text-4xl font-extrabold text-gradient">
                 {translate('home.sections.testimonies.title')}
             </h2>

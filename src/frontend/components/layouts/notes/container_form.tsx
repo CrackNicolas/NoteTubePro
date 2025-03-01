@@ -195,7 +195,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                             error={errors.description?.type}
                             register={register}
                             placeholder={`${translate('notes.form.items.description.input')}...`}
-                            descriptionClass="border-opacity-50 dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] min-h-[65px] scroll-text py-1 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
+                            descriptionClass="border-opacity-50 dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] min-h-[65px] py-1 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
                         />
                     </div>
                     <div className="flex flex-col gap-y-0.5">
