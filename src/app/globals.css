@@ -81,6 +81,7 @@ polygon {
 
 textarea {
   resize: none;
+  field-sizing: content;
 }
 
 .shaking {
