@@ -13,8 +13,8 @@ export default function ComponentButtonGoBack(props: IButtonGoBack): Component {
     const { translate } = useAppTranslation();
 
     return (
-        <span onClick={onClick} className={`absolute ${descriptionClass} dark:bg-dark-primary bg-primary rounded-full dark:hover:bg-dark-room hover:bg-room transition duration-500`} title={translate('dashboard.button')} >
-            <ComponentIcon name="return" size={22} descriptionClass="rotate-[-180deg] dark:text-dark-secondary text-secondary cursor-pointer" />
+        <span onClick={onClick} className={`absolute ${descriptionClass} bg-custom-gradient rounded-sm py-0.5 px-1.5 dark:hover:bg-dark-room hover:bg-room transition duration-500 cursor-pointer`} title={translate('dashboard.button')} >
+            <ComponentIcon name="return" size={22} descriptionClass="rotate-[-180deg] dark:text-primary text-tertiary cursor-pointer" />
         </span>
     )
 }
