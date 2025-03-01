@@ -11,6 +11,7 @@ const ComponentTemplateClerkProvider = dynamic(() => import('@/frontend/componen
 import ILayouts from '@/frontend/interfaces/layouts'
 
 import { Component } from '@/frontend/types/component'
+import { Languages } from '@/shared/enums/languages';
 
 import './globals.css'
 
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: ILayouts): Component {
 	return (
-		<html>
+		<html lang={Languages.SPANISH}>
 			<Head>
 				<meta name="theme-color" content="#00ffff" />
 			</Head>
