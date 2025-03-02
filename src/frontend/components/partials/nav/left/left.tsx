@@ -21,7 +21,7 @@ export default function ComponentNavLeft(props: INavLeft): Component {
     const { translate } = useAppTranslation();
 
     return (
-        <nav className={`${opacity && 'opacity-40'} fixed sm:min-h-screen py-1.5 sm:py-0 bottom-0 w-full sm:top-12 z-50 2xl:w-[50px] sm:w-[40px] dark:bg-tertiary bg-primary`}>
+        <nav className={`${opacity && 'opacity-40'} fixed sm:min-h-screen py-0 bottom-0 w-full sm:top-12 z-50 2xl:w-[50px] sm:w-[40px] dark:bg-tertiary bg-primary`}>
             <div className="flex sm:grid sm:place-items-center">
                 <ComponentItemNavLeft url={APP_ROUTES.home} title={translate('menu.left.home')} name="home" />
                 <ComponentItemNavLeft url={APP_ROUTES.dashboard.main} title={translate('menu.left.panel')} name="panel" />
