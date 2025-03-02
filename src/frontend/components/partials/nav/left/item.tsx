@@ -16,7 +16,7 @@ interface INavLeft extends Pick<IElement, 'title'>, Partial<Pick<IElement, 'desc
 }
 
 export default function ComponentItemNavLeft(props: INavLeft): Component {
-    const { url = '', name, title, type = TypeButtonNav.NAV, descriptionClass = 'py-0 sm:py-[10px]', onClick } = props;
+    const { url = '', name, title, type = TypeButtonNav.NAV, descriptionClass = 'pb-0 pt-1.5 sm:py-[10px]', onClick } = props;
 
     const [focus, setFocus] = useState<string>('');
 
@@ -32,15 +32,17 @@ export default function ComponentItemNavLeft(props: INavLeft): Component {
         return (focus === name) ? `${name}-fill` : name;
     }
 
-    const paintItem = (item: string): string => {
-        return (item === path) ? 'dark:text-seventh text-secondary' : 'dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-80';
+    const paint: boolean = (url === path);
+
+    const paintItem = (): string => {
+        return (paint) ? 'dark:text-seventh text-secondary' : 'dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-80';
     }
 
     return (
         <ComponentLink url={url} title={title} descriptionClass="w-full" onClick={onClick} onMouseOver={() => setFocus(name)} onMouseLeave={() => setFocus('')}>
-            <div className={`group grid place-items-center sm:gap-1 cursor-pointer ${descriptionClass}`} title={title}>
-                <ComponentIcon name={getNameIcon(name)} size={23} viewBox="0 0.2 16 16" descriptionClass={`${paintItem(url)} dark:group-hover:text-seventh group-hover:text-secondary cursor-pointer`} />
-                <span className={`${paintItem(url)} dark:group-hover:text-seventh group-hover:text-secondary dark:font-semibold font-normal text-[11.3px] transition duration-500 `}>
+            <div className={`sm:border-none border-t-[2px] ${paint ? 'border-t-secondary':'border-t-transparent'} sm:w-auto w-[50px] rounded-sm sm:mx-0 mx-auto group grid place-items-center sm:gap-1 cursor-pointer ${descriptionClass}`} title={title}>
+                <ComponentIcon name={getNameIcon(name)} size={23} viewBox="0 0.2 16 16" descriptionClass={`${paintItem()} dark:group-hover:text-seventh group-hover:text-secondary cursor-pointer`} />
+                <span className={`${paintItem()} dark:group-hover:text-seventh group-hover:text-secondary dark:font-semibold font-normal text-[11.3px] transition duration-500 `}>
                     {title}
                 </span>
             </div>

@@ -9,12 +9,12 @@ const fadeIn = {
 };
 
 const hoverEffect = {
-    scale: 1.05,
-    rotate: 5,
+    scale: 1,
+    rotate: 3,
     transition: {
         type: "spring",
-        stiffness: 300,
-        damping: 20
+        stiffness: 200,
+        damping: 4
     }
 }
 

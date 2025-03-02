@@ -184,7 +184,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                             error={errors.title?.type}
                             register={register}
                             placeholder={`${translate('notes.form.items.title.input')}...`}
-                            descriptionClass="border-opacity-50 dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] py-1 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
+                            descriptionClass="border-opacity-50 dark:bg-tertiary bg-primary w-full rounded-md border-[0.1px] py-1 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
                         />
                     </div>
                     <div className="flex flex-col gap-y-0.5">
@@ -195,7 +195,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                             error={errors.description?.type}
                             register={register}
                             placeholder={`${translate('notes.form.items.description.input')}...`}
-                            descriptionClass="border-opacity-50 dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] min-h-[65px] py-1 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
+                            descriptionClass="border-opacity-50 dark:bg-tertiary bg-primary w-full rounded-md border-[0.1px] min-h-[65px] py-1 px-2 outline-none tracking-wide placeholder:opacity-70 sm:text-md"
                         />
                     </div>
                     <div className="flex flex-col gap-y-0.5">
@@ -258,7 +258,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                                 )
                             }
                         </div>
-                        <label htmlFor="file-upload" title={translate('notes.form.items.image.upload.text_1')} className="grid gap-y-0.5 place-items-center mt-0.5 p-1 dark:border-dark-secondary border-secondary border-opacity-20 dark:bg-dark-primary bg-primary w-full rounded-md border-[0.1px] cursor-pointer hover:border-opacity-60 transition duration-500">
+                        <label htmlFor="file-upload" title={translate('notes.form.items.image.upload.text_1')} className="grid gap-y-0.5 place-items-center mt-0.5 p-1 dark:border-dark-secondary border-secondary border-opacity-20 dark:bg-tertiary bg-primary w-full rounded-md border-[0.1px] cursor-pointer hover:border-opacity-60 transition duration-500">
                             {
                                 ((!file || !noteSelected?.file?.id) && (!viewFile)) ?
                                     <ComponentIcon name="upload-file" size={27} descriptionClass="icon-home dark:text-dark-secondary text-secondary cursor-pointer" />

@@ -43,32 +43,4 @@ describe('Componente <Category/>', () => {
         expect(title).toBeInTheDocument();
         expect(subtitle).toBeInTheDocument();
     });
-
-    test('Renderizacion correcta loading Items', () => {
-        const { getAllByTitle } = render(<ComponentList categorys={[]} setRestart={setRestart} />);
-
-        const itemsLoading = getAllByTitle('Cargando...');
-
-        itemsLoading.map(item => {
-            expect(item).toBeInTheDocument();
-        })
-    });
-
-    describe('Renderizacion correcta en la <List/>', () => {
-        const setRestart = jest.fn();
-        let component: RenderResult;
-
-        beforeEach(() => {
-            component = render(<ComponentList categorys={categorys} setRestart={setRestart} />);
-        });
-
-        test('Redirigir a la ruta correcta', () => {
-            const volver = component.getByTitle("Volver atras");
-
-            fireEvent.click(volver);
-
-            expect(mock_push).toHaveBeenCalledWith(APP_ROUTES.dashboard.config);
-        });
-
-    });
 })

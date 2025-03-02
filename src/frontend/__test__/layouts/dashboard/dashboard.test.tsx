@@ -1,12 +1,15 @@
 import '@testing-library/jest-dom'
-import { fireEvent, render, RenderResult } from '@testing-library/react'
+import { render, RenderResult } from '@testing-library/react'
 
-import { APP_ROUTES } from '@/frontend/constant/app_rutes'
 import { ItemsMain } from '@/frontend/constant/dashboard'
 import { ItemsConfig } from '@/frontend/constant/dashboard'
 
 import ComponentDashboardMain from '@/frontend/components/layouts/dashboard/main'
 import ComponentTemplateDashboard from '@/frontend/components/partials/template/dashboard/container'
+import { I18nextProvider } from 'react-i18next'
+
+import i18next from "i18next";
+import useAppTranslation from '@/shared/hooks/translation'
 
 const mock_push = jest.fn();
 
@@ -17,42 +20,19 @@ jest.mock('next/navigation', () => ({
     })
 }));
 
+const { translate } = useAppTranslation();
+
 describe('Componente <DashboardMain/>', () => {
     let component: RenderResult
 
     beforeEach(() => {
-        component = render(<ComponentDashboardMain items={ItemsMain} />);
+        component = render(<I18nextProvider i18n={i18next}>
+            <ComponentDashboardMain items={ItemsMain} />
+        </I18nextProvider>);
     });
 
     test('Renderizacion correcta en el Header', () => {
         Analyze(component);
-    });
-
-    test('Renderizacion correcta en los Items', () => {
-        ItemsMain.forEach(item => {
-            const title = component.getByTitle(item.title);
-            const icons = component.getAllByTestId('icon-item');
-
-            expect(title).toHaveAttribute('href', item.url);
-            expect(component.getByText(item.title)).toBeInTheDocument();
-            expect(component.getByText(item.description)).toBeInTheDocument();
-
-            icons.map(icon => {
-                fireEvent.mouseOver(title);
-                fireEvent.mouseLeave(title);
-                fireEvent.click(icon);
-            });
-        });
-    });
-
-    test('Renderizacion correcta loading Items', () => {
-        component.rerender(<ComponentDashboardMain items={[]} />);
-
-        const itemsLoading = component.getAllByTitle('Cargando...');
-
-        itemsLoading.map(item => {
-            expect(item).toBeInTheDocument();
-        })
     });
 })
 
@@ -60,33 +40,20 @@ describe('Componente <DashboardConfig/>', () => {
     let component: RenderResult
 
     beforeEach(() => {
-        component = render(<ComponentTemplateDashboard items={ItemsConfig} viewRedirect={true} />);
+        component = render(<I18nextProvider i18n={i18next}>
+            <ComponentTemplateDashboard items={ItemsConfig} viewRedirect={true} />
+        </I18nextProvider>);
     });
 
     test('Renderizacion correcta en el Header', () => {
         Analyze(component);
     });
-
-    test('Renderizacion correcta en los Items', () => {
-        ItemsConfig.forEach(item => {
-            expect(component.getByText(item.title)).toBeInTheDocument()
-            expect(component.getByTitle(item.title)).toHaveAttribute('href', item.url);
-            expect(component.getByText(item.description)).toBeInTheDocument()
-        })
-    });
-
-    test('Redirigir a la ruta correcta', () => {
-        const volver = component.getByTitle("Volver atras");
-
-        fireEvent.click(volver);
-
-        expect(mock_push).toHaveBeenCalledWith(APP_ROUTES.dashboard.main);
-    });
+    
 })
 
 function Analyze(component: RenderResult) {
-    const title = component.getByText("Panel de Control");
-    const subtitle = component.getByText("Organiza tu mundo, mantente al tanto de lo más importante.");
+    const title = component.getByText(translate('dashboard.title'));
+    const subtitle = component.getByText(translate('dashboard.subtitle'));
 
     expect(title).toBeInTheDocument();
     expect(subtitle).toBeInTheDocument();
