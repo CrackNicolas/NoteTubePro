@@ -23,7 +23,7 @@ const nextConfig = {
         ]
     },
     env: {
-        PROJECT_VERSION: "1.2.11",
+        PROJECT_VERSION: "1.2.12",
         NEXT_PUBLIC_CLERK_SIGN_IN_URL: "/sign-in",
         NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: "/",
         ROL_ADMIN_USER_ID: process.env.ROL_ADMIN_USER_ID,
@@ -31,7 +31,7 @@ const nextConfig = {
             process.env.NODE_ENV === 'development' ?
                 'http://localhost:3000'
                 :
-                'https://notes-aplication.vercel.app',
+                'https://notetubepro.vercel.app',
     }
 }
 

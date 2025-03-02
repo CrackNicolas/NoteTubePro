@@ -4,7 +4,7 @@
    - Production
 
 ## Uso
-   - Clone the repository ["https://github.com/CrackNicolas/Notes-application.git"]
+   - Clone the repository ["https://github.com/CrackNicolas/NoteTube.git"]
    - Run the npm install command to install dependencies
    - Run the npm run dev command to run the application
 
