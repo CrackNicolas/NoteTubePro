@@ -40,7 +40,7 @@ export default function ComponentItemNavLeft(props: INavLeft): Component {
 
     return (
         <ComponentLink url={url} title={title} descriptionClass="w-full" onClick={onClick} onMouseOver={() => setFocus(name)} onMouseLeave={() => setFocus('')}>
-            <div className={`sm:border-none border-t-[2px] ${paint ? 'border-t-secondary':'border-t-transparent'} sm:w-auto w-[50px] rounded-sm sm:mx-0 mx-auto group grid place-items-center sm:gap-1 cursor-pointer ${descriptionClass}`} title={title}>
+            <div className={`sm:border-none border-t-[2px] ${paint ? 'border-t-secondary dark:border-t-seventh':'border-t-transparent'} sm:w-auto w-[50px] rounded-sm sm:mx-0 mx-auto group grid place-items-center sm:gap-1 cursor-pointer ${descriptionClass}`} title={title}>
                 <ComponentIcon name={getNameIcon(name)} size={23} viewBox="0 0.2 16 16" descriptionClass={`${paintItem()} dark:group-hover:text-seventh group-hover:text-secondary cursor-pointer`} />
                 <span className={`${paintItem()} dark:group-hover:text-seventh group-hover:text-secondary dark:font-semibold font-normal text-[11.3px] transition duration-500 `}>
                     {title}
