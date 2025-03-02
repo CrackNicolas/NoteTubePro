@@ -25,6 +25,8 @@ export const metadata: Metadata = {
 	title: 'NoteTube',
 	description: 'Aplicación de notas para organizar y gestionar tu información de forma eficiente.',
 	keywords: ['Notas', 'Next.js', 'React', 'JavaScript', 'TypeScript', 'Tailwind', 'CSS', 'HTML', 'Productividad', 'Organización'],
+	manifest: "/manifest.json",
+	viewport: "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-     fit=no, viewport-fit=cover",
 	icons: {
 		icon: '/favicon.ico'
 	},
