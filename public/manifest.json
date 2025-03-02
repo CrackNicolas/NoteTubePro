@@ -1,29 +1,25 @@
 {
-    "name": "NoteTube",
-    "short_name": "NoteTube",
-    "description": "Aplicación de notas para organizar y gestionar tu información de forma eficiente.",
+    "theme_color": "#8936FF",
+    "background_color": "#2EC6FE",
     "icons": [
         {
-            "src": "/images/logo.png",
-            "sizes": "144x144",
-            "type": "image/png",
-            "purpose": "any maskable"
-        },
-        {
-            "src": "/images/logo-512.png",
+            "purpose": "maskable",
             "sizes": "512x512",
+            "src": "icon512_maskable.png",
             "type": "image/png"
         },
         {
-            "src": "/images/logo-512-black.png",
+            "purpose": "any",
             "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "maskable"
+            "src": "icon512_rounded.png",
+            "type": "image/png"
         }
     ],
-    "theme_color": "#000000",
-    "background_color": "#00ffff",
-    "start_url": "/",
+    "orientation": "any",
     "display": "standalone",
-    "orientation": "portrait"
+    "dir": "auto",
+    "lang": "es-419",
+    "name": "NoteTube",
+    "short_name": "NoteTube",
+    "description": "Aplicación de notas para organizar y gestionar tu información de forma eficiente."
 }
