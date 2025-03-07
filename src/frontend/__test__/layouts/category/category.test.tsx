@@ -1,17 +1,19 @@
-import '@testing-library/jest-dom'
-import { fireEvent, render, RenderResult } from '@testing-library/react'
-
-import ResizeObserver from 'resize-observer-polyfill';
-global.ResizeObserver = ResizeObserver;
+import { act } from 'react-dom/test-utils';
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-import ComponentList from "@/frontend/components/layouts/category/list/container"
-import ComponentHeader from "@/frontend/components/partials/template/dashboard/header"
+import i18next from "i18next";
+import { I18nextProvider } from "react-i18next";
 
-import { APP_ROUTES } from '@/frontend/constant/app_rutes';
-import { categorys } from '@/frontend/__test__/mocks/categorys'
+import es from "@/shared/i18n/es/global.json";
+
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+
+import { categorys } from '@/frontend/__test__/mocks/categorys';
+import { PropsResponse } from '@/shared/types/response';
+
+import ComponentCategory from '@/frontend/components/layouts/category/container';
 
 const mock = new MockAdapter(axios);
 
@@ -22,25 +24,43 @@ mock.onPut('/api/categorys').reply(200, {
     }
 });
 
-const mock_push = jest.fn();
+mock.onGet('/api/categorys').reply<PropsResponse>(200, {
+    status: 200,
+    details: categorys
+});
 
-jest.mock('next/navigation', () => ({
-    ...jest.requireActual('next/navigation'),
-    useRouter: () => ({
-        push: mock_push
-    })
-}));
+describe('Category component', () => {
 
-describe('Componente <Category/>', () => {
-    const setRestart = jest.fn();
-
-    test('Renderizacion correcta en el Header', () => {
-        const { getByText } = render(<ComponentHeader title="Categorias de notas" subtitle="Selecciona las categorias que deseas agregar o quitar de tus notas" />)
-
-        const title = getByText("Categorias de notas");
-        const subtitle = getByText("Selecciona las categorias que deseas agregar o quitar de tus notas");
-
-        expect(title).toBeInTheDocument();
-        expect(subtitle).toBeInTheDocument();
+    beforeEach(async () => {
+        await act(async () => {
+            render(
+                <I18nextProvider i18n={i18next}>
+                    <ComponentCategory />
+                </I18nextProvider>
+            );
+        });
     });
-})
+
+    test('header component renders correctly', async () => {
+        expect(await screen.findByText(es.categories.title)).toBeInTheDocument();
+        expect(await screen.findByText(es.categories.subtitle)).toBeInTheDocument();
+    });
+
+    describe('List component', () => {
+        test('renders correctly button goback', async () => {
+            const buttonGoBack = await screen.findByTitle(es.dashboard.button);
+
+            expect(buttonGoBack).toBeInTheDocument();
+            fireEvent.click(buttonGoBack);
+        });
+
+        test('successful category modification', async () => {
+            const selectCategory = await screen.findByTitle(`${es.categories.default} ${es.categories.items.plane}`);
+
+            expect(selectCategory).toBeInTheDocument();
+            await waitFor(() => {
+                fireEvent.click(selectCategory);
+            });
+        });
+    });
+});

@@ -3,7 +3,7 @@ import { Component } from "@/frontend/types/component";
 import IElement from "@/frontend/interfaces/elements/element";
 import ComponentMotion from "@/frontend/components/partials/motion";
 
-interface IHeader extends Partial<Pick<IElement, 'title' | 'subtitle'>> {}
+interface IHeader extends Partial<Pick<IElement, 'title' | 'subtitle'>> { }
 
 export default function ComponentHeader(props: IHeader): Component {
     const { title = '', subtitle = '' } = props;

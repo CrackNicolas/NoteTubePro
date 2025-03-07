@@ -12,7 +12,7 @@ export default function WithoutInternet(): Component {
     const { translate } = useAppTranslation();
 
     return (
-        <article className="min-h-screen dark:bg-dark-primary bg-primary pt-24 pb-9">
+        <article className="min-h-screen pt-24 pb-9">
             <article className="flex flex-col items-center gap-y-4 max-w-7xl px-2 lg:px-10">
                 <div className="flex flex-col place-items-center">
                     <ComponentIcon name="without_internet" size={250} viewBox="0 0 192 195" />

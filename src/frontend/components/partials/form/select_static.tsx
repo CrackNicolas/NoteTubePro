@@ -49,8 +49,8 @@ export default function ComponentSelect(props: ISelect): Component {
     }
 
     const translateValue = (value?: string): string => {
-        if(!value) return "";
-        if(value === title) return value;
+        if (!value) return "";
+        if (value === title) return value;
         return translate(`${ruteTranslate}.options.${value.toLocaleLowerCase()}`)
     }
 
@@ -62,10 +62,10 @@ export default function ComponentSelect(props: ISelect): Component {
                 </span>
                 <ComponentIcon name={open ? 'caret-up' : 'caret-down'} size={20} descriptionClass={`${optionSelected && 'dark:text-tertiary text-tertiary'} ${style?.text} cursor-pointer`} />
             </div>
-            <ul ref={list} className={`${(!open)? 'max-h-0 ':'max-h-64 border-[0.1px]'} overflow-hidden transition-all ease-in-out duration-300 mt-[-1px] flex flex-col z-10 w-full dark:bg-tertiary bg-primary ${style.border} rounded-b-md border-opacity-50`}>
+            <ul ref={list} className={`${(!open) ? 'max-h-0 ' : 'max-h-64 border-[0.1px]'} overflow-hidden transition-all ease-in-out duration-300 mt-[-1px] flex flex-col z-10 w-full dark:bg-tertiary bg-primary ${style.border} rounded-b-md border-opacity-50`}>
                 {
                     select != title && (
-                        <li onClick={() => selectedItem(title)} className="group flex justify-between dark:hover:bg-dark-secondary hover:bg-secondary items-center px-2 py-1 cursor-pointer hover:font-semibold">
+                        <li onClick={() => selectedItem(title)} title={title} className="group flex justify-between dark:hover:bg-dark-secondary hover:bg-secondary items-center px-2 py-1 cursor-pointer hover:font-semibold">
                             <span className={`text-md font-normal group-hover:font-semibold dark:group-hover:text-dark-primary group-hover:text-primary ${style.text}`}>
                                 {title}
                             </span>

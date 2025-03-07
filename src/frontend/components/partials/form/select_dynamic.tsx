@@ -45,7 +45,7 @@ export default function ComponentSelect(props: ISelect): Component {
     const optionSelected: boolean = (selectCategory.title != translate('categories.default'));
 
     const translateName = (category: PropsCategory) => {
-        if(!category.icon) return itemDefault.title;
+        if (!category.icon) return itemDefault.title;
         return translate(`categories.items.${category.icon?.toLocaleLowerCase()}`);
     }
 
@@ -75,7 +75,7 @@ export default function ComponentSelect(props: ISelect): Component {
 
     useEffect(() => {
         setCategorys(prev => prev.filter((item: PropsCategory) => item.icon));
-    },[translate('categories.default')])
+    }, [translate('categories.default')])
 
     useEffect(() => {
         loadCategorys();
@@ -105,7 +105,7 @@ export default function ComponentSelect(props: ISelect): Component {
                             </span>
                             <ComponentIcon name={openCategory ? 'caret-up' : 'caret-down'} size={20} descriptionClass={`${optionSelected && 'dark:text-tertiary text-tertiary'} ${!error ? style.text : 'dark:text-dark-error text-error'} cursor-pointer`} />
                         </div>
-                        <ul ref={list} title={translate('categories.list')} className={`${(!openCategory) ? 'max-h-0 ':'max-h-64 border-[0.1px]' } overflow-hidden transition-all ease-in-out duration-300 mt-[-1px] z-10 w-full dark:bg-tertiary bg-primary ${!error ? `${style.border}` : 'dark:border-dark-error border-error'} rounded-b-md border-opacity-50 overflow-hidden`}>
+                        <ul ref={list} title={translate('categories.list')} className={`${(!openCategory) ? 'max-h-0 ' : 'max-h-64 border-[0.1px]'} overflow-hidden transition-all ease-in-out duration-300 mt-[-1px] z-10 w-full dark:bg-tertiary bg-primary ${!error ? `${style.border}` : 'dark:border-dark-error border-error'} rounded-b-md border-opacity-50 overflow-hidden`}>
                             {
                                 categorys.filter((category: PropsCategory) => category.title != selectCategory.title).map((category: PropsCategory) => {
                                     return (

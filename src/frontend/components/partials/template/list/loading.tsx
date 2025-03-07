@@ -11,7 +11,7 @@ interface ITemplateLoading extends Partial<Pick<IElement, 'title' | 'description
 }
 
 export default function ComponentTemplateLoading(props: ITemplateLoading): Component {
-    const {translate} = useAppTranslation();
+    const { translate } = useAppTranslation();
 
     const { children, count, descriptionClass = "", title = `${translate('loading.messages.default')}...` } = props;
 

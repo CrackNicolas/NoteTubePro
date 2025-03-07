@@ -51,7 +51,7 @@ const schemaSession = new Schema<PropsSession>({
             type: String,
             require: [true, 'Required user image'],
         },
-        lastSignInAt:{
+        lastSignInAt: {
             type: Date,
             require: [true, 'Required user lastSignInAt'],
         },

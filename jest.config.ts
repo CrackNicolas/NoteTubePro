@@ -12,7 +12,10 @@ const config: Config = {
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: "coverage",
-  setupFiles: ['./jest.setup.ts'],
+  setupFilesAfterEnv: ['./jest.setup.ts'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  }
 }
 
 export default createJestConfig(config)

@@ -24,7 +24,7 @@ type PropsValidation = {
 }
 
 export const validation = (name: PropsInputName, required: boolean = true): PropsValidation => {
-    const ruteTranslate = (error: TypeErrorForm) => `notes.form.items.${name}.messages.${error}`
+    const ruteTranslate = (error: TypeErrorForm) => `notes.form.items.${name}.messages.${error}`;
 
     switch (name) {
         case 'title':

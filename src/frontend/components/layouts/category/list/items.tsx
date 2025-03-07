@@ -18,7 +18,7 @@ export default function ComponentItems(props: IItems): Component {
 
     const { translate } = useAppTranslation();
 
-    const translateName = (category?: string): string => (category)? translate(`categories.items.${category.toLocaleLowerCase()}`): "";
+    const translateName = (category?: string): string => (category) ? translate(`categories.items.${category.toLocaleLowerCase()}`) : "";
 
     return (
         <article className="relative pb-10 sm:pb-7 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3 w-full">

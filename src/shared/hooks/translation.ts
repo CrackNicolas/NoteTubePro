@@ -11,7 +11,7 @@ export default function useAppTranslation(): ITranslation {
         i18n.changeLanguage(newlanguage);
         localStorage.setItem('language', newlanguage);
     }
-    
+
     const translate = (chain: string): string => t(chain);
 
     return { language: i18n.language as Languages, update_language, translate };

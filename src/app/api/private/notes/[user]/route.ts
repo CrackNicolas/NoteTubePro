@@ -18,7 +18,7 @@ export async function GET(req: NextRequest, { params: { user } }: { params: { us
                 "__v": 0
             });
 
-            return { status: 200, details: notes };
+            return { status: 200, details: notes }
         }
     })
 }

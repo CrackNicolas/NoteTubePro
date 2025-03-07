@@ -25,7 +25,7 @@ export default function ComponentNotes(): Component {
     const [listCategorys, setListCategorys] = useState<PropsCategory[]>([]);
     const [categorySelected, setCategorySelected] = useState<PropsCategory | undefined>(undefined);
     
-    const lastPage = localStorage.getItem('last_page') as string;
+    const lastPage: string = localStorage.getItem('last_page') as string;
     
     const { note, opacity }: IContext = useAppContext();
     const { translate } = useAppTranslation();

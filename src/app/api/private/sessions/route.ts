@@ -43,9 +43,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 origin,
                 user
             };
-            
+
             const session = await Session.findOneAndUpdate(
-                { id }, 
+                { id },
                 { $set: sessionData },
                 { new: true, upsert: true }  // Si no existe, lo crea; si existe, lo actualiza
             );
@@ -76,10 +76,10 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
             );
 
             if (!session) {
-                return { status: 404, info: { message: "La sesión no existe" } };  // Mejor usar 404
+                return { status: 404, info: { message: "La sesión no existe" } };
             }
 
-            return { status: 200, info: { message: 'Sesión actualizada' } }; 
+            return { status: 200, info: { message: 'Sesión actualizada' } };
         }
     })
 }

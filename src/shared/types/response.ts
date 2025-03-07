@@ -18,7 +18,7 @@ import { PropsCategory } from "@/context/types/category"
 export type PropsResponse = {
     status: HttpStatusCode,
     details?: RolUser | PropsNote[] | PropsNote | PropsCategory[] | PropsSession[]
-    info?: { 
+    info?: {
         message: string
     }
 }

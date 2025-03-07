@@ -270,7 +270,7 @@ export default function ComponentContainerForm(props: IContainerForm): Component
                                     (!file || !noteSelected?.file?.id) && (!viewFile) && `${translate('notes.form.items.image.upload.text_2')}...`
                                 }
                             </span>
-                            <input id="file-upload" accept="image/*" name="file-upload" type="file" onChange={event => captureFile(event)} className="sr-only" />
+                            <input data-testid="file-upload" id="file-upload" accept="image/*" name="file-upload" type="file" onChange={(event) => captureFile(event)} className="sr-only" />
                         </label>
                     </div>
                 </div>

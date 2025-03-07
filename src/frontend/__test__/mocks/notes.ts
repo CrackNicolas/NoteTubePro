@@ -5,10 +5,11 @@ const currentDate: Date = new Date();
 
 export const note: PropsNote = {
     _id: '1234',
-    title: 'Programando',
-    description: 'Realizar configuraciones en la aplicacion',
+    title: 'Programando pruebas',
+    description: 'Realizar configuraciones en la aplicacion lo antes posible',
     category: {
         title: 'Viajes',
+        use: true,
         icon: 'plane'
     },
     priority: 'Alta',
@@ -25,10 +26,11 @@ export const note: PropsNote = {
 export const notes: PropsNote[] = [
     {
         _id: '1234',
-        title: 'Titulo de prueba, accionando',
-        description: 'Descripcion de prueba 1',
+        title: 'Titulo de prueba a',
+        description: 'Descripcion de prueba a funcionando',
         category: {
             title: 'Viajes',
+            use: true,
             icon: 'plane'
         },
         priority: 'Baja',
@@ -43,10 +45,11 @@ export const notes: PropsNote[] = [
     },
     {
         _id: '4321',
-        title: 'Titulo de prueba 2',
-        description: 'Descripcion de prueba 2',
+        title: 'Titulo de prueba b',
+        description: 'Descripcion de prueba b funcionando',
         category: {
             title: 'Viajes',
+            use: true,
             icon: 'plane'
         },
         priority: 'Media',
@@ -56,10 +59,11 @@ export const notes: PropsNote[] = [
     },
     {
         _id: '2223',
-        title: 'Titulo de prueba 3',
-        description: 'Descripcion de prueba 3',
+        title: 'Titulo de prueba c',
+        description: 'Descripcion de prueba c funcionando',
         category: {
             title: 'Viajes',
+            use: true,
             icon: 'plane'
         },
         priority: 'Alta',

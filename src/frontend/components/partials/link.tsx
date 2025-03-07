@@ -6,7 +6,7 @@ import { Component } from "@/frontend/types/component";
 
 import IElement from "@/frontend/interfaces/elements/element";
 
-interface ILink extends Pick<IElement, 'title' |'children' | 'descriptionClass' | 'onClick' | 'onMouseLeave' | 'onMouseOver'> {
+interface ILink extends Pick<IElement, 'title' | 'children' | 'descriptionClass' | 'onClick' | 'onMouseLeave' | 'onMouseOver'> {
     url: string
 }
 

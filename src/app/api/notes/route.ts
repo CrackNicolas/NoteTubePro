@@ -35,7 +35,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return handleApiRequest({
         cookies: req.cookies,
         processRequest: async (userId: string): Promise<PropsResponse> => {
-            const data = await req.formData();
+            const data: FormData = await req.formData();
 
             const categoryPrev = data.get('category');
             const category: PropsCategory = categoryPrev && typeof categoryPrev === 'string' ? JSON.parse(categoryPrev) : null;
@@ -88,7 +88,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
     return handleApiRequest({
         cookies: req.cookies,
         processRequest: async (userId: string): Promise<PropsResponse> => {
-            const data = await req.formData();
+            const data: FormData = await req.formData();
 
             const existsNote = await Notes.findById(data.get('_id'));
             if (!existsNote) {

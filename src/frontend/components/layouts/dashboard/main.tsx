@@ -5,7 +5,7 @@ import { PropsItemsDashboard } from "@/frontend/types/props"
 import ComponentTemplateDashboard from "@/frontend/components/partials/template/dashboard/container"
 
 interface IDashboardMain {
-    items: PropsItemsDashboard[] 
+    items: PropsItemsDashboard[]
 }
 
 export default function ComponentDashboardMain({ items }: IDashboardMain): Component {

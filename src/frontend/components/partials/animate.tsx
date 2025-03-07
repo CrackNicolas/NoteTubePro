@@ -3,9 +3,9 @@ import { useMemo } from "react";
 import { Component } from "@/frontend/types/component";
 
 interface IParticle {
-    top: string;
-    left: string;
-    animationDuration: string;
+    top: string,
+    left: string,
+    animationDuration: string
 }
 
 export default function ComponentAnimatedBackground(): Component {

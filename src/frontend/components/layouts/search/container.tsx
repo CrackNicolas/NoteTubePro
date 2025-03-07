@@ -118,10 +118,11 @@ export default function ComponentSearch(): Component {
     }
 
     const loadNotes = useCallback(async (): Promise<void> => {
-        if (search === StatusSearchNote.NOT_FILTER) return;
+        if (search === StatusSearchNote.NOT_FILTER || search === StatusSearchNote.RELOAD) return;
 
         setLoadingNotes({ value: true, button: true });
         const { data } = await httpRequest({ type: 'GET', url: `/api/notes${(search !== '{}') ? `/${search}` : ''}` });
+
         if (data.status === 200) {
             setLoadingNotes({
                 value: false,

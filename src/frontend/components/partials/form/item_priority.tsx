@@ -18,7 +18,7 @@ interface IItemPriority extends Pick<IInputBase, 'value' | 'register' | 'descrip
 export default function ComponentItemPriority(props: IItemPriority): Component {
     const { id, descriptionClass, value, paint, error, register } = props;
 
-    const {translate} = useAppTranslation();
+    const { translate } = useAppTranslation();
 
     const translateValue: string = translate(`notes.form.items.priority.options.${value?.toLocaleLowerCase()}`);
 

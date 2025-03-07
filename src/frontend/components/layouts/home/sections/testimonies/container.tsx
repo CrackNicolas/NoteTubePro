@@ -10,10 +10,10 @@ export default function ComponentTestimoniesHome(): Component {
 
     return (
         <ComponentMotion type="section" descriptionClass="mt-16  flex flex-col items-center dark:bg-tertiary bg-primary py-16">
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-gradient">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-gradient" title={translate('home.sections.testimonies.title')}>
                 {translate('home.sections.testimonies.title')}
             </h2>
-            <p className="mt-3 text-md sm:text-lg text-center text-tertiary dark:text-dark-tertiary opacity-60 dark:opacity-100 max-w-xl sm:max-w-2xl">
+            <p className="mt-3 text-md sm:text-lg text-center text-tertiary dark:text-dark-tertiary opacity-60 dark:opacity-100 max-w-xl sm:max-w-2xl" title={translate('home.sections.testimonies.subtitle')}>
                 {translate('home.sections.testimonies.subtitle')}
             </p>
             <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-7">

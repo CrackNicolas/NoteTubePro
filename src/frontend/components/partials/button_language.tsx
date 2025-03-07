@@ -45,10 +45,10 @@ export default function ComponentButtonLanguage(props: IButtonLanguage): Compone
     const itemPopover = ({ ruteTranslate, onClick, paint }: IItemPopover): Component => {
         return (
             <div title={translate(ruteTranslate)} onClick={onClick} className={`${paint && 'dark:bg-custom-gradient bg-custom-gradient-red'} flex justify-between items-center w-full px-3 py-1 transition-all`}>
-                <span className={`text-md ${paint? 'text-tertiary':'text-primary'}`}>
+                <span className={`text-md ${paint ? 'text-tertiary' : 'text-primary'}`}>
                     {translate(ruteTranslate)}
                 </span>
-                <ComponentIcon size={18} name="translate" descriptionClass={`${paint? 'text-tertiary':'text-primary'}`}/>
+                <ComponentIcon size={18} name="translate" descriptionClass={`${paint ? 'text-tertiary' : 'text-primary'}`} />
             </div>
         )
     }

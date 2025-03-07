@@ -2,7 +2,7 @@ import IContext from "@/context/interfaces/context";
 
 import { ThemeName } from "@/frontend/types/theme";
 
-interface IChangeTopic extends Pick<IContext, 'theme' | 'setTheme'> {}
+interface IChangeTopic extends Pick<IContext, 'theme' | 'setTheme'> { }
 
 export function changeTopic(props: IChangeTopic): void {
     const { theme, setTheme } = props;
