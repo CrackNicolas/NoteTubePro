@@ -7,6 +7,7 @@ import { ThemeColors, ThemeName } from "@/frontend/types/theme";
 import IContext from "@/context/interfaces/context";
 import ILayouts from "@/frontend/interfaces/layouts";
 import Template from '@/frontend/template/init';
+import useDynamicTitle from "@/frontend/hooks/dynamic_title";
 
 import { ComponentUserButton } from "@/frontend/components/services/clerk";
 
@@ -29,6 +30,8 @@ export const IntanceContextApp = createContext<IContext>({
 
 export default function TemplateContext(props: ITemplateContext): Component {
     const { children, value } = props;
+
+    useDynamicTitle();
 
     return (
         <IntanceContextApp.Provider value={value}>
