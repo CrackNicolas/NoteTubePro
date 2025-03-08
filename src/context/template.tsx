@@ -31,7 +31,7 @@ export const IntanceContextApp = createContext<IContext>({
 export default function TemplateContext(props: ITemplateContext): Component {
     const { children, value } = props;
 
-    useDynamicTitle();
+    //useDynamicTitle();
 
     return (
         <IntanceContextApp.Provider value={value}>

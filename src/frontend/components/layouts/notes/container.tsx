@@ -37,6 +37,8 @@ export default function ComponentNotes(): Component {
     const loadCategorys = useCallback(async (): Promise<void> => {
         const { data } = await httpRequest({ type: 'GET', url: '/api/categorys/true' });
 
+        console.log(data.info)
+
         if (data.status === 200) {
             setListCategorys(data.details);
         }
