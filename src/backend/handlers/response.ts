@@ -3,13 +3,7 @@ import { MessageResponse } from "@/backend/enums/messages/response";
 import { PropsResponse, HttpStatusCode } from "@/shared/types/response";
 
 export default function sendApiResponse(data: PropsResponse): NextResponse<PropsResponse> {
-    const { status, details, info } = data;
-
-    return NextResponse.json<PropsResponse>({
-        status,
-        details,
-        info
-    })
+    const { status, details } = data;
 
     const messages: Record<HttpStatusCode, string> = {
         200: MessageResponse.SUCCESS,
