@@ -41,10 +41,10 @@ export default function ComponentItem({ props }: IItem): Component {
 				<ComponentIcon name={`${focus ? `${icon + '-fill'}` : icon}`} testid="icon-item" size={20} descriptionClass={`${focus ? 'dark:text-seventh' : 'dark:text-dark-secondary'} text-secondary dark:text-seventh cursor-pointer`} />
 			</div>
 			<div className="relative">
-				<h3 className="line-clamp-1 text-md font-normal group-hover:font-bold tracking-wide text-gradient">
+				<h3 className="line-clamp-1 text-md font-normal group-hover:font-bold tracking-wide dark:text-gradient text-secondary">
 					{translate(`dashboard.sections.${nameTranslate}.title`)}
 				</h3>
-				<p className="mt-0 line-clamp-2 text-sm leading-3 dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-50 hover:opacity-100 transition duration-700">
+				<p className="mt-0 line-clamp-2 text-sm leading-5 dark:text-dark-tertiary text-tertiary dark:opacity-100 opacity-50 hover:opacity-100 transition duration-700">
 					{translate(`dashboard.sections.${nameTranslate}.description`)}
 				</p>
 			</div>
