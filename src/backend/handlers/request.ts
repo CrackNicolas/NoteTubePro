@@ -25,21 +25,20 @@ export async function handleApiRequest({ cookies, processRequest, useCredentials
     }
 
     if (useConnectDb) {
-        const connection: boolean = await conectDatabase();
-        if (!connection) return sendApiResponse({ status: 500 });
+        const connection: any = await conectDatabase();
+        return NextResponse.json<PropsResponse>({
+            status:500,
+            info: {
+                message: connection
+            }
+        })
+        //if (!connection) return sendApiResponse({ status: 500 });
     }
 
     try {
         const result = await processRequest(userId ?? '');
         return sendApiResponse(result);
     } catch (error: any) {
-        return NextResponse.json<PropsResponse>({
-                status:500,
-                info: {
-                    message: error
-                }
-            })
-        
         if (error.code === 11000 && error.keyPattern && error.keyValue) {
             return sendApiResponse({ status: 400, info: { message: MessagesNote.DUPLICATED } })
         }
