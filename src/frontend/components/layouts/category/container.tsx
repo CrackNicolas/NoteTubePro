@@ -30,8 +30,7 @@ export default function ComponentCategory(): Component {
 
     const loadCategorys = async (): Promise<void> => {
         const { data } = await httpRequest({ type: 'GET', url: `/api/categorys` });
-        console.log(data)
-
+        
         if (data.status === 200) {
             setListCategorys(data.details);
         }

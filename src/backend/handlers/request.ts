@@ -26,13 +26,7 @@ export async function handleApiRequest({ cookies, processRequest, useCredentials
 
     if (useConnectDb) {
         const connection: any = await conectDatabase();
-        return NextResponse.json<PropsResponse>({
-            status:500,
-            info: {
-                message: connection
-            }
-        })
-        //if (!connection) return sendApiResponse({ status: 500 });
+        if (!connection) return sendApiResponse({ status: 500 });
     }
 
     try {
