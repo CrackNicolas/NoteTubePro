@@ -362,10 +362,9 @@
     },
     "clerk": {
         "signIn": {
+            "title": "Iniciar sesión",
             "button_close": "Cerrar sesión",
-            "input": {
-                "placeholder": "Introduce tu correo electrónico"
-            }
+            "description": "Elige cómo iniciar sesión y accede a tu cuenta."
         }
     }
 }

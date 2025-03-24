@@ -1,6 +1,9 @@
 "use client"
 
+import dynamic from "next/dynamic";
+
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import { useForm } from "react-hook-form";
 
 import { Component } from "@/frontend/types/component";
@@ -29,11 +32,12 @@ import ComponentIcon from "@/frontend/components/partials/icon";
 import ComponentList from "@/frontend/components/layouts/search/list";
 import ComponentMessageWait from "@/frontend/components/layouts/messages/wait";
 import ComponentInputSearch from "@/frontend/components/layouts/search/input_search";
-import ComponentSelectStatic from "@/frontend/components/partials/form/select_static";
 import ComponentButtonCreate from "@/frontend/components/layouts/search/button_create";
-import ComponentSelectDynamic from "@/frontend/components/partials/form/select_dynamic";
 import ComponentMessageConfirmation from "@/frontend/components/layouts/messages/confirmation";
 import ComponentMessageConfirmationDelete from "@/frontend/components/layouts/messages/confirmation_delete";
+
+const ComponentSelectStatic = dynamic(() => import('@/frontend/components/partials/form/select_static'), {ssr:false});
+const ComponentSelectDynamic = dynamic(() => import('@/frontend/components/partials/form/select_dynamic'), { ssr: false });
 
 export default function ComponentSearch(): Component {
     const { opacity }: IContext = useAppContext();
@@ -117,7 +121,7 @@ export default function ComponentSearch(): Component {
         })
     }
 
-    const loadNotes = useCallback(async (): Promise<void> => {
+    const loadNotes = async (): Promise<void> => {
         if (search === StatusSearchNote.NOT_FILTER || search === StatusSearchNote.RELOAD) return;
 
         setLoadingNotes({ value: true, button: true });
@@ -138,9 +142,9 @@ export default function ComponentSearch(): Component {
             setListNotes([]);
             setLoadingNotes({ value: false });
         }
-    }, [search]);
+    };
 
-    const listenToChanges = useCallback(async (): Promise<void> => {
+    const listenToChanges = useDebouncedCallback((): void => {
         const criteria: PropsParamsSearch = {
             order: (selectOrder !== translate('search.toggle.selects.order.default')) ? selectOrder : undefined,
             title: (title !== '') ? title : undefined,
@@ -150,7 +154,7 @@ export default function ComponentSearch(): Component {
             featured: (selectFeatured !== translate('search.toggle.selects.highlight')) ? (selectFeatured === 'SI') : undefined,
         }
         setSearch(JSON.stringify(criteria));
-    }, [selectOrder, title, selectCategory, selectPriority, selectDate, selectFeatured])
+    }, 300)
 
     const deleteNotes = async (): Promise<void> => {
         setLoadingMessage(true);
@@ -181,11 +185,11 @@ export default function ComponentSearch(): Component {
 
     useEffect(() => {
         loadNotes();
-    }, [search, loadNotes]);
+    }, [search]);
 
     useEffect(() => {
         listenToChanges();
-    }, [title, selectCategory, selectPriority, selectFeatured, selectDate, listenToChanges]);
+    }, [selectOrder, title, selectCategory, selectPriority, selectFeatured, selectDate]);
 
     return (
         <article className={`${opacity && 'opacity-50'} relative min-h-screen 2xl:px-0 sm:pl-5 flex flex-col gap-5 pt-[54px]`}>
@@ -248,80 +252,84 @@ export default function ComponentSearch(): Component {
                     descriptionClass={`transition-width ${viewFilter ? 'w-full sz:w-full md:w-[calc(100%-175px)]' : 'w-full'}`}
                 />
                 <div ref={refNavToggle} className={`fixed top-0 flex min-h-screen flex-col justify-between toggle-search ${viewFilter ? 'translate-x-0' : 'translate-x-[120%]'} right-0 dark:bg-tertiary bg-primary z-50 w-[200px] border-fifth border-opacity-50 border-l-[0.1px] p-2`}>
-                    <div className="flex flex-col">
-                        <div className="flex justify-between items-center pb-1 border-b-[3px] rounded-md border-opacity-50 dark:border-seventh border-secondary w-full">
-                            <h4 className="text-gradient tracking-wider font-semibold">
-                                {translate('search.toggle.title')}
-                            </h4>
-                            <button ref={refButtonCloseToggle} type="button" title={translate('search.toggle.buttons.close')} onClick={() => controllerViewFilter(!viewFilter)} className="outline-none">
-                                <ComponentIcon name="close" descriptionClass="cursor-pointer text-secondary text-opacity-60 dark:text-seventh" size={27} viewBox="0 0 16 16" />
-                            </button>
-                        </div>
-                        <button onClick={() => restart()} title={translate('search.toggle.buttons.clean')} className="w-full mt-2 group bg-custom-gradient border-none px-3 rounded-md flex items-center justify-center py-[3px] gap-x-1 outline-none transition duration-500">
-                            <ComponentIcon name="load" size={16} descriptionClass="group-hover:rotate-[360deg] dark:text-tertiary text-primary cursor-pointer" />
-                            <span className="text-sm tracking-wider dark:text-tertiary text-primary duration-500">
-                                {translate('search.toggle.buttons.clean')}
-                            </span>
-                        </button>
-                        <div className="relative flex flex-col gap-y-3 py-3 w-full">
-                            {stateSelect && <ComponentInputSearch value={watch('title')} setValue={setValue} design={stateSelect} />}
-                            <ComponentSelectStatic
-                                ruteTranslate="search.toggle.selects.order"
-                                title={translate('search.toggle.selects.order.default')}
-                                select={selectOrder}
-                                setSelect={setSelectOrder}
-                                items={[
-                                    { value: ValueOrder.UPWARD, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } },
-                                    { value: ValueOrder.DESCENDING, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } },
-                                    { value: ValueOrder.MOST_RECENT, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } },
-                                    { value: ValueOrder.LEAST_RECENT, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } }
-                                ]}
-                                style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
-                            />
-                            <ComponentSelectStatic
-                                ruteTranslate="search.toggle.selects.date"
-                                title={translate('search.toggle.selects.date.default')}
-                                select={selectDate}
-                                setSelect={setSelectDate}
-                                items={[
-                                    { value: ValueDate.TODAY, icon: { name: 'date', class: 'dark:text-dark-fifth text-fifth' } },
-                                    { value: ValueDate.YESTERDAY, icon: { name: 'date', class: 'dark:text-dark-fifth text-fifth' } },
-                                    { value: ValueDate.AGO_7_DAYS, icon: { name: 'date', class: 'dark:text-dark-fifth text-fifth' } },
-                                    { value: ValueDate.AGO_1_MONTH, icon: { name: 'date', class: 'dark:text-dark-fifth text-fifth' } }
-                                ]}
-                                style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
-                            />
-                            <ComponentSelectDynamic
-                                selectCategory={selectCategory}
-                                setSelectCategory={setSelectCategory}
-                                register={register}
-                                style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth' }}
-                            />
-                            <ComponentSelectStatic
-                                ruteTranslate="notes.form.items.priority"
-                                title={translate('search.toggle.selects.priority')}
-                                select={selectPriority}
-                                setSelect={setSelectPriority}
-                                items={[
-                                    { value: ValuePriority.High, icon: { name: 'arrow', class: 'dark:text-dark-fifth text-red-500 rotate-[-180deg]' } },
-                                    { value: ValuePriority.Medium, icon: { name: 'arrow', class: 'dark:text-dark-fifth text-yellow-500 rotate-[-180deg]' } },
-                                    { value: ValuePriority.Low, icon: { name: 'arrow', class: 'dark:text-dark-fifth text-green-500' } }
-                                ]}
-                                style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
-                            />
-                            <ComponentSelectStatic
-                                ruteTranslate="notes.form.items.featured"
-                                title={translate('search.toggle.selects.highlight')}
-                                select={selectFeatured}
-                                setSelect={setSelectFeatured}
-                                items={[
-                                    { value: ValueBoolean.YEAH, icon: { name: 'star-fill', class: 'dark:text-dark-fifth text-fifth' } },
-                                    { value: ValueBoolean.NOT, icon: { name: 'star-half', class: 'dark:text-dark-fifth text-fifth' } }
-                                ]}
-                                style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
-                            />
-                        </div>
-                    </div>
+                    {
+                        (viewFilter) && (
+                            <div className="flex flex-col">
+                                <div className="flex justify-between items-center pb-1 border-b-[3px] rounded-md border-opacity-50 dark:border-seventh border-secondary w-full">
+                                    <h4 className="text-gradient tracking-wider font-semibold">
+                                        {translate('search.toggle.title')}
+                                    </h4>
+                                    <button ref={refButtonCloseToggle} type="button" title={translate('search.toggle.buttons.close')} onClick={() => controllerViewFilter(!viewFilter)} className="outline-none">
+                                        <ComponentIcon name="close" descriptionClass="cursor-pointer text-secondary text-opacity-60 dark:text-seventh" size={27} viewBox="0 0 16 16" />
+                                    </button>
+                                </div>
+                                <button onClick={() => restart()} title={translate('search.toggle.buttons.clean')} className="w-full mt-2 group bg-custom-gradient border-none px-3 rounded-md flex items-center justify-center py-[3px] gap-x-1 outline-none transition duration-500">
+                                    <ComponentIcon name="load" size={16} descriptionClass="group-hover:rotate-[360deg] dark:text-tertiary text-primary cursor-pointer" />
+                                    <span className="text-sm tracking-wider dark:text-tertiary text-primary duration-500">
+                                        {translate('search.toggle.buttons.clean')}
+                                    </span>
+                                </button>
+                                <div className="relative flex flex-col gap-y-3 py-3 w-full">
+                                    {stateSelect && <ComponentInputSearch value={watch('title')} setValue={setValue} design={stateSelect} />}
+                                    <ComponentSelectStatic
+                                        ruteTranslate="search.toggle.selects.order"
+                                        title={translate('search.toggle.selects.order.default')}
+                                        select={selectOrder}
+                                        setSelect={setSelectOrder}
+                                        items={[
+                                            { value: ValueOrder.UPWARD, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } },
+                                            { value: ValueOrder.DESCENDING, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } },
+                                            { value: ValueOrder.MOST_RECENT, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } },
+                                            { value: ValueOrder.LEAST_RECENT, icon: { name: 'order', class: 'dark:text-dark-fifth text-fifth' } }
+                                        ]}
+                                        style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
+                                    />
+                                    <ComponentSelectStatic
+                                        ruteTranslate="search.toggle.selects.date"
+                                        title={translate('search.toggle.selects.date.default')}
+                                        select={selectDate}
+                                        setSelect={setSelectDate}
+                                        items={[
+                                            { value: ValueDate.TODAY, icon: { name: 'date', class: 'dark:text-dark-fifth text-fifth' } },
+                                            { value: ValueDate.YESTERDAY, icon: { name: 'date', class: 'dark:text-dark-fifth text-fifth' } },
+                                            { value: ValueDate.AGO_7_DAYS, icon: { name: 'date', class: 'dark:text-dark-fifth text-fifth' } },
+                                            { value: ValueDate.AGO_1_MONTH, icon: { name: 'date', class: 'dark:text-dark-fifth text-fifth' } }
+                                        ]}
+                                        style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
+                                    />
+                                    <ComponentSelectDynamic
+                                        selectCategory={selectCategory}
+                                        setSelectCategory={setSelectCategory}
+                                        register={register}
+                                        style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth' }}
+                                    />
+                                    <ComponentSelectStatic
+                                        ruteTranslate="notes.form.items.priority"
+                                        title={translate('search.toggle.selects.priority')}
+                                        select={selectPriority}
+                                        setSelect={setSelectPriority}
+                                        items={[
+                                            { value: ValuePriority.High, icon: { name: 'arrow', class: 'dark:text-dark-fifth text-red-500 rotate-[-180deg]' } },
+                                            { value: ValuePriority.Medium, icon: { name: 'arrow', class: 'dark:text-dark-fifth text-yellow-500 rotate-[-180deg]' } },
+                                            { value: ValuePriority.Low, icon: { name: 'arrow', class: 'dark:text-dark-fifth text-green-500' } }
+                                        ]}
+                                        style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
+                                    />
+                                    <ComponentSelectStatic
+                                        ruteTranslate="notes.form.items.featured"
+                                        title={translate('search.toggle.selects.highlight')}
+                                        select={selectFeatured}
+                                        setSelect={setSelectFeatured}
+                                        items={[
+                                            { value: ValueBoolean.YEAH, icon: { name: 'star-fill', class: 'dark:text-dark-fifth text-fifth' } },
+                                            { value: ValueBoolean.NOT, icon: { name: 'star-half', class: 'dark:text-dark-fifth text-fifth' } }
+                                        ]}
+                                        style={{ text: 'dark:text-dark-fifth text-fifth', border: 'dark:border-dark-fifth border-fifth', bg: 'dark:bg-dark-secondary bg-secondary' }}
+                                    />
+                                </div>
+                            </div>
+                        )
+                    }
                 </div>
             </article>
             {loadingMessage && <ComponentMessageWait open={loadingMessage} setOpen={setLoadingMessage} />}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import { Component } from "@/frontend/types/component";
 
@@ -24,32 +24,27 @@ export default function ComponentNotes(): Component {
     const [selectedNote, setSelectedNote] = useState<PropsNote | undefined>(undefined);
     const [listCategorys, setListCategorys] = useState<PropsCategory[]>([]);
     const [categorySelected, setCategorySelected] = useState<PropsCategory | undefined>(undefined);
-    
+
     const lastPage: string = localStorage.getItem('last_page') as string;
-    
+
     const { note, opacity }: IContext = useAppContext();
     const { translate } = useAppTranslation();
-    
+
     const router = useRouter();
 
     const select = (category: PropsCategory): void => setCategorySelected(category);
 
-    const loadCategorys = useCallback(async (): Promise<void> => {
+    const loadCategorys = async (): Promise<void> => {
         const { data } = await httpRequest({ type: 'GET', url: '/api/categorys/true' });
 
-        if (data.status === 200) {
-            setListCategorys(data.details);
-        }
-        if (data.status === 500) {
-            setListCategorys([]);
-        }
-    }, [])
+        setListCategorys((data.status === 200) ? data.details : []);
+    }
 
     useEffect(() => {
         if (lastPage === ValueBoolean.NOT) {
             loadCategorys();
         }
-    }, [loadCategorys])
+    }, [])
 
     useEffect(() => {
         if (lastPage === ValueBoolean.YEAH) {

@@ -2,7 +2,7 @@
 
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Component } from "@/frontend/types/component";
 import { httpRequest } from "@/shared/logic/requests";
@@ -41,12 +41,12 @@ export default function Provider({ children }: ILayouts): Component {
 
     const sectionCurrent: string = useCurrentPath(true);
 
-    const loadUser = useCallback(async (): Promise<void> => {
+    const loadUser = async (): Promise<void> => {
         const { isSignedIn, user, isLoaded } = dataUser;
-
+        
         if (!isLoaded) return;
-
-        if (isLoaded && !isSignedIn && user == null) {
+        
+        if (isLoaded && !isSignedIn && user == null && session.id) {
             await httpRequest({ type: 'PUT', url: "/api/private/sessions", body: { id: session.id, status: false } });
             setSession({});
             router.push(APP_ROUTES.init);
@@ -81,23 +81,22 @@ export default function Provider({ children }: ILayouts): Component {
                 },
                 user: instanceUser
             }
+
             setSession(instanceSession);
             await httpRequest({ type: 'POST', url: "/api/private/sessions", body: instanceSession });
         }
-    }, [dataUser.user, session.id])
+    }
 
     useEffect(() => {
         if (sectionCurrent !== APP_ROUTES.notes.init) {
             localStorage.setItem('last_page', ValueBoolean.NOT);
-        }
-        if (sectionCurrent !== APP_ROUTES.notes.init) {
             setNote(undefined);
         }
-    }, [sectionCurrent]);
+    }, [sectionCurrent])
 
     useEffect(() => {
         loadUser();
-    }, [dataUser.isSignedIn, loadUser])
+    }, [dataUser.isSignedIn])
 
     const contextValue: IContext = useMemo(() => ({
         opacity,

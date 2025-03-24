@@ -362,10 +362,9 @@
     },
     "clerk": {
         "signIn": {
+            "title": "Login",
             "button_close": "Log out",
-            "input": {
-                "placeholder": "Enter your email"
-            }
+            "description": "Choose how to log in and access your account."
         }
     }
 }
