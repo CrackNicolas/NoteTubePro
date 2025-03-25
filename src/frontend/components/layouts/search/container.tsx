@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useForm } from "react-hook-form";
 
@@ -36,7 +36,7 @@ import ComponentButtonCreate from "@/frontend/components/layouts/search/button_c
 import ComponentMessageConfirmation from "@/frontend/components/layouts/messages/confirmation";
 import ComponentMessageConfirmationDelete from "@/frontend/components/layouts/messages/confirmation_delete";
 
-const ComponentSelectStatic = dynamic(() => import('@/frontend/components/partials/form/select_static'), {ssr:false});
+const ComponentSelectStatic = dynamic(() => import('@/frontend/components/partials/form/select_static'), { ssr: false });
 const ComponentSelectDynamic = dynamic(() => import('@/frontend/components/partials/form/select_dynamic'), { ssr: false });
 
 export default function ComponentSearch(): Component {
@@ -122,17 +122,17 @@ export default function ComponentSearch(): Component {
     }
 
     const loadNotes = async (): Promise<void> => {
-        if (search === StatusSearchNote.NOT_FILTER || search === StatusSearchNote.RELOAD) return;
-
         setLoadingNotes({ value: true, button: true });
-        const { data } = await httpRequest({ type: 'GET', url: `/api/notes${(search !== '{}') ? `/${search}` : ''}` });
+        if (search === StatusSearchNote.NOT_FILTER) return;
+
+        const { data } = await httpRequest({ type: 'GET', url: `/api/notes${(search === StatusSearchNote.RELOAD) ? '' : `/${search}`}` });
 
         if (data.status === 200) {
             setLoadingNotes({
                 value: false,
-                icon: `emoji-${search === '{}' ? 'without' : 'search'}-notes`,
-                description: (search === '{}') ? translate('search.messages.text_1') : translate('search.messages.text_2'),
-                button: (search === '{}')
+                icon: `emoji-${(search == StatusSearchNote.RELOAD) ? 'without' : 'search'}-notes`,
+                description: (search == StatusSearchNote.RELOAD) ? translate('search.messages.text_1') : translate('search.messages.text_2'),
+                button: (search == StatusSearchNote.RELOAD)
             });
             setListNotes(data.details);
         }
@@ -142,7 +142,7 @@ export default function ComponentSearch(): Component {
             setListNotes([]);
             setLoadingNotes({ value: false });
         }
-    };
+    }
 
     const listenToChanges = useDebouncedCallback((): void => {
         const criteria: PropsParamsSearch = {
@@ -153,7 +153,8 @@ export default function ComponentSearch(): Component {
             dates: (selectDate !== translate('search.toggle.selects.date.default')) ? selectDate : undefined,
             featured: (selectFeatured !== translate('search.toggle.selects.highlight')) ? (selectFeatured === 'SI') : undefined,
         }
-        setSearch(JSON.stringify(criteria));
+        const isFilter: boolean = !Object.values(criteria).every(value => value === undefined);
+        setSearch((isFilter)? JSON.stringify(criteria): StatusSearchNote.RELOAD);
     }, 300)
 
     const deleteNotes = async (): Promise<void> => {

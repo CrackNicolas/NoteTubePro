@@ -34,7 +34,7 @@ export async function handleApiRequest({ cookies, processRequest, useCredentials
         return sendApiResponse(result);
     } catch (error: any) {
         if (error.code === 11000 && error.keyPattern && error.keyValue) {
-            return sendApiResponse({ status: 400, info: { message: MessagesNote.DUPLICATED } })
+            return sendApiResponse({ status: 400, info: { message: MessagesNote.DUPLICATED } });
         }
         return sendApiResponse({ status: 500 });
     }
