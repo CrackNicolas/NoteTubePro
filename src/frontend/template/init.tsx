@@ -22,8 +22,8 @@ export default function Template({ children }: ILayouts): Component {
             {(props.theme === ThemeName.ligth) && <ComponentAnimatedBackground />}
             <ComponentNavTop {...props} />
             <ComponentNavLeft theme={props.theme} setTheme={props.setTheme} />
-            <main className="max-w-7xl mx-auto">
-                <section className="px-3 sm:pl-16 sm:pr-10 2xl:px-10">
+            <main className="w-full">
+                <section className="mx-auto max-w-7xl pl-3 pr-2 2xl:pl-10 sm:pl-[60px] sm:pr-10">
                     {children}
                 </section>
             </main>

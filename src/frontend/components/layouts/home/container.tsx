@@ -41,7 +41,7 @@ export default function ComponentHome(): Component {
     if (!session.value.user) return <ComponentLoadingHome />
 
     return (
-        <ComponentMotion type="article" descriptionClass={`${opacity && "opacity-40"} overflow-x-hidden flex flex-col min-h-screen justify-between sm:px-0.5 relative w-full pb-16 sm:pb-5`} >
+        <ComponentMotion type="article" descriptionClass={`${opacity && "opacity-40"} overflow-x-hidden flex flex-col min-h-screen justify-between px-1 relative w-full pb-16 sm:pb-5`} >
             {confetti && <Confetti className="w-full h-full" />}
             <ComponentHeaderHome title={`${translate('home.title')}, ${session.value.user.name}!`} subtitle={translate('home.subtitle')} />
             <ComponentMainHome />
