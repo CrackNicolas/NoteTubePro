@@ -37,7 +37,7 @@ export default function ComponentTemplateDashboard(props: ITemplateDashboard): C
     const { opacity }: IContext = useAppContext();
 
     return (
-        <ComponentMotion type="article" descriptionClass={`${opacity && 'opacity-40'} min-h-screen relative 2xl:px-0 sm:pl-5 sm:pt-20 pt-16 pb-9`}>
+        <ComponentMotion type="article" descriptionClass={`${opacity && 'opacity-40'} min-h-screen relative sm:px-0.5 sm:pt-20 pt-16 pb-9`}>
             <ComponentHeader title={header.title} subtitle={header.subtitle} />
             <ComponentMotion type="article" descriptionClass="relative pb-10 sm:pb-9 mx-auto place-items-center mt-1 grid max-w-2xl grid-cols-1 lg:gap-8 gap-3 pt-10 sm:mt-10 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {viewRedirect && <ComponentButtonGoBack onClick={() => router.push(APP_ROUTES.dashboard.main)} descriptionClass="p-1.5 top-0 left-0" />}

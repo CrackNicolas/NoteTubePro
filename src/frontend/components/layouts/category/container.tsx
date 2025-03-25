@@ -47,7 +47,7 @@ export default function ComponentCategory(): Component {
     }, [restart])
 
     return (
-        <article className={`${opacity && 'opacity-50'} relative min-h-screen 2xl:px-0 sm:pl-5 flex flex-col gap-12 sm:pt-20 pt-16 pb-7`}>
+        <article className={`${opacity && 'opacity-50'} relative min-h-screen sm:px-0.5 flex flex-col gap-12 sm:pt-20 pt-16 pb-7`}>
             <ComponentHeader title={translate('categories.title')} subtitle={translate('categories.subtitle')} />
             <ComponentList categorys={listCategorys} setRestart={setRestart} />
             {response && <ComponentMessageConfirmation open={open} setOpen={setOpen} response={response} />}

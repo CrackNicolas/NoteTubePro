@@ -27,7 +27,7 @@ export default function ComponentItemPriority(props: IItemPriority): Component {
             <ComponentInput type="radio" name="priority" id={id} value={value} descriptionClass="hidden" register={register} />
             <label htmlFor={id} title={translateValue} className={`group border-opacity-50 ${(!error) ? 'dark:border-dark-secondary border-secondary' : 'dark:border-dark-error border-error'} col-span-1 border-[0.1px] rounded-md flex place-items-center overflow-hidden cursor-pointer`}>
                 <ComponentIcon name="arrow" size={20} descriptionClass={`w-[30px] cursor-pointer ${descriptionClass}`} />
-                <span className={` ${paint ? 'bg-custom-gradient text-tertiary' : ` ${(!error) ? 'dark:text-primary text-secondary dark:group-hover:bg-red-500 group-hover:bg-custom-gradient dark:group-hover:text-dark-primary group-hover:text-tertiary' : 'dark:text-dark-error text-error dark:group-hover:bg-dark-error group-hover:bg-error dark:group-hover:text-dark-primary group-hover:text-primary'}  `} w-full text-center text-[14.4px] tracking-wider font-semibold cursor-pointer py-[5.1px] `}>
+                <span className={` ${paint ? 'bg-custom-gradient text-tertiary' : ` ${(!error) ? 'dark:text-primary text-secondary dark:group-hover:bg-error group-hover:bg-custom-gradient dark:group-hover:text-dark-primary group-hover:text-tertiary' : 'dark:text-dark-error text-error dark:group-hover:bg-dark-error group-hover:bg-error dark:group-hover:text-dark-primary group-hover:text-primary'}  `} w-full text-center text-[14.4px] tracking-wider font-semibold cursor-pointer py-[5.1px] `}>
                     {translateValue}
                 </span>
             </label>

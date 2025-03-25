@@ -55,7 +55,7 @@ export function ComponentSignIn(): Component {
         ...((theme == ThemeName.ligth) && { baseTheme: dark }),
         elements: {
             logoBox: "absolute right-2 top-2",
-            card: "pr-6 pt-4 sm:pt-7 pb-4 after:w-full after:text-tertiary after:text-tertiary after:text-opacity-40 after:whitespace-pre-line after:text-sm ",
+            card: "pr-6 pt-4 sm:pt-7 pb-4 after:w-full after:text-tertiary after:text-tertiary dark:after:text-dark-tertiary dark:after:text-opacity-80 after:text-opacity-40 after:whitespace-pre-line after:text-sm ",
             headerTitle: "text-transparent mb-[-30px] text-center flex flex-col text-lg items-center before:text-gradient",
             socialButtonsRoot: "sm:flex sm:flex-col sm:gap-y-5",
             socialButtonsIconButton: "sm:w-[60px] sm:h-[50px]"
