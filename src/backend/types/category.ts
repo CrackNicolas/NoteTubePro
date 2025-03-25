@@ -1,6 +1,6 @@
 export type PropsCategory = {
     title: string,
-    use?: PropsUse[]
+    use?: PropsUse[],
     icon: string
 }
 

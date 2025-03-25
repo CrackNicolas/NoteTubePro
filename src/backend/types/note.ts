@@ -3,7 +3,7 @@ import { PropsCategory } from "@/backend/types/category"
 export type PropsNote = {
     title: string,
     description: string,
-    category: PropsCategory
+    category: PropsCategory,
     priority: string,
     featured: boolean,
     file: PropsFile,
