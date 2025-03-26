@@ -20,9 +20,9 @@ export async function GET(req: NextRequest, { params: { segment } }: { params: {
     return handleApiRequest({
         cookies: req.cookies,
         processRequest: async (userId: string): Promise<PropsResponse> => {
-            let queryBuilder: Query<PropsNote[], PropsNote> = Notes.find(query(userId, criteria)).lean().select(
+            let queryBuilder: any = Notes.find(query(userId, criteria)).lean().select(
                 { "updatedAt": 0, "__v": 0 }
-            );
+            )
 
             if (criteria.order === ValueOrder.UPWARD) {
                 queryBuilder = queryBuilder.sort({ title: 1 });

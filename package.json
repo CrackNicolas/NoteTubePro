@@ -15,15 +15,15 @@
     "@clerk/nextjs": "^6.6.0",
     "@clerk/themes": "^2.1.50",
     "@headlessui/react": "^1.7.18",
-    "axios": "^1.6.2",
+    "axios": "^1.7.2",
     "cloudinary": "^2.1.0",
     "file-type": "^19.6.0",
     "framer-motion": "^12.0.6",
     "intersection-observer": "^0.12.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.2",
-    "next": "^14.1.0",
-    "next-nprogress-bar": "^2.1.2",
+    "mongoose": "^8.5.1",
+    "next": "^14.2.25",
+    "next-nprogress-bar": "^2.4.3",
     "next-pwa": "^5.6.0",
     "react": "^18",
     "react-confetti": "^6.2.2",
@@ -34,10 +34,12 @@
     "use-debounce": "^10.0.4"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^14.2.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
@@ -49,7 +51,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
     "resize-observer-polyfill": "^1.5.1",
-    "tailwindcss": "^3.3.0",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
 }

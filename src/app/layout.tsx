@@ -16,11 +16,11 @@ import { Languages } from '@/shared/enums/languages';
 import './globals.css'
 
 export const metadata: Metadata = {
+	metadataBase: new URL('https://notetubepro.vercel.app'),
 	title: 'NoteTube',
 	description: 'Aplicación de notas para organizar y gestionar tu información de forma eficiente.',
 	keywords: ['Notas', 'Next.js', 'React', 'JavaScript', 'TypeScript', 'Tailwind', 'CSS', 'HTML', 'Productividad', 'Organización'],
 	manifest: "/manifest.json",
-	viewport: "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-     fit=no, viewport-fit=cover",
 	icons: {
 		icon: '/favicon.ico'
 	},
@@ -36,6 +36,7 @@ export default function RootLayout({ children }: ILayouts): Component {
 	return (
 		<html lang={Languages.SPANISH}>
 			<Head>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<meta name="theme-color" content="#00ffff" />
 			</Head>
 			<body className={`${roboto.className} antialiased`}>
